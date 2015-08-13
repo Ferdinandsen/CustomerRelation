@@ -3,7 +3,7 @@
 
     <string name="login">Welcome - Please log in</string>
     <string name="loginPassword">Password</string>
-    <string name="loginUsername">Username</string>
+    <string name="loginUsername">Username - Email</string>
     <string name="loginBtn">Login</string>
     <string name="title_activity_main">MainActivity</string>
 

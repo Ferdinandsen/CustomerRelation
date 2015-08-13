@@ -3,19 +3,23 @@ package bws.customerrelation.Controller;
 import android.app.Activity;
 
 
+import java.util.ArrayList;
+
+import bws.customerrelation.DAL.DAOClient;
 import bws.customerrelation.DAL.DAOUser;
+import bws.customerrelation.Model.BEClient;
 import bws.customerrelation.Model.BEUser;
 
 /**
  * Created by Jacob Ferdinandsen on 12-08-2015.
  */
 public class UserController {
-    Activity _Activity;
+    Activity _activity;
     DAOUser _daoUser;
 
     public UserController(Activity context) {
-        _Activity = context;
-        _daoUser = new DAOUser(_Activity);
+        _activity = context;
+        _daoUser = new DAOUser(_activity);
     }
 
     public void createDummyUsers() {
@@ -32,9 +36,11 @@ public class UserController {
             _daoUser.insert(new BEUser("Kasper", "Juul", "kjuu@live.dk", "hej123", 0));
         }
     }
-
-//    public BEUser getUserByCredentials(String email, String password) {
-//        return _daoUser.getUserByCredentials(email, password);
-//    }
+public ArrayList<BEUser> getAllUsers(){
+    return _daoUser.getAllUsers();
+}
+    public BEUser getUserByCredentials(String email, String password) {
+        return _daoUser.getUserByCredentials(email, password);
+    }
 
 }

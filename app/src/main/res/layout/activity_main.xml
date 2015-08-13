@@ -10,7 +10,7 @@
 
     <LinearLayout
         android:id="@+id/linearLayout1"
-        android:layout_width="fill_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
 
@@ -20,13 +20,6 @@
             android:layout_height="wrap_content"
             android:text="@string/userData"
             android:textSize="20sp" />
-
-        <ImageView
-            android:id="@+id/netYesNo"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="end"
-            android:contentDescription="@string/picture"/>
 
     </LinearLayout>
 
@@ -41,7 +34,7 @@
         android:orientation="horizontal">
 
                 <ListView
-                    android:id="@+id/clientList"
+                    android:id="@+id/clientListView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     >
@@ -65,13 +58,22 @@
                     android:textSize="15sp"
                     style='"?android:attr/buttonBarButtonStyle"' />
                 <Button
+                    android:id="@+id/btnCache"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/loadedClients"
                     android:textSize="15sp"
-
                     style="buttonBarButtonStyle" />
 
         </LinearLayout>
+
+    <ImageView
+        android:id="@+id/bwsNet"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:contentDescription="@string/picture"
+        android:src="@drawable/abc_btn_check_to_on_mtrl_015"
+        android:layout_alignTop="@+id/linearLayout1"
+        android:layout_alignEnd="@+id/linearLayout3" />
 
 </RelativeLayout>

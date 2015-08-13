@@ -14,9 +14,17 @@ public class BEClient implements Serializable {
     private String m_password;
     private String m_company;
     private int m_phoneNumber;
-    private String m_createdDate;
 
-    public BEClient(int id, String firstName, String lastName, String email, String password, String company, int phoneNumber, String createdDate) {
+    public BEClient(String firstName, String lastName, String email, String password, String company, int phoneNumber) {
+        m_firstName = firstName;
+        m_lastName = lastName;
+        m_email = email;
+        m_password = password;
+        m_company = company;
+        m_phoneNumber = phoneNumber;
+    }
+
+    public BEClient(int id, String firstName, String lastName, String email, String password, String company, int phoneNumber) {
         m_id = id;
         m_firstName = firstName;
         m_lastName = lastName;
@@ -24,7 +32,11 @@ public class BEClient implements Serializable {
         m_password = password;
         m_company = company;
         m_phoneNumber = phoneNumber;
-        m_createdDate = createdDate;
+    }
+
+    @Override
+    public String toString() {
+        return m_firstName + " " + m_lastName + " - " + m_company;
     }
 
     public int getId() {
@@ -81,14 +93,6 @@ public class BEClient implements Serializable {
 
     public void setPhoneNumber(int phoneNumber) {
         m_phoneNumber = phoneNumber;
-    }
-
-    public String getCreatedDate() {
-        return m_createdDate;
-    }
-
-    public void setCreatedDate(String createdDate) {
-        m_createdDate = createdDate;
     }
 
 }
