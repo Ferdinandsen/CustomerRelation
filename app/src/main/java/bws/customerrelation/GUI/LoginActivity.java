@@ -25,17 +25,20 @@ public class LoginActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+        _userController = new UserController(this);
         findViews();
         setListeners();
-        createDummyData();
+        //lav en metode til den?
+        _userController.createDummyUsers();
 //        autoLogin();
-        _userController = new UserController(this);
+
     }
 
     private void findViews() {
         btnLogin = (Button) findViewById(R.id.btnLogin);
         txtUsername = (EditText) findViewById(R.id.txtLoginUsername);
         txtPassword = (EditText) findViewById(R.id.txtLoginPassword);
+        txtPassword.setText("");
     }
 
     private void setListeners() {
@@ -53,36 +56,34 @@ public class LoginActivity extends AppCompatActivity {
 //        checkNetwork();
         //  - i databasen
         // GEM User som _loggedUser
-        checkCredentials();
+//        checkCredentials();
     }
 
     private void checkNetwork() {
         //PAS!
     }
 
-    private void checkCredentials() {
-        String email = txtUsername.getText().toString();
-        String password = txtPassword.getText().toString();
-        if (userLogin(email, password)) {
-            Intent mainActivity = new Intent();
-            mainActivity.putExtra(SharedConstants.LOGGED_USER, _loggedUser);
-            mainActivity.setClass(this, MainActivity.class);
-            startActivity(mainActivity);
-        }
-    }
+//    private void checkCredentials() {
+//        String email = txtUsername.getText().toString();
+//        String password = txtPassword.getText().toString();
+//        if (userLogin(email, password)) {
+//            Intent mainActivity = new Intent();
+//            mainActivity.putExtra(SharedConstants.LOGGED_USER, _loggedUser);
+//            mainActivity.setClass(this, MainActivity.class);
+//            startActivity(mainActivity);
+//        }
+//    }
 
-    private boolean userLogin(String email, String password) {
-        if ((_loggedUser = _userController.getUserByCredentials(email, password)) != null) {
-            return true;
-        }
-        Toast.makeText(this, "Login failed! Please try again...", Toast.LENGTH_LONG).show();
-        txtPassword.setText("");
-        return false;
-    }
+//    private boolean userLogin(String email, String password) {
+//        if ((_loggedUser = _userController.getUserByCredentials(email, password)) != null) {
+//            return true;
+//        }
+//        Toast.makeText(this, "Login failed! Please try again...", Toast.LENGTH_LONG).show();
+//        txtPassword.setText("");
+//        return false;
+//    }
 
-    private void createDummyData() {
-        _userController.createDummyUsers();
-    }
+
 
     //    private void autoLogin() {
 //        BEUser user = getLatestUser();

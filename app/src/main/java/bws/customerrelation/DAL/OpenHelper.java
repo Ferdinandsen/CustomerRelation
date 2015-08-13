@@ -12,7 +12,7 @@ public class OpenHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         db.execSQL("CREATE TABLE " + DAConstants.TABLE_USER + "(Id INTEGER PRIMARY KEY, Firstname TEXT, Lastname TEXT, Email TEXT, Password TEXT, PhoneNumber INTEGER)");
-        db.execSQL("CREATE TABLE " + DAConstants.TABLE_CLIENT + "(Id INTEGER PRIMARY KEY, ClientId INTEGER, Firstname TEXT, Lastname TEXT, Email TEXT, PhoneNumber INTEGER, Company TEXT, Date_Created DATETIME, )");
+//        db.execSQL("CREATE TABLE " + DAConstants.TABLE_CLIENT + "(Id INTEGER PRIMARY KEY, ClientId INTEGER, Firstname TEXT, Lastname TEXT, Email TEXT, PhoneNumber INTEGER, Company TEXT, Date_Created DATETIME");
 //        db.execSQL("CREATE TABLE " + DAConstants.TABLE_FRIEND + "(UserId INTEGER, FriendId INTEGER , CONSTRAINT pk_id PRIMARY KEY (UserID, FriendID))");
 //        db.execSQL("CREATE TABLE " + DAConstants.TABLE_HIDDEN_POST + "(UserId INTEGER, PostId INTEGER)");
 //        db.execSQL("CREATE TABLE " + DAConstants.TABLE_MESSAGE + "(Id INTEGER PRIMARY KEY, UserFrom INTEGER, UserTo INTEGER, Message TEXT, Date_Created DATETIME)");

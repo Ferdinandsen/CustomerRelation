@@ -11,6 +11,6 @@
     <string name="btnDownLoadList">Download</string>
     <string name="loadedClients">Cache</string>
     <string name="picture">picture</string>
-
+    <string name="action_settings">settings</string>
 
 </resources>

@@ -15,6 +15,7 @@ public class UserController {
 
     public UserController(Activity context) {
         _Activity = context;
+        _daoUser = new DAOUser(_Activity);
     }
 
     public void createDummyUsers() {
@@ -32,8 +33,8 @@ public class UserController {
         }
     }
 
-    public BEUser getUserByCredentials(String email, String password) {
-        return _daoUser.getUserByCredentials(email, password);
-    }
+//    public BEUser getUserByCredentials(String email, String password) {
+//        return _daoUser.getUserByCredentials(email, password);
+//    }
 
 }

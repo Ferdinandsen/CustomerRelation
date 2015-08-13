@@ -36,24 +36,12 @@ public class DAOUser {
         return _sql.executeInsert();
     }
 
-    public BEUser getUserByCredentials(String email, String password) {
-        BEUser localUser = null;
-        Cursor cursor = _db.query(DAConstants.TABLE_USER, new String[]{"Id", "Firstname", "Lastname", "Email", "Password", "PhoneNumber"}, "Email=? and Password=?", new String[]{"" + email, "" + password}, null, null, null);
-        if (cursor.moveToFirst()) {
-            localUser = new BEUser(cursor.getInt(0), cursor.getString(1), cursor.getString(2), cursor.getString(3), cursor.getString(4), cursor.getInt(6));
-        }
-        if (cursor != null && !cursor.isClosed()) {
-            cursor.close();
-        }
-        return localUser;
-    }
-
     public ArrayList<BEUser> getAllUsers() {
         ArrayList<BEUser> users = new ArrayList<BEUser>();
         Cursor cursor = _db.query(DAConstants.TABLE_USER, new String[]{"Id", "Firstname", "Lastname", "Email", "Password", "PhoneNumber"}, null, null, null, null, "Firstname desc");
         if (cursor.moveToFirst()) {
             do {
-                users.add(new BEUser(cursor.getInt(0), cursor.getString(1), cursor.getString(2), cursor.getString(3), cursor.getString(5), cursor.getInt(6)));
+                users.add(new BEUser(cursor.getInt(0), cursor.getString(1), cursor.getString(2), cursor.getString(3), cursor.getString(4), cursor.getInt(5)));
             } while (cursor.moveToNext());
         }
         if (cursor != null && !cursor.isClosed()) {
@@ -61,4 +49,17 @@ public class DAOUser {
         }
         return users;
     }
+//    public BEUser getUserByCredentials(String email, String password) {
+//        BEUser localUser = null;
+//        Cursor cursor = _db.query(DAConstants.TABLE_USER, new String[]{"Id", "Firstname", "Lastname", "Email", "Password", "PhoneNumber"}, "Email=? and Password=?", new String[]{"" + email, "" + password}, null, null, null);
+//        if (cursor.moveToFirst()) {
+//            localUser = new BEUser(cursor.getInt(0), cursor.getString(1), cursor.getString(2), cursor.getString(3), cursor.getString(4), cursor.getInt(6));
+//        }
+//        if (cursor != null && !cursor.isClosed()) {
+//            cursor.close();
+//        }
+//        return localUser;
+//    }
+
+
 }
