@@ -3,4 +3,6 @@
     <color name="red">#FF0000</color>
     <color name="deepBlueSky2">#00B2EE</color>
     <color name="black">#000000</color>
+    <color name="selector">#00CCFF</color>
+    <color name="defaultSelect">#ffffff</color>
 </resources>

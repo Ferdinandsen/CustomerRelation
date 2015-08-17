@@ -3,6 +3,7 @@ package bws.customerrelation.GUI;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -15,7 +16,7 @@ import bws.customerrelation.Controller.UserController;
 import bws.customerrelation.Model.BEUser;
 import bws.customerrelation.R;
 
-public class LoginActivity extends Activity {
+public class LoginActivity extends AppCompatActivity {
 
     EditText txtUsername;
     EditText txtPassword;

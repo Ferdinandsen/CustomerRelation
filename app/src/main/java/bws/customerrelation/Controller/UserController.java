@@ -23,7 +23,7 @@ public class UserController {
     }
 
     public void createDummyUsers() {
-        if (_daoUser.getAllUsers().size() < 10) {
+        if (_daoUser.getAllUsers().size() < 11) {
             _daoUser.insert(new BEUser("André", "Psy", "SejerejekillerxX@live.dk", "hej123", 0));
             _daoUser.insert(new BEUser("Thomas", "Petersen", "PsykoMegetOverklar@msn.com", "hej123", 0));
             _daoUser.insert(new BEUser("Bob", "Olesen", "bobolesen@hotmail.com", "hej123", 0));
@@ -34,6 +34,7 @@ public class UserController {
             _daoUser.insert(new BEUser("Thue", "Emilsen", "Volume@onmypc.com", "hej123", 0));
             _daoUser.insert(new BEUser("Mette", "Enevoldsen", "menevold@live.dk", "hej123", 0));
             _daoUser.insert(new BEUser("Kasper", "Juul", "kjuu@live.dk", "hej123", 0));
+            _daoUser.insert(new BEUser("Test", "BWS", "a", "a", 0));
         }
     }
 public ArrayList<BEUser> getAllUsers(){
