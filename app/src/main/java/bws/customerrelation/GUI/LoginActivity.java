@@ -36,7 +36,12 @@ public class LoginActivity extends AppCompatActivity {
         findViews();
         setListeners();
         testSetup();
+        // TIL TEST
+        clearDBClientList();
+    }
 
+    private void clearDBClientList() {
+        _clientController.deleteAllClients();
     }
 
     private void testSetup() {
@@ -50,7 +55,8 @@ public class LoginActivity extends AppCompatActivity {
         btnLogin = (Button) findViewById(R.id.btnLogin);
         txtUsername = (EditText) findViewById(R.id.txtLoginUsername);
         txtPassword = (EditText) findViewById(R.id.txtLoginPassword);
-        txtPassword.setText("");
+        txtUsername.setText("a");
+        txtPassword.setText("a");
     }
 
     private void setListeners() {

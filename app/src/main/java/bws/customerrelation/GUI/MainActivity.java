@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -11,6 +12,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -50,7 +52,23 @@ public class MainActivity extends AppCompatActivity {
         setImageView();
         populateClientList();
         clientListView.setAdapter(adapter());
+        setSelectedFromDevice();
         clientListView.setBackgroundColor(Color.parseColor("#ffffff"));
+    }
+
+    private void setSelectedFromDevice() {
+        ArrayList<BEClient> test1 = _clientController.getAllClientsFromDevice();
+
+        if (!test1.isEmpty()) {
+            for (int i = 0; i >= allClients.size(); i++) {
+                for (BEClient x : test1) {
+                    if (allClients.get(i) == x) {
+                        View test = (View) clientListView.getItemAtPosition(i);
+                        test.setBackgroundColor(Color.parseColor("#00B2EE"));
+                    }
+                }
+            }
+        }
     }
 
     private void populateClientList() {
@@ -83,25 +101,39 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void onClientListItemClick(int position, View view) {
+        Object pos = position; // for at vi kan fjerne den korrekte
         if (!selectedItems.contains(position)) {
             selectedItems.add(position);
             view.setBackgroundColor(Color.parseColor("#00B2EE"));
         } else {
             view.setBackgroundColor(Color.parseColor("#ffffff"));
-            selectedItems.remove(position);
+            selectedItems.remove(pos);
         }
 
     }
 
     private void onClickDownloadList() {
-        ArrayList<BEClient> _dlClientList = new ArrayList<BEClient>();
-        for (int x : selectedItems) {
-            _dlClientList.add((BEClient) clientListView.getItemAtPosition(x));
+        if (selectedItems.isEmpty()) {
+            Toast.makeText(this, "Du har ikke valgt nogle kunder", Toast.LENGTH_SHORT).show();
+        } else {
+            ArrayList<BEClient> dlClientList = new ArrayList<BEClient>();
+            for (int x : selectedItems) {
+                dlClientList.add((BEClient) clientListView.getItemAtPosition(x));
+            }
+            if (dlClientList.size() == 1) {
+                Intent showClientIntent = new Intent();
+                showClientIntent.setClass(this, ClientDataActivity.class);
+                _clientController.createClientList(dlClientList);
+                showClientIntent.putExtra(SharedConstants.CLIENT, dlClientList.get(0));
+                startActivity(showClientIntent);
+            } else {
+                Intent clientIntent = new Intent();
+                clientIntent.setClass(this, ClientActivity.class);
+                _clientController.createClientList(dlClientList);
+//                clientIntent.putExtra(SharedConstants.CLIENTLIST, dlClientList);
+                startActivity(clientIntent);
+            }
         }
-        Intent clientIntent = new Intent();
-        clientIntent.setClass(this, ClientActivity.class);
-        clientIntent.putExtra(SharedConstants.CLIENT, _dlClientList);
-
     }
 
     private void findViews() {

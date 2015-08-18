@@ -15,11 +15,12 @@ public class ClientController {
     DAOClient _daoClient;
     Activity _activity;
 
-    public ClientController(Activity context){
+    public ClientController(Activity context) {
         _activity = context;
         _daoClient = new DAOClient(_activity);
 
     }
+
     public void createDummyClients() {
         int test = _daoClient.getAllClients().size();
         if (_daoClient.getAllClients().size() < 10) {
@@ -36,11 +37,34 @@ public class ClientController {
         }
     }
 
-    public ArrayList<BEClient> getAllClients(){
+    public ArrayList<BEClient> getAllClients() {
         return _daoClient.getAllClients();
     }
 
     public void deleteAllClients() {
-       _daoClient.deleteAllClients();
+        _daoClient.deleteAllClients();
+    }
+
+    public void createClientList(ArrayList<BEClient> clients) {
+        ArrayList<BEClient> test = getAllClientsFromDevice();
+        if (test.isEmpty()) {
+            for (BEClient x : clients) {
+                _daoClient.insertClientOnList(x);
+            }
+        } else {
+            // FIX DETTE !
+            for (BEClient x : clients) {
+                for (BEClient y : test) {
+                    if (y.getId() == x.getId()) {
+                        _daoClient.insertClientOnList(x);
+                    }
+                }
+            }
+
+        }
+    }
+
+    public ArrayList<BEClient> getAllClientsFromDevice() {
+        return _daoClient.getAllClientsFromDevice();
     }
 }
