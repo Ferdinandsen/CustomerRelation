@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -27,7 +26,6 @@ public class MainActivity extends AppCompatActivity {
     ImageView bwsNet;
     ListView clientListView;
     Button btnDownloadList;
-    Button btnCache;
     BEUser _user;
     ArrayList<BEClient> allClients;
     ArrayList<Integer> cliList;
@@ -75,13 +73,6 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        btnCache.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onClickCache();
-            }
-        });
-
         btnDownloadList.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -102,19 +93,13 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-
-    private void onClickCache() {
-        //TODO
-
-    }
-
     private void onClickDownloadList() {
         ArrayList<BEClient> _dlClientList = new ArrayList<BEClient>();
         for (int x : selectedItems) {
             _dlClientList.add((BEClient) clientListView.getItemAtPosition(x));
         }
         Intent clientIntent = new Intent();
-        clientIntent.setClass(this, clientActivity.class);
+        clientIntent.setClass(this, ClientActivity.class);
         clientIntent.putExtra(SharedConstants.CLIENT, _dlClientList);
 
     }
@@ -124,7 +109,6 @@ public class MainActivity extends AppCompatActivity {
         bwsNet = (ImageView) findViewById(R.id.bwsNet);
         clientListView = (ListView) findViewById(R.id.clientListView);
         btnDownloadList = (Button) findViewById(R.id.btnDownloadList);
-        btnCache = (Button) findViewById(R.id.btnCache);
 
     }
 
