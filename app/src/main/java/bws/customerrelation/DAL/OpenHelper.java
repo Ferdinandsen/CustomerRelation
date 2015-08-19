@@ -15,7 +15,7 @@ public class OpenHelper extends SQLiteOpenHelper {
         db.execSQL("CREATE TABLE " + DAConstants.TABLE_USER + " (Id INTEGER PRIMARY KEY, Firstname TEXT, Lastname TEXT, Email TEXT, Password TEXT, PhoneNumber INTEGER)");
         db.execSQL("CREATE TABLE " + DAConstants.TABLE_CLIENT + " (Id INTEGER PRIMARY KEY, Firstname TEXT, Lastname TEXT, Email TEXT, Password TEXT, Company TEXT, PhoneNumber INTEGER)");
         db.execSQL("CREATE TABLE " + DAConstants.TABLE_CLIENTLIST + "(Id INTEGER PRIMARY KEY, Firstname TEXT, Lastname TEXT, Email TEXT, Password TEXT, Company TEXT, PhoneNumber INTEGER)");
-//        db.execSQL("CREATE TABLE " + DAConstants.TABLE_HIDDEN_POST + "(UserId INTEGER, PostId INTEGER)");
+        db.execSQL("CREATE TABLE " + DAConstants.TABLE_CANVAS + "(Id INTEGER PRIMARY KEY , ClientId INTEGER, Canvas TEXT)");
 //        db.execSQL("CREATE TABLE " + DAConstants.TABLE_MESSAGE + "(Id INTEGER PRIMARY KEY, UserFrom INTEGER, UserTo INTEGER, Message TEXT, Date_Created DATETIME)");
 //        db.execSQL("CREATE TABLE " + DAConstants.TABLE_REQUEST + "(Id INTEGER PRIMARY KEY, UserFrom INTEGER, UserTo INTEGER, RequestMessage TEXT, Date_Created DATETIME)");
 //        db.execSQL("CREATE TABLE " + DAConstants.TABLE_COMMENT + "(Id INTEGER PRIMARY KEY, PostId INTEGER, UserId INTEGER, Message TEXT, Date_Created DATETIME)");

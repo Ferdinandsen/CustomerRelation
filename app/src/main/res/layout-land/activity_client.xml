@@ -16,11 +16,13 @@
     <ListView
         android:id="@+id/showClientsListview"
         android:layout_width="wrap_content"
-        android:layout_height="400dp"
+        android:layout_height="234dp"
         android:clickable="true"
         android:choiceMode="singleChoice"
         >
     </ListView>
+
+</LinearLayout>
 
     <Button
     android:id="@+id/btnShowClient"
@@ -28,9 +30,9 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
 
-        style='"?android:attr/buttonBarButtonStyle"'/>
-
-</LinearLayout>
+        style='"?android:attr/buttonBarButtonStyle"'
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true" />
 
 
 </RelativeLayout>

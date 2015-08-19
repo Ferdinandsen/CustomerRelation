@@ -4,16 +4,11 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.ListView;
-import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -29,6 +24,7 @@ public class ClientActivity extends AppCompatActivity {
     BEClient selectedClient;
     View selectedView;
     ClientController _clientController;
+    ListViewAdapter adapter;
 
 
     @Override
@@ -36,10 +32,11 @@ public class ClientActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_client);
         _clientController = new ClientController(this);
+        adapter = new ListViewAdapter();
         findViews();
         PopulateClients();
         setListeners();
-        showClientsListview.setAdapter(adapter());
+        showClientsListview.setAdapter(adapter.createNewAdapter(this, dlClients));
         showClientsListview.setBackgroundColor(Color.parseColor("#ffffff"));
     }
 
@@ -56,16 +53,18 @@ public class ClientActivity extends AppCompatActivity {
                 onClickBtnShowClient();
             }
         });
-
     }
 
     private void onClickBtnShowClient() {
         Intent clientDataIntent = new Intent();
         clientDataIntent.setClass(this, ClientDataActivity.class);
+        if(selectedClient != null){
         clientDataIntent.putExtra(SharedConstants.CLIENT, selectedClient);
-        startActivity(clientDataIntent);
+        startActivity(clientDataIntent);}
+        else{
+            Toast.makeText(this,"du skal vælge en Client", Toast.LENGTH_SHORT).show();
+        }
     }
-
 
     private void onClientListItemClick(int position, View view) {
         selectedClient = dlClients.get(position);
@@ -74,7 +73,6 @@ public class ClientActivity extends AppCompatActivity {
         view.setBackgroundColor(Color.parseColor("#00B2EE"));
         selectedView = view;
     }
-
 
     private void PopulateClients() {
         dlClients = _clientController.getAllClientsFromDevice();
@@ -85,14 +83,13 @@ public class ClientActivity extends AppCompatActivity {
         showClientsListview = (ListView) findViewById(R.id.showClientsListview);
     }
 
-    private ArrayAdapter<BEClient> adapter() {
-        return new ArrayAdapter<BEClient>(
-                this,
-                android.R.layout.simple_list_item_1,
-                android.R.id.text1,
-                dlClients);
-    }
-
+//    private ArrayAdapter<BEClient> createNewAdapter() {
+//        return new ArrayAdapter<BEClient>(
+//                this,
+//                android.R.layout.simple_list_item_1,
+//                android.R.id.text1,
+//                dlClients);
+//    }
 
 //    @Override
 //    public boolean onCreateOptionsMenu(Menu menu) {

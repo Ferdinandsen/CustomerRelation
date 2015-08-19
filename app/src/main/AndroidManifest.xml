@@ -30,6 +30,10 @@
             android:name=".GUI.ClientDataActivity"
             android:label="@string/title_activity_client_data" >
         </activity>
+        <activity
+            android:name=".GUI.CanvasActivity"
+            android:label="@string/title_activity_canvas" >
+        </activity>
     </application>
 
 </manifest>
