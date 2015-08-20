@@ -1,3 +1,4 @@
+
 package bws.customerrelation.GUI;
 
 import android.content.Intent;
@@ -74,8 +75,8 @@ public class ClientActivity extends AppCompatActivity {
         Intent clientDataIntent = new Intent();
         clientDataIntent.setClass(this, ClientDataActivity.class);
         if(selectedClient != null){
-        clientDataIntent.putExtra(SharedConstants.CLIENT, selectedClient);
-        startActivity(clientDataIntent);}
+            clientDataIntent.putExtra(SharedConstants.CLIENT, selectedClient);
+            startActivity(clientDataIntent);}
         else{
             Toast.makeText(this,"du skal vælge en Client", Toast.LENGTH_SHORT).show();
         }
@@ -84,7 +85,7 @@ public class ClientActivity extends AppCompatActivity {
     private void onClientListItemClick(int position, View view) {
         selectedClient = dlClients.get(position);
         if(selectedView != null)
-        selectedView.setBackgroundColor(Color.parseColor("#ffffff"));
+            selectedView.setBackgroundColor(Color.parseColor("#ffffff"));
         view.setBackgroundColor(Color.parseColor("#00B2EE"));
         selectedView = view;
     }
