@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -31,9 +32,10 @@ public class ClientDataActivity extends AppCompatActivity {
     ListView canvasList;
     BEClient selectedClient;
     Button btnCreateCanvas;
-//    MainActivityListViewAdapter adapter;
+    MainActivityListViewAdapter adapter;
     ArrayList<BECanvas> clientCanvaslist;
     ClientController _clientController;
+    int _selectedCanvasPosition;
 
 
     @Override
@@ -46,9 +48,23 @@ public class ClientDataActivity extends AppCompatActivity {
         findViews();
         populateData();
         setListeners();
-//        adapter = new MainActivityListViewAdapter( this,android.R.layout.simple_list_item_1,clientCanvaslist,null);
-//        if (!clientCanvaslist.isEmpty())
-//            canvasList.setAdapter(adapter);
+        if (savedInstanceState == null) {
+//            adapter = new ClientDataActivityListViewAdapter(this, R.layout.cell_main_activity, clientCanvaslist, selectedClient);
+            canvasList.setAdapter(adapter);
+        }
+    }
+    @Override
+    public void onSaveInstanceState(Bundle savedInstanceState) {
+        savedInstanceState.putSerializable(SharedConstants.SELECTEDCLIENT, selectedClient);
+        super.onSaveInstanceState(savedInstanceState);
+    }
+
+    @Override
+    public void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+        selectedClient = (BEClient) savedInstanceState.getSerializable(SharedConstants.SELECTEDCLIENT);
+//        adapter = new MainActivityListViewAdapter(this, R.layout.cell_main_activity, dlClients, selectedClient);
+        canvasList.setAdapter(adapter);
     }
 
     private void populateData() {
@@ -63,7 +79,6 @@ public class ClientDataActivity extends AppCompatActivity {
     public void onResume() {
         super.onResume();
         populateData();
-//        canvasList.setAdapter(adapter);
     }
 
     private void findViews() {
@@ -85,7 +100,17 @@ public class ClientDataActivity extends AppCompatActivity {
                 onclickBtnCreateCanvas();
             }
         });
+        canvasList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                onClickSelectedCanvas();
+            }
+        });
 
+    }
+
+    private  void onClickSelectedCanvas() {
+        //TODO
     }
 
     private void onclickBtnCreateCanvas() {

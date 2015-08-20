@@ -24,7 +24,7 @@ public class ClientActivity extends AppCompatActivity {
     BEClient selectedClient;
     View selectedView;
     ClientController _clientController;
-//    MainActivityListViewAdapter adapter;
+    MainActivityListViewAdapter adapter;
 
 
     @Override
@@ -36,9 +36,23 @@ public class ClientActivity extends AppCompatActivity {
         findViews();
         PopulateClients();
         setListeners();
-//        adapter = new MainActivityListViewAdapter(this,android.R.layout.simple_list_item_1,dlClients,null);
-//        showClientsListview.setAdapter(adapter);
-        showClientsListview.setBackgroundColor(Color.parseColor("#ffffff"));
+        if (savedInstanceState == null) {
+            adapter = new MainActivityListViewAdapter(this, R.layout.cell_main_activity, dlClients, selectedClient);
+            showClientsListview.setAdapter(adapter);
+        }
+    }
+    @Override
+    public void onSaveInstanceState(Bundle savedInstanceState) {
+        savedInstanceState.putSerializable(SharedConstants.SELECTEDCLIENT, selectedClient);
+        super.onSaveInstanceState(savedInstanceState);
+    }
+
+    @Override
+    public void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+        selectedClient = (BEClient) savedInstanceState.getSerializable(SharedConstants.SELECTEDCLIENT);
+        adapter = new MainActivityListViewAdapter(this, R.layout.cell_main_activity, dlClients, selectedClient);
+        showClientsListview.setAdapter(adapter);
     }
 
     private void setListeners() {

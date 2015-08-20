@@ -12,8 +12,8 @@
         android:id="@+id/linearLayout1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_centerHorizontal="true">
+        android:layout_centerHorizontal="true"
+        android:orientation="horizontal">
 
     </LinearLayout>
 
@@ -21,9 +21,9 @@
         android:id="@+id/linearLayout2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
+        android:layout_alignParentStart="true"
         android:layout_below="@+id/bwsNet"
-        android:layout_alignParentStart="true">
+        android:orientation="horizontal">
 
     </LinearLayout>
 
@@ -31,20 +31,20 @@
         android:id="@+id/bwsNet"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:contentDescription="@string/picture"
-        android:src="@drawable/abc_btn_check_to_on_mtrl_015"
+        android:layout_alignParentEnd="true"
         android:layout_alignParentTop="true"
-        android:layout_alignParentEnd="true" />
+        android:contentDescription="@string/picture"
+        android:src="@drawable/abc_btn_check_to_on_mtrl_015" />
 
     <LinearLayout
         android:id="@+id/linearLayout3"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        android:orientation="horizontal"
-        android:gravity="center"
-        android:layout_gravity="bottom"
         android:layout_below="@+id/linearLayout2"
-        android:layout_toStartOf="@+id/linearLayout1">
+        android:layout_gravity="bottom"
+        android:layout_toStartOf="@+id/linearLayout1"
+        android:gravity="center"
+        android:orientation="horizontal">
 
     </LinearLayout>
 
@@ -52,30 +52,41 @@
         android:id="@+id/userData"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/userData"
-        android:textSize="20sp"
         android:layout_alignParentTop="true"
-        android:layout_toStartOf="@+id/linearLayout1" />
+        android:layout_toStartOf="@+id/linearLayout1"
+        android:text="@string/userData"
+        android:textSize="20sp" />
 
     <Button
         android:id="@+id/btnDownloadList"
+        style='"?android:attr/buttonBarButtonStyle"'
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/btnDownLoadList"
-        android:textSize="15sp"
-        style='"?android:attr/buttonBarButtonStyle"'
         android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true" />
+        android:layout_centerHorizontal="true"
+        android:text="@string/btnDownLoadList"
+        android:textSize="15sp" />
 
-    <ListView
+    <ScrollView
         android:id="@+id/clientListView"
-        android:layout_width="wrap_content"
-        android:layout_height="200dp"
-        android:clickable="true"
-        android:choiceMode="multipleChoice"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:layout_below="@+id/userData"
-        android:layout_alignParentStart="true"
-        android:layout_above="@+id/btnDownloadList">
-    </ListView>
+        android:layout_above="@id/btnDownloadList">
+
+        <LinearLayout
+            android:id="@+id/linear_scroll"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" >
+
+            <LinearLayout
+                android:id="@+id/linear_listview"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical" />
+
+        </LinearLayout>
+    </ScrollView>
 
 </RelativeLayout>
