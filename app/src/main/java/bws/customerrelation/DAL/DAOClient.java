@@ -51,7 +51,7 @@ public class DAOClient {
                 "Id desc");
         if (cursor.moveToFirst()) {
             do {
-                clients.add(new BEClient(cursor.getInt(0), cursor.getString(1), cursor.getString(2), cursor.getString(3), cursor.getString(4), cursor.getString(5), cursor.getInt(6)));
+                clients.add(new BEClient(cursor.getInt(0), cursor.getString(1), cursor.getString(2), cursor.getString(3), cursor.getString(4), cursor.getString(5), cursor.getInt(6),false));
             } while (cursor.moveToNext());
         }
         if (cursor != null && !cursor.isClosed()) {
@@ -68,7 +68,7 @@ public class DAOClient {
                 "Firstname desc");
         if (cursor.moveToFirst()) {
             do {
-                clients.add(new BEClient(cursor.getInt(0), cursor.getString(1), cursor.getString(2), cursor.getString(3), cursor.getString(4), cursor.getString(5), cursor.getInt(6)));
+                clients.add(new BEClient(cursor.getInt(0), cursor.getString(1), cursor.getString(2), cursor.getString(3), cursor.getString(4), cursor.getString(5), cursor.getInt(6),false));
             } while (cursor.moveToNext());
         }
         if (cursor != null && !cursor.isClosed()) {

@@ -31,7 +31,7 @@ public class ClientDataActivity extends AppCompatActivity {
     ListView canvasList;
     BEClient selectedClient;
     Button btnCreateCanvas;
-    ListViewAdapter adapter;
+//    MainActivityListViewAdapter adapter;
     ArrayList<BECanvas> clientCanvaslist;
     ClientController _clientController;
 
@@ -42,13 +42,13 @@ public class ClientDataActivity extends AppCompatActivity {
         setContentView(R.layout.activity_client_data);
         Bundle b = getIntent().getExtras();
         _clientController = new ClientController(this);
-        adapter = new ListViewAdapter();
         selectedClient = (BEClient) b.getSerializable(SharedConstants.CLIENT);
         findViews();
         populateData();
         setListeners();
-        if (!clientCanvaslist.isEmpty())
-            canvasList.setAdapter(adapter.createNewAdapter(this, clientCanvaslist));
+//        adapter = new MainActivityListViewAdapter( this,android.R.layout.simple_list_item_1,clientCanvaslist,null);
+//        if (!clientCanvaslist.isEmpty())
+//            canvasList.setAdapter(adapter);
     }
 
     private void populateData() {
@@ -63,7 +63,7 @@ public class ClientDataActivity extends AppCompatActivity {
     public void onResume() {
         super.onResume();
         populateData();
-        canvasList.setAdapter(adapter.createNewAdapter(this, clientCanvaslist));
+//        canvasList.setAdapter(adapter);
     }
 
     private void findViews() {

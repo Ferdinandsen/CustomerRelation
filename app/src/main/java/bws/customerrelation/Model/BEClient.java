@@ -1,6 +1,7 @@
 package bws.customerrelation.Model;
 
 import java.io.Serializable;
+import java.security.BasicPermission;
 
 /**
  * Created by Jacob Ferdinandsen on 12-08-2015.
@@ -14,17 +15,19 @@ public class BEClient implements Serializable {
     private String m_password;
     private String m_company;
     private int m_phoneNumber;
+    boolean m_onListSelected;
 
-    public BEClient(String firstName, String lastName, String email, String password, String company, int phoneNumber) {
+    public BEClient(String firstName, String lastName, String email, String password, String company, int phoneNumber, boolean onListSelected) {
         m_firstName = firstName;
         m_lastName = lastName;
         m_email = email;
         m_password = password;
         m_company = company;
         m_phoneNumber = phoneNumber;
+        m_onListSelected = onListSelected;
     }
 
-    public BEClient(int id, String firstName, String lastName, String email, String password, String company, int phoneNumber) {
+    public BEClient(int id, String firstName, String lastName, String email, String password, String company, int phoneNumber, boolean onListSelected) {
         m_id = id;
         m_firstName = firstName;
         m_lastName = lastName;
@@ -32,12 +35,13 @@ public class BEClient implements Serializable {
         m_password = password;
         m_company = company;
         m_phoneNumber = phoneNumber;
+        m_onListSelected = onListSelected;
     }
 
-    @Override
-    public String toString() {
-        return m_firstName + " " + m_lastName + " - " + m_company;
-    }
+//    @Override
+//    public String toString() {
+//        return m_firstName + " " + m_lastName + " - " + m_company;
+//    }
 
     public int getId() {
         return m_id;
@@ -95,4 +99,10 @@ public class BEClient implements Serializable {
         m_phoneNumber = phoneNumber;
     }
 
+    public boolean isOnListSelected(){
+        return m_onListSelected;
+    }
+    public void setOnListSelected(boolean b){
+        m_onListSelected = b;
+    }
 }

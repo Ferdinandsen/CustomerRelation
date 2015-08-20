@@ -24,7 +24,7 @@ public class ClientActivity extends AppCompatActivity {
     BEClient selectedClient;
     View selectedView;
     ClientController _clientController;
-    ListViewAdapter adapter;
+//    MainActivityListViewAdapter adapter;
 
 
     @Override
@@ -32,11 +32,12 @@ public class ClientActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_client);
         _clientController = new ClientController(this);
-        adapter = new ListViewAdapter();
+
         findViews();
         PopulateClients();
         setListeners();
-        showClientsListview.setAdapter(adapter.createNewAdapter(this, dlClients));
+//        adapter = new MainActivityListViewAdapter(this,android.R.layout.simple_list_item_1,dlClients,null);
+//        showClientsListview.setAdapter(adapter);
         showClientsListview.setBackgroundColor(Color.parseColor("#ffffff"));
     }
 

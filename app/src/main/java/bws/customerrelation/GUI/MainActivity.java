@@ -1,14 +1,10 @@
 package bws.customerrelation.GUI;
 
-import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -17,6 +13,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+
 
 import bws.customerrelation.Controller.ClientController;
 import bws.customerrelation.Controller.SharedConstants;
@@ -36,7 +33,7 @@ public class MainActivity extends AppCompatActivity {
     UserController _userController;
     ArrayList<Integer> selectedItems;
     private static String TAG = "MainActivity";
-    ListViewAdapter adapter;
+    MainActivityListViewAdapter adapter;
     Bundle tempSavedInstanceState;
 
     @Override
@@ -45,7 +42,7 @@ public class MainActivity extends AppCompatActivity {
         tempSavedInstanceState = savedInstanceState;
         setContentView(R.layout.activity_main);
         Bundle b = getIntent().getExtras();
-        adapter = new ListViewAdapter();
+
         _user = (BEUser) b.getSerializable(SharedConstants.USER);
         _userController = new UserController(this);
         _clientController = new ClientController(this);
@@ -54,14 +51,25 @@ public class MainActivity extends AppCompatActivity {
         setListeners();
         setUserData();
         populateClientList();
-        clientListView.setAdapter(adapter.createNewAdapter(this, allClients));
-        clientListView.setBackgroundColor(Color.parseColor("#ffffff"));
+
+        if (savedInstanceState == null) {
+            adapter = new MainActivityListViewAdapter(this, R.layout.cell_main_activity, allClients, selectedItems);
+            clientListView.setAdapter(adapter);
+        }
     }
 
     @Override
     public void onSaveInstanceState(Bundle savedInstanceState) {
         savedInstanceState.putSerializable(SharedConstants.STATE, selectedItems);
         super.onSaveInstanceState(savedInstanceState);
+    }
+
+    @Override
+    public void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+        selectedItems = (ArrayList<Integer>) savedInstanceState.getSerializable(SharedConstants.STATE);
+        adapter = new MainActivityListViewAdapter(this, R.layout.cell_main_activity, allClients, selectedItems);
+        clientListView.setAdapter(adapter);
     }
 
     private void populateClientList() {
@@ -71,17 +79,6 @@ public class MainActivity extends AppCompatActivity {
     private void setUserData() {
         txtUserData.setText("Logged in as: " + _user.getFirstname() + " " + _user.getLastname());
     }
-
-    @Override
-    public void onRestoreInstanceState(Bundle savedInstanceState) {
-        super.onRestoreInstanceState(savedInstanceState);
-        selectedItems = (ArrayList<Integer>) savedInstanceState.getSerializable(SharedConstants.STATE);
-       //FIX DETTE farve på baggrund af de gamle selectede
-
-    }
-
-
-
 
     private void setListeners() {
         clientListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -101,11 +98,14 @@ public class MainActivity extends AppCompatActivity {
     //SELECT OR DESELECT ITEMS ON LIST
     private void onClientListItemClick(int position, View view) {
         Object pos = position; // for at vi kan fjerne den korrekte
+        BEClient c = (BEClient) clientListView.getItemAtPosition(position);
         if (!selectedItems.contains(position)) {
             selectedItems.add(position);
+            c.setOnListSelected(true);
             view.setBackgroundColor(Color.parseColor("#00B2EE"));
         } else {
             view.setBackgroundColor(Color.parseColor("#ffffff"));
+            c.setOnListSelected(false);
             selectedItems.remove(pos);
         }
     }
@@ -133,7 +133,6 @@ public class MainActivity extends AppCompatActivity {
                 Intent clientIntent = new Intent();
                 clientIntent.setClass(this, ClientActivity.class);
                 _clientController.createClientList(tempClientList);
-//                clientIntent.putExtra(SharedConstants.CLIENTLIST, tempClientList);
                 startActivity(clientIntent);
             }
         }

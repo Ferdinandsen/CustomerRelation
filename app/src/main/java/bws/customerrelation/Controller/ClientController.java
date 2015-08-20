@@ -26,16 +26,16 @@ public class ClientController {
     public void createDummyClients() {
         int test = _daoClient.getAllClients().size();
         if (_daoClient.getAllClients().size() < 10) {
-            _daoClient.insert(new BEClient("André", "Psy", "SejerejekillerxX@live.dk", "hej123", "BWS", 0));
-            _daoClient.insert(new BEClient("Thomas", "Petersen", "PsykoMegetOverklar@msn.com", "hej123", "BWS", 0));
-            _daoClient.insert(new BEClient("Bob", "Olesen", "bobolesen@hotmail.com", "hej123", "BWS", 0));
-            _daoClient.insert(new BEClient("Kevin", "Ørskov", "yoyo@live.dk", "hej123", "BWS", 0));
-            _daoClient.insert(new BEClient("Jacob", "Jakobsen", "feedthehorse@yumyum.com", "hej123", "BWS", 0));
-            _daoClient.insert(new BEClient("Trine", "Hansen", "thansen@fakta.com", "hej123", "BWS", 0));
-            _daoClient.insert(new BEClient("Anne", "Dahl", "adahl@gmail.com", "hej123", "BWS", 0));
-            _daoClient.insert(new BEClient("Thue", "Emilsen", "Volume@onmypc.com", "hej123", "BWS", 0));
-            _daoClient.insert(new BEClient("Mette", "Enevoldsen", "menevold@live.dk", "hej123", "BWS", 0));
-            _daoClient.insert(new BEClient("Kasper", "Juul", "kjuu@live.dk", "hej123", "BWS", 0));
+            _daoClient.insert(new BEClient("André", "Psy", "SejerejekillerxX@live.dk", "hej123", "BWS", 0,false));
+            _daoClient.insert(new BEClient("Thomas", "Petersen", "PsykoMegetOverklar@msn.com", "hej123", "BWS", 0,false));
+            _daoClient.insert(new BEClient("Bob", "Olesen", "bobolesen@hotmail.com", "hej123", "BWS", 0,false));
+            _daoClient.insert(new BEClient("Kevin", "Ørskov", "yoyo@live.dk", "hej123", "BWS", 0,false));
+            _daoClient.insert(new BEClient("Jacob", "Jakobsen", "feedthehorse@yumyum.com", "hej123", "BWS", 0,false));
+            _daoClient.insert(new BEClient("Trine", "Hansen", "thansen@fakta.com", "hej123", "BWS", 0,false));
+            _daoClient.insert(new BEClient("Anne", "Dahl", "adahl@gmail.com", "hej123", "BWS", 0,false));
+            _daoClient.insert(new BEClient("Thue", "Emilsen", "Volume@onmypc.com", "hej123", "BWS", 0,false));
+            _daoClient.insert(new BEClient("Mette", "Enevoldsen", "menevold@live.dk", "hej123", "BWS", 0,false));
+            _daoClient.insert(new BEClient("Kasper", "Juul", "kjuu@live.dk", "hej123", "BWS", 0,false));
         }
     }
 
