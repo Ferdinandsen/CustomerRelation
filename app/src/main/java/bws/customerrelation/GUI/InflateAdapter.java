@@ -1,37 +1,42 @@
 package bws.customerrelation.GUI;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
-import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
-import bws.customerrelation.Model.BECanvas;
+import bws.customerrelation.Controller.SharedConstants;
 import bws.customerrelation.Model.BEClient;
 import bws.customerrelation.R;
 
 /**
  * Created by Jaje on 20-Aug-15.
  */
-public class InflateAdapter extends AppCompatActivity {
+public class InflateAdapter {
     LinearLayout mLinearListView;
-    ArrayList<BEClient> clients;
+    ArrayList<BEClient> _allClients;
     Context _context;
 
+    ArrayList<BEClient> _selectedClients;
+    ArrayList<View> _views;
+
     public InflateAdapter(Context context, ArrayList<BEClient> list, LinearLayout layout) {
-        clients = list;
+        _allClients = list;
         _context = context;
         mLinearListView = layout;
+
     }
 
     public void inflateView() {
-        for (int i = 0; i < clients.size(); i++) {
+        for (final BEClient c : _allClients) {
             /**
              * inflate items/ add items in linear layout instead of listview
              */
@@ -44,23 +49,41 @@ public class InflateAdapter extends AppCompatActivity {
 
             TextView mFirstName = (TextView) mLinearView
                     .findViewById(R.id.companyName);
-            TextView mLastName = (TextView) mLinearView
+            final TextView mLastName = (TextView) mLinearView
                     .findViewById(R.id.canvasAmount);
-            CheckBox mCheckBox = (CheckBox) mLinearView
+            final CheckBox mCheckBox = (CheckBox) mLinearView
                     .findViewById(R.id.checkbox);
             /**
              * set item into row
              */
-            final String fName = clients.get(i).getFirstName();
-            final String lName = "" + clients.get(i).getId();
+            final String fName = c.getFirstName();
+            final String lName = "" + c.getId();
             mFirstName.setText(fName);
             mLastName.setText(lName);
 
             /**
+             * changes background to white
+             */
+
+            mLinearListView.setBackgroundColor(Color.parseColor("#ffffff"));
+
+            /**
              * add view in top linear
              */
-            mLinearListView.setBackgroundColor(Color.parseColor("#ffffff"));
+
             mLinearListView.addView(mLinearView);
+
+            /**
+             * IF the client is in_selectedClients, highlight it again
+             */
+            if (_selectedClients != null) {
+                for (BEClient cl : _selectedClients) {
+                    if (cl.getId() == c.getId()) {
+                        mLinearView.setBackgroundColor(Color.parseColor("#00B2EE"));
+
+                    }
+                }
+            }
 
             /**
              * get item row on click
@@ -70,19 +93,28 @@ public class InflateAdapter extends AppCompatActivity {
 
                 @Override
                 public void onClick(View v) {
-                    // TODO Auto-generated method stub
-                    boolean test = ((CheckBox) mLinearView.findViewById(R.id.checkbox)).isChecked();
+                    _views = new ArrayList<View>();
+                    boolean isChecked = mCheckBox.isChecked();
 
-                    CheckBox box = (CheckBox) v.findViewById(R.id.checkbox);
-                    box.setChecked(!test);
+                    mCheckBox.setChecked(!isChecked);
 
-                    if (test) {
+                    if (isChecked) {
                         v.setBackgroundColor(Color.parseColor("#ffffff"));
+                        _selectedClients.remove(c);
                     } else {
                         v.setBackgroundColor(Color.parseColor("#00B2EE"));
+                        _selectedClients.add(c);
                     }
                 }
             });
         }
+    }
+
+    public ArrayList<BEClient> getSelectedClients() {
+        return _selectedClients;
+    }
+
+    public void setSelectedClients(ArrayList<BEClient> li) {
+        _selectedClients = li;
     }
 }
