@@ -42,6 +42,7 @@ public class ClientActivity extends AppCompatActivity {
             showClientsListview.setAdapter(adapter);
         }
     }
+
     @Override
     public void onSaveInstanceState(Bundle savedInstanceState) {
         savedInstanceState.putSerializable(SharedConstants.SELECTEDCLIENT, selectedClient);
@@ -74,20 +75,21 @@ public class ClientActivity extends AppCompatActivity {
     private void onClickBtnShowClient() {
         Intent clientDataIntent = new Intent();
         clientDataIntent.setClass(this, ClientDataActivity.class);
-        if(selectedClient != null){
+        if (selectedClient != null) {
             clientDataIntent.putExtra(SharedConstants.CLIENT, selectedClient);
-            startActivity(clientDataIntent);}
-        else{
-            Toast.makeText(this,"du skal vælge en Client", Toast.LENGTH_SHORT).show();
+            startActivity(clientDataIntent);
+        } else {
+            Toast.makeText(this, "Du skal vælge en kunde på listen", Toast.LENGTH_SHORT).show();
         }
     }
 
     private void onClientListItemClick(int position, View view) {
         selectedClient = dlClients.get(position);
-        if(selectedView != null)
+        if (selectedView != null) {
             selectedView.setBackgroundColor(Color.parseColor("#ffffff"));
-        view.setBackgroundColor(Color.parseColor("#00B2EE"));
-        selectedView = view;
+            view.setBackgroundColor(Color.parseColor("#00B2EE"));
+            selectedView = view;
+        }
     }
 
     private void PopulateClients() {

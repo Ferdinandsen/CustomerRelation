@@ -25,6 +25,7 @@ public class MainActivity extends AppCompatActivity {
     LinearLayout _linearlayoutListView;
     BEUser _user;
     ArrayList<BEClient> _allClients;
+    ArrayList<BEClient> _selectedClients;
     ClientController _clientController;
     UserController _userController;
     private static String TAG = "MainActivity";
@@ -56,7 +57,7 @@ public class MainActivity extends AppCompatActivity {
     public void onSaveInstanceState(Bundle savedInstanceState) {
         super.onSaveInstanceState(savedInstanceState);
         ArrayList<BEClient> _selectedClients = _adapter.getSelectedClients();
-        if(_selectedClients != null) {
+        if (_selectedClients != null) {
             savedInstanceState.putSerializable(SharedConstants.SELECTEDCLIENTLIST, _selectedClients);
         }
     }
@@ -70,8 +71,14 @@ public class MainActivity extends AppCompatActivity {
          * TEST FOR NULL ???
          * TODO
          */
+
         ArrayList<BEClient> cl = (ArrayList<BEClient>) savedInstanceState.getSerializable((SharedConstants.SELECTEDCLIENTLIST));
-        _adapter.setSelectedClients(cl);
+        if (!cl.isEmpty()) {
+            _adapter.setSelectedClients(cl);
+        }else{
+            _selectedClients = cl;
+        }
+
     }
 
     private void findViews() {
