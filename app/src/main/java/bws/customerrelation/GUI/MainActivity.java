@@ -1,9 +1,13 @@
 package bws.customerrelation.GUI;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.Display;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -52,6 +56,26 @@ public class MainActivity extends AppCompatActivity {
         if (savedInstanceState == null) {
             _adapter = new InflateClients(this, _allClients, _linearlayoutListView);
             _adapter.inflateView();
+        } else {
+            rotateScreenSaver();
+        }
+    }
+
+    private void rotateScreenSaver() {
+        Display display = ((WindowManager) this.getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay();
+        int rotation = display.getRotation();
+        if (rotation == 1) {
+            Toast.makeText(this, "hej landscape", Toast.LENGTH_SHORT).show();
+
+            if (_selectedClients.isEmpty()) {
+                _selectedClients = _adapter.getSelectedClients();
+            }
+            _adapter.setSelectedClients(_selectedClients);
+//            instanceState.putSerializable(SharedConstants.SELECTEDCLIENTLIST, _selectedClients);
+
+        } else {
+            Toast.makeText(this, "hej portrait", Toast.LENGTH_SHORT).show();
+            //TODO!!!!!!!!!!!!!!!!!!!
         }
     }
 
@@ -60,20 +84,20 @@ public class MainActivity extends AppCompatActivity {
         super.onResume();
         if (_selectedClients.isEmpty()) {
             _selectedClients = _clientController.getAllClientsFromDevice();
-
             _adapter.setSelectedClients(_selectedClients);
         }
     }
+
 
     @Override
     public void onSaveInstanceState(Bundle savedInstanceState) {
         super.onSaveInstanceState(savedInstanceState);
 
-        if (_selectedClients.isEmpty()) {
-            _selectedClients = _adapter.getSelectedClients();
-        }
-
-        savedInstanceState.putSerializable(SharedConstants.SELECTEDCLIENTLIST, _selectedClients);
+//        if (_selectedClients.isEmpty()) {
+//            _selectedClients = _adapter.getSelectedClients();
+//        }
+//        _adapter.setSelectedClients(_selectedClients);
+//        savedInstanceState.putSerializable(SharedConstants.SELECTEDCLIENTLIST, _selectedClients);
 
     }
 
@@ -121,6 +145,9 @@ public class MainActivity extends AppCompatActivity {
         if (selectedClients.isEmpty()) {
             Toast.makeText(this, "Du har ikke valgt kunder", Toast.LENGTH_SHORT).show();
         } else {
+            /**
+             * Er dette irriterende ??
+             */
             if (selectedClients.size() == 1) {
                 Intent showClientIntent = new Intent();
                 showClientIntent.setClass(this, ClientDataActivity.class);
