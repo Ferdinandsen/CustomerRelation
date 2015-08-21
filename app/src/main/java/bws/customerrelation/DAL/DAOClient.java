@@ -79,6 +79,7 @@ public class DAOClient {
 
     public void deleteAllClients() {
         _db.execSQL("DELETE FROM " + DAConstants.TABLE_CLIENTLIST + " WHERE ID != " + 100000);
+
     }
 
     public long insertClientOnList(BEClient client) {

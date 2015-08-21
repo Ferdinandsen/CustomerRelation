@@ -1,38 +1,36 @@
 package bws.customerrelation.GUI;
 
 import android.content.Context;
-import android.content.Intent;
 import android.graphics.Color;
-import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
-import bws.customerrelation.Controller.SharedConstants;
 import bws.customerrelation.Model.BEClient;
 import bws.customerrelation.R;
 
 /**
  * Created by Jaje on 20-Aug-15.
  */
-public class InflateAdapter {
+public class InflateClient {
     LinearLayout mLinearListView;
     ArrayList<BEClient> _allClients;
+    BEClient _selectedClient;
     Context _context;
-
     ArrayList<BEClient> _selectedClients;
-    ArrayList<View> _views;
+    View test;
 
-    public InflateAdapter(Context context, ArrayList<BEClient> list, LinearLayout layout) {
+
+    public InflateClient(Context context, ArrayList<BEClient> list, LinearLayout layout) {
+        _selectedClients = new ArrayList<BEClient>();
+        _selectedClient = null;
         _allClients = list;
         _context = context;
         mLinearListView = layout;
-
     }
 
     public void inflateView() {
@@ -43,6 +41,7 @@ public class InflateAdapter {
             LayoutInflater inflater = null;
             inflater = (LayoutInflater) _context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             final View mLinearView = inflater.inflate(R.layout.rowtest, null);
+
             /**
              * getting id of row.xml
              */
@@ -56,6 +55,7 @@ public class InflateAdapter {
             /**
              * set item into row
              */
+
             final String fName = c.getFirstName();
             final String lName = "" + c.getId();
             mFirstName.setText(fName);
@@ -76,6 +76,7 @@ public class InflateAdapter {
             /**
              * IF the client is in_selectedClients, highlight it again
              */
+
             if (_selectedClients != null) {
                 for (BEClient cl : _selectedClients) {
                     if (cl.getId() == c.getId()) {
@@ -87,34 +88,41 @@ public class InflateAdapter {
 
             /**
              * get item row on click
-             *
              */
             mLinearView.setOnClickListener(new View.OnClickListener() {
 
                 @Override
                 public void onClick(View v) {
-                    _views = new ArrayList<View>();
                     boolean isChecked = mCheckBox.isChecked();
 
                     mCheckBox.setChecked(!isChecked);
 
-                    if (isChecked) {
+                    if (_selectedClient != null && isChecked) {
                         v.setBackgroundColor(Color.parseColor("#ffffff"));
-                        _selectedClients.remove(c);
+                        _selectedClient = null;
                     } else {
-                        v.setBackgroundColor(Color.parseColor("#00B2EE"));
-                        _selectedClients.add(c);
+                        if (test != null) {
+                            v.setBackgroundColor(Color.parseColor("#00B2EE"));
+                            ((CheckBox) test.findViewById(R.id.checkbox)).setChecked(false);
+                            _selectedClient = c;
+                            test.setBackgroundColor(Color.parseColor("#ffffff"));
+                            test = v;
+                        } else {
+                            v.setBackgroundColor(Color.parseColor("#00B2EE"));
+                            test = v;
+                        }
                     }
                 }
             });
         }
     }
 
-    public ArrayList<BEClient> getSelectedClients() {
-        return _selectedClients;
+    public BEClient getSelectedClient() {
+        return _selectedClient;
     }
 
-    public void setSelectedClients(ArrayList<BEClient> li) {
-        _selectedClients = li;
+    public void setSelectedClient(BEClient cli) {
+        _selectedClient = cli;
+        _selectedClients.add(cli);
     }
 }

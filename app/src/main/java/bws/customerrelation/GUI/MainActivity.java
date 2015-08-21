@@ -1,5 +1,6 @@
 package bws.customerrelation.GUI;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -7,6 +8,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -25,10 +27,11 @@ public class MainActivity extends AppCompatActivity {
     LinearLayout _linearlayoutListView;
     BEUser _user;
     ArrayList<BEClient> _allClients;
+    ArrayList<BEClient> _selectedClients;
     ClientController _clientController;
     UserController _userController;
     private static String TAG = "MainActivity";
-    InflateAdapter _adapter;
+    InflateClients _adapter;
 
 
     @Override
@@ -39,40 +42,50 @@ public class MainActivity extends AppCompatActivity {
         _user = (BEUser) b.getSerializable(SharedConstants.USER);
         _userController = new UserController(this);
         _clientController = new ClientController(this);
+        _selectedClients = new ArrayList<>();
+
         findViews();
         setListeners();
         setUserData();
         populateClientList();
 
         if (savedInstanceState == null) {
-            _adapter = new InflateAdapter(this, _allClients, _linearlayoutListView);
+            _adapter = new InflateClients(this, _allClients, _linearlayoutListView);
             _adapter.inflateView();
+        }
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (_selectedClients.isEmpty()) {
+            _selectedClients = _clientController.getAllClientsFromDevice();
+
+            _adapter.setSelectedClients(_selectedClients);
         }
     }
 
     @Override
     public void onSaveInstanceState(Bundle savedInstanceState) {
         super.onSaveInstanceState(savedInstanceState);
-        ArrayList<BEClient> _selectedClients = _adapter.getSelectedClients();
-        if (_selectedClients != null) {
-            savedInstanceState.putSerializable(SharedConstants.SELECTEDCLIENTLIST, _selectedClients);
+
+        if (_selectedClients.isEmpty()) {
+            _selectedClients = _adapter.getSelectedClients();
         }
+
+        savedInstanceState.putSerializable(SharedConstants.SELECTEDCLIENTLIST, _selectedClients);
+
     }
 
     @Override
     public void onRestoreInstanceState(Bundle savedInstanceState) {
         super.onRestoreInstanceState(savedInstanceState);
-        _adapter = new InflateAdapter(this, _allClients, _linearlayoutListView);
-        _adapter.inflateView();
-        /**
-         * TEST FOR NULL ???
-         * TODO
-         */
-
-        ArrayList<BEClient> cl = (ArrayList<BEClient>) savedInstanceState.getSerializable((SharedConstants.SELECTEDCLIENTLIST));
-        if (!cl.isEmpty()) {
-            _adapter.setSelectedClients(cl);
+        _adapter = new InflateClients(this, _allClients, _linearlayoutListView);
+        _selectedClients = (ArrayList<BEClient>) savedInstanceState.getSerializable((SharedConstants.SELECTEDCLIENTLIST));
+        if (!_selectedClients.isEmpty()) {
+            _adapter.setSelectedClients(_selectedClients);
         }
+        _adapter.inflateView();
     }
 
     private void findViews() {
@@ -96,44 +109,33 @@ public class MainActivity extends AppCompatActivity {
         _btnDownloadList.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                onClickDownloadList();
+                onClickDownloadList();
             }
         });
     }
 
-    //SELECT OR DESELECT ITEMS ON LIST
-    private void onClientListItemClick(int position, View view) {
-
-    }
 
     //DOWNLOAD THE SELECTED ITEMS TO DB
-//    private void onClickDownloadList() {
-//        //DU SKAL vælge kunder for at kunne DL
-//        if (selectedItems.isEmpty()) {
-//            Toast.makeText(this, "Du har ikke valgt nogle kunder", Toast.LENGTH_SHORT).show();
-//        } else {
-//            //Tilføjer kunder til liste for at sende til device
-//            ArrayList<BEClient> tempClientList = new ArrayList<BEClient>();
-//            for (int x : selectedItems) {
-////                tempClientList.add((BEClient) clientListView.getItemAtPosition(x));
-//            }
-//            //HVIS der kun er en gå direkte til ClientDataActivity
-//            if (tempClientList.size() == 1) {
-//                Intent showClientIntent = new Intent();
-//                showClientIntent.setClass(this, ClientDataActivity.class);
-//                _clientController.createClientList(tempClientList);
-//                showClientIntent.putExtra(SharedConstants.CLIENT, tempClientList.get(0));
-//                startActivity(showClientIntent);
-//                //Send listen med flere items til ClientActivity
-//            } else {
-//                Intent clientIntent = new Intent();
-//                clientIntent.setClass(this, ClientActivity.class);
-//                _clientController.createClientList(tempClientList);
-//                startActivity(clientIntent);
-//            }
-//        }
-//    }
-
-
+    private void onClickDownloadList() {
+        ArrayList<BEClient> selectedClients = _adapter.getSelectedClients();
+        if (selectedClients.isEmpty()) {
+            Toast.makeText(this, "Du har ikke valgt kunder", Toast.LENGTH_SHORT).show();
+        } else {
+            if (selectedClients.size() == 1) {
+                Intent showClientIntent = new Intent();
+                showClientIntent.setClass(this, ClientDataActivity.class);
+                _clientController.createClientList(selectedClients);
+                showClientIntent.putExtra(SharedConstants.CLIENT, selectedClients.get(0));
+                startActivity(showClientIntent);
+                //Send listen med flere items til ClientActivity
+            } else {
+                Intent clientIntent = new Intent();
+                clientIntent.setClass(this, ClientActivity.class);
+                clientIntent.putExtra(SharedConstants.SELECTEDCLIENTLIST, selectedClients);
+                _clientController.createClientList(selectedClients);
+                startActivity(clientIntent);
+            }
+        }
+    }
 }
 

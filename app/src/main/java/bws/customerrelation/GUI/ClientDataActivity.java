@@ -49,7 +49,7 @@ public class ClientDataActivity extends AppCompatActivity {
         populateData();
         setListeners();
         if (savedInstanceState == null) {
-//            _adapter = new ClientDataActivityListViewAdapter(this, R.layout.cell_main_activity, clientCanvaslist, selectedClient);
+//            _adapter = new ClientDataActivityListViewAdapter(this, R.layout.cell_main_activity, clientCanvaslist, _selectedClient);
             canvasList.setAdapter(adapter);
         }
     }
@@ -63,7 +63,7 @@ public class ClientDataActivity extends AppCompatActivity {
     public void onRestoreInstanceState(Bundle savedInstanceState) {
         super.onRestoreInstanceState(savedInstanceState);
         selectedClient = (BEClient) savedInstanceState.getSerializable(SharedConstants.SELECTEDCLIENT);
-//        _adapter = new MainActivityListViewAdapter(this, R.layout.cell_main_activity, dlClients, selectedClient);
+//        _adapter = new MainActivityListViewAdapter(this, R.layout.cell_main_activity, _selectedClients, _selectedClient);
         canvasList.setAdapter(adapter);
     }
 

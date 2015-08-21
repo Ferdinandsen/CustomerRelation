@@ -85,7 +85,6 @@ public class LoginActivity extends AppCompatActivity {
         String email = txtUsername.getText().toString().trim();
         String password = txtPassword.getText().toString();
         if (userLogin(email, password)) {
-
             Intent mainActivity = new Intent();
             mainActivity.setClass(this, MainActivity.class);
             mainActivity.putExtra(SharedConstants.USER, _user);
