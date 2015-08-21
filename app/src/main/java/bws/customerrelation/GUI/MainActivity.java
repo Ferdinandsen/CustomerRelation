@@ -25,18 +25,15 @@ public class MainActivity extends AppCompatActivity {
     LinearLayout _linearlayoutListView;
     BEUser _user;
     ArrayList<BEClient> _allClients;
-    ArrayList<BEClient> _selectedClients;
     ClientController _clientController;
     UserController _userController;
     private static String TAG = "MainActivity";
-    Bundle _tempSavedInstanceState;
     InflateAdapter _adapter;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        _tempSavedInstanceState = savedInstanceState;
         setContentView(R.layout.activity_main);
         Bundle b = getIntent().getExtras();
         _user = (BEUser) b.getSerializable(SharedConstants.USER);
@@ -75,10 +72,7 @@ public class MainActivity extends AppCompatActivity {
         ArrayList<BEClient> cl = (ArrayList<BEClient>) savedInstanceState.getSerializable((SharedConstants.SELECTEDCLIENTLIST));
         if (!cl.isEmpty()) {
             _adapter.setSelectedClients(cl);
-        }else{
-            _selectedClients = cl;
         }
-
     }
 
     private void findViews() {
