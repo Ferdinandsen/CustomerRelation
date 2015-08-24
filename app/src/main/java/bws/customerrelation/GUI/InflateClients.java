@@ -1,5 +1,6 @@
 package bws.customerrelation.GUI;
 
+import android.app.Activity;
 import android.content.Context;
 import android.graphics.Color;
 import android.view.LayoutInflater;
@@ -10,6 +11,7 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
+import bws.customerrelation.Controller.ClientController;
 import bws.customerrelation.Model.BEClient;
 import bws.customerrelation.R;
 
@@ -19,11 +21,12 @@ import bws.customerrelation.R;
 public class InflateClients {
     LinearLayout _mLinearListView;
     ArrayList<BEClient> _allClients;
-    Context _context;
+    Activity _context;
     ArrayList<BEClient> _selectedClients;
 
-   public InflateClients(Context context, ArrayList<BEClient> list, LinearLayout layout) {
-        _selectedClients = new ArrayList<>();
+
+    public InflateClients(Activity context, ArrayList<BEClient> list, LinearLayout layout, ArrayList<BEClient> selectedClients) {
+        _selectedClients = selectedClients;
         _allClients = list;
         _context = context;
         _mLinearListView = layout;
@@ -112,7 +115,7 @@ public class InflateClients {
         return _selectedClients;
     }
 
-    public void setSelectedClients(ArrayList<BEClient> li) {
-        _selectedClients = li;
-    }
+//    public void setSelectedClients(ArrayList<BEClient> li) {
+//        _selectedClients = li;
+//    }
 }

@@ -36,13 +36,16 @@ public class MainActivity extends AppCompatActivity {
     UserController _userController;
     private static String TAG = "MainActivity";
     InflateClients _adapter;
+    final int LANDSCAPE = 1;
+    Bundle b;
+
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Bundle b = getIntent().getExtras();
+        b = getIntent().getExtras();
         _user = (BEUser) b.getSerializable(SharedConstants.USER);
         _userController = new UserController(this);
         _clientController = new ClientController(this);
@@ -54,7 +57,7 @@ public class MainActivity extends AppCompatActivity {
         populateClientList();
 
         if (savedInstanceState == null) {
-            _adapter = new InflateClients(this, _allClients, _linearlayoutListView);
+            _adapter = new InflateClients(this, _allClients, _linearlayoutListView, _selectedClients);
             _adapter.inflateView();
         } else {
             rotateScreenSaver();
@@ -62,55 +65,63 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void rotateScreenSaver() {
-        Display display = ((WindowManager) this.getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay();
-        int rotation = display.getRotation();
-        if (rotation == 1) {
-            Toast.makeText(this, "hej landscape", Toast.LENGTH_SHORT).show();
+//        Display display = ((WindowManager) this.getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay();
+//        int rotation = display.getRotation();
+        _selectedClients = (ArrayList<BEClient>) b.getSerializable(SharedConstants.SELECTEDCLIENTLIST);
+        _adapter = new InflateClients(this, _allClients, _linearlayoutListView, _selectedClients);
+        _adapter.inflateView();
 
-            if (_selectedClients.isEmpty()) {
-                _selectedClients = _adapter.getSelectedClients();
-            }
-            _adapter.setSelectedClients(_selectedClients);
-//            instanceState.putSerializable(SharedConstants.SELECTEDCLIENTLIST, _selectedClients);
-
-        } else {
-            Toast.makeText(this, "hej portrait", Toast.LENGTH_SHORT).show();
-            //TODO!!!!!!!!!!!!!!!!!!!
-        }
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        if (_selectedClients.isEmpty()) {
-            _selectedClients = _clientController.getAllClientsFromDevice();
-            _adapter.setSelectedClients(_selectedClients);
-        }
-    }
-
-
-    @Override
-    public void onSaveInstanceState(Bundle savedInstanceState) {
-        super.onSaveInstanceState(savedInstanceState);
-
-//        if (_selectedClients.isEmpty()) {
-//            _selectedClients = _adapter.getSelectedClients();
+//
+//            if (_selectedClients.isEmpty()) {
+//                _selectedClients = _adapter.getSelectedClients();
+//            }
+//            _adapter.setSelectedClients(_selectedClients);
+////            instanceState.putSerializable(SharedConstants.SELECTEDCLIENTLIST, _selectedClients);
+//
+//        } else {
+//            Toast.makeText(this, "hej portrait", Toast.LENGTH_SHORT).show();
+//            //TODO!!!!!!!!!!!!!!!!!!!
 //        }
+
+    }
+
+//    @Override
+//    public void onResume() {
+//        super.onResume();
+//        if (_selectedClients.isEmpty()) {
+//            _selectedClients = _clientController.getAllClientsFromDevice();
+//            _adapter.setSelectedClients(_selectedClients);
+//        } else if (_selectedClients.size() <= _adapter.getSelectedClients().size()) {
+//            _selectedClients = _adapter.getSelectedClients();
+//            Toast.makeText(this, "hej", Toast.LENGTH_SHORT);
+//
+//        }
+//    }
+
+//
+//    @Override
+//    public void onSaveInstanceState(Bundle savedInstanceState) {
+//        super.onSaveInstanceState(savedInstanceState);
+//
+////        if (_selectedClients.isEmpty()) {
+////            _selectedClients = _adapter.getSelectedClients();
+////        } else if (_selectedClients.size() <= _adapter.getSelectedClients().size()) {
+////            _selectedClients = _adapter.getSelectedClients();
+////        }
 //        _adapter.setSelectedClients(_selectedClients);
 //        savedInstanceState.putSerializable(SharedConstants.SELECTEDCLIENTLIST, _selectedClients);
-
-    }
-
-    @Override
-    public void onRestoreInstanceState(Bundle savedInstanceState) {
-        super.onRestoreInstanceState(savedInstanceState);
-        _adapter = new InflateClients(this, _allClients, _linearlayoutListView);
-        _selectedClients = (ArrayList<BEClient>) savedInstanceState.getSerializable((SharedConstants.SELECTEDCLIENTLIST));
-        if (!_selectedClients.isEmpty()) {
-            _adapter.setSelectedClients(_selectedClients);
-        }
-        _adapter.inflateView();
-    }
+//    }
+//
+//    @Override
+//    public void onRestoreInstanceState(Bundle savedInstanceState) {
+//        super.onRestoreInstanceState(savedInstanceState);
+//        _adapter = new InflateClients(this, _allClients, _linearlayoutListView);
+//        _selectedClients = (ArrayList<BEClient>) savedInstanceState.getSerializable((SharedConstants.SELECTEDCLIENTLIST));
+//        if (!_selectedClients.isEmpty()) {
+//            _adapter.setSelectedClients(_selectedClients);
+//        }
+//        _adapter.inflateView();
+//    }
 
     private void findViews() {
         _txtUserData = (TextView) findViewById(R.id.userData);
@@ -153,12 +164,16 @@ public class MainActivity extends AppCompatActivity {
                 showClientIntent.setClass(this, ClientDataActivity.class);
                 _clientController.createClientList(selectedClients);
                 showClientIntent.putExtra(SharedConstants.CLIENT, selectedClients.get(0));
+                b.putSerializable(SharedConstants.SELECTEDCLIENTLIST, selectedClients);
                 startActivity(showClientIntent);
                 //Send listen med flere items til ClientActivity
             } else {
                 Intent clientIntent = new Intent();
                 clientIntent.setClass(this, ClientActivity.class);
                 clientIntent.putExtra(SharedConstants.SELECTEDCLIENTLIST, selectedClients);
+                getIntent().putExtra(SharedConstants.SELECTEDCLIENTLIST, selectedClients);
+                _selectedClients = selectedClients;
+//                _adapter.setSelectedClients(selectedClients);
                 _clientController.createClientList(selectedClients);
                 startActivity(clientIntent);
             }
