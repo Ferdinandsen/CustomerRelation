@@ -4,6 +4,7 @@ package bws.customerrelation.GUI;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
@@ -23,7 +24,7 @@ public class ClientActivity extends AppCompatActivity {
     BEClient _selectedClient;
     ClientController _clientController;
     InflateClient _adapter;
-
+    final static String TAG = "ClientActivity";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,22 +43,18 @@ public class ClientActivity extends AppCompatActivity {
     }
 
     @Override
-    public void onSaveInstanceState(Bundle savedInstanceState) {
-        super.onSaveInstanceState(savedInstanceState);
+    protected void onSaveInstanceState(Bundle savedInstanceState) {
         _selectedClient = _adapter.getSelectedClient();
-        if (_selectedClient != null) {
-            savedInstanceState.putSerializable(SharedConstants.SELECTEDCLIENT, _selectedClient);
-        }
+        savedInstanceState.putSerializable(SharedConstants.CLIENT, _selectedClient);
+        super.onSaveInstanceState(savedInstanceState);
     }
 
     @Override
-    public void onRestoreInstanceState(Bundle savedInstanceState) {
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
         super.onRestoreInstanceState(savedInstanceState);
+        _selectedClient = (BEClient) savedInstanceState.getSerializable(SharedConstants.CLIENT);
         _adapter = new InflateClient(this, _selectedClients, _linearLayout);
-        BEClient cl = (BEClient) savedInstanceState.getSerializable((SharedConstants.SELECTEDCLIENT));
-        if (cl != null) {
-            _adapter.setSelectedClient(cl);
-        }
+        _adapter.setSelectedClient(_selectedClient);
         _adapter.inflateView();
     }
 
@@ -96,7 +93,7 @@ public class ClientActivity extends AppCompatActivity {
 //                this,
 //                android.R.layout.simple_list_item_1,
 //                android.R.id.text1,
-//                _selectedClients);
+//                _INFLATECLIENTS);
 //    }
 
 //    @Override

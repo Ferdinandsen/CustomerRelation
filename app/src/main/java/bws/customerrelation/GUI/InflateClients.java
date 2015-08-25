@@ -11,7 +11,6 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
-import bws.customerrelation.Controller.ClientController;
 import bws.customerrelation.Model.BEClient;
 import bws.customerrelation.R;
 
@@ -22,14 +21,18 @@ public class InflateClients {
     LinearLayout _mLinearListView;
     ArrayList<BEClient> _allClients;
     Activity _context;
-    ArrayList<BEClient> _selectedClients;
+    static ArrayList<BEClient> _INFLATECLIENTS;
+    final static String TAG = "Inflate";
 
 
-    public InflateClients(Activity context, ArrayList<BEClient> list, LinearLayout layout, ArrayList<BEClient> selectedClients) {
-        _selectedClients = selectedClients;
+    public InflateClients(Activity context, ArrayList<BEClient> list, LinearLayout layout) {
         _allClients = list;
         _context = context;
         _mLinearListView = layout;
+        if (_INFLATECLIENTS == null) {
+            _INFLATECLIENTS = new ArrayList<BEClient>();
+
+        }
     }
 
     public void inflateView() {
@@ -75,8 +78,8 @@ public class InflateClients {
              * IF the client is in_selectedClients, highlight it again
              */
 
-            if (_selectedClients != null) {
-                for (BEClient cl : _selectedClients) {
+            if (_INFLATECLIENTS != null) {
+                for (BEClient cl : _INFLATECLIENTS) {
                     if (cl.getId() == c.getId()) {
                         mView.setBackgroundColor(Color.parseColor("#00B2EE"));
                     }
@@ -98,24 +101,20 @@ public class InflateClients {
                     boolean isChecked = mCheckBox.isChecked();
 
                     mCheckBox.setChecked(!isChecked);
-
                     if (isChecked) {
                         v.setBackgroundColor(Color.parseColor("#ffffff"));
-                        _selectedClients.remove(c);
+                        _INFLATECLIENTS.remove(c);
                     } else {
                         v.setBackgroundColor(Color.parseColor("#00B2EE"));
-                        _selectedClients.add(c);
+                        _INFLATECLIENTS.add(c);
                     }
+                    MainActivity._SELECTEDCLIENTS = _INFLATECLIENTS;
                 }
             });
         }
     }
 
     public ArrayList<BEClient> getSelectedClients() {
-        return _selectedClients;
+        return _INFLATECLIENTS;
     }
-
-//    public void setSelectedClients(ArrayList<BEClient> li) {
-//        _selectedClients = li;
-//    }
 }

@@ -48,24 +48,28 @@ public class ClientController {
     }
 
     public void createClientList(ArrayList<BEClient> clients) {
+        ArrayList<BEClient> fuck = new ArrayList<BEClient>();
+        for(BEClient clie : clients){
+            fuck.add(clie);
+        }
         ArrayList<BEClient> test = getAllClientsFromDevice();
         ArrayList<BEClient> test1 = new ArrayList<>();
 
         if (test.isEmpty()) {
-            for (BEClient x : clients) {
+            for (BEClient x : fuck) {
                 _daoClient.insertClientOnList(x);
             }
         } else {
-            for (BEClient x : clients) {
+            for (BEClient x : fuck) {
                 for (BEClient y : test) {
                     if (x.getId() == y.getId())
                         test1.add(x);
                 }
             }
             for (BEClient x : test1)
-                clients.remove(x);
+                fuck.remove(x);
 
-            for (BEClient x : clients) {
+            for (BEClient x : fuck) {
                 _daoClient.insertClientOnList(x);
             }
         }

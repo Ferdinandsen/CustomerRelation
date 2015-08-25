@@ -8,19 +8,33 @@
 
 <LinearLayout
     android:orientation="vertical"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
     android:id="@+id/liniearLayout1"
-    android:gravity="center">
+    android:gravity="center"
+    android:layout_above="@+id/btnShowClient">
 
-    <ListView
-        android:id="@+id/showClientsListview"
-        android:layout_width="wrap_content"
-        android:layout_height="234dp"
-        android:clickable="true"
-        android:choiceMode="singleChoice"
+    <ScrollView
+        android:id="@+id/clientListView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         >
-    </ListView>
+
+        <LinearLayout
+            android:id="@+id/linear_scroll"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            >
+
+            <LinearLayout
+                android:id="@+id/linear_listview"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                />
+        </LinearLayout>
+    </ScrollView>
 
 </LinearLayout>
 

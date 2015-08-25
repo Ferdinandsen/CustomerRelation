@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.Display;
 import android.view.View;
 import android.view.WindowManager;
@@ -31,97 +32,33 @@ public class MainActivity extends AppCompatActivity {
     LinearLayout _linearlayoutListView;
     BEUser _user;
     ArrayList<BEClient> _allClients;
-    ArrayList<BEClient> _selectedClients;
+    static ArrayList<BEClient> _SELECTEDCLIENTS = new ArrayList<BEClient>();
     ClientController _clientController;
     UserController _userController;
     private static String TAG = "MainActivity";
     InflateClients _adapter;
-    final int LANDSCAPE = 1;
-    Bundle b;
-
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        b = getIntent().getExtras();
+        Bundle b = getIntent().getExtras();
         _user = (BEUser) b.getSerializable(SharedConstants.USER);
         _userController = new UserController(this);
         _clientController = new ClientController(this);
-        _selectedClients = new ArrayList<>();
 
         findViews();
         setListeners();
         setUserData();
         populateClientList();
 
-        if (savedInstanceState == null) {
-            _adapter = new InflateClients(this, _allClients, _linearlayoutListView, _selectedClients);
-            _adapter.inflateView();
-        } else {
-            rotateScreenSaver();
+        _adapter = new InflateClients(this, _allClients, _linearlayoutListView);
+        _adapter.inflateView();
+        if (_adapter.getSelectedClients() != null) {
+            _SELECTEDCLIENTS = _adapter.getSelectedClients();
         }
     }
-
-    private void rotateScreenSaver() {
-//        Display display = ((WindowManager) this.getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay();
-//        int rotation = display.getRotation();
-        _selectedClients = (ArrayList<BEClient>) b.getSerializable(SharedConstants.SELECTEDCLIENTLIST);
-        _adapter = new InflateClients(this, _allClients, _linearlayoutListView, _selectedClients);
-        _adapter.inflateView();
-
-//
-//            if (_selectedClients.isEmpty()) {
-//                _selectedClients = _adapter.getSelectedClients();
-//            }
-//            _adapter.setSelectedClients(_selectedClients);
-////            instanceState.putSerializable(SharedConstants.SELECTEDCLIENTLIST, _selectedClients);
-//
-//        } else {
-//            Toast.makeText(this, "hej portrait", Toast.LENGTH_SHORT).show();
-//            //TODO!!!!!!!!!!!!!!!!!!!
-//        }
-
-    }
-
-//    @Override
-//    public void onResume() {
-//        super.onResume();
-//        if (_selectedClients.isEmpty()) {
-//            _selectedClients = _clientController.getAllClientsFromDevice();
-//            _adapter.setSelectedClients(_selectedClients);
-//        } else if (_selectedClients.size() <= _adapter.getSelectedClients().size()) {
-//            _selectedClients = _adapter.getSelectedClients();
-//            Toast.makeText(this, "hej", Toast.LENGTH_SHORT);
-//
-//        }
-//    }
-
-//
-//    @Override
-//    public void onSaveInstanceState(Bundle savedInstanceState) {
-//        super.onSaveInstanceState(savedInstanceState);
-//
-////        if (_selectedClients.isEmpty()) {
-////            _selectedClients = _adapter.getSelectedClients();
-////        } else if (_selectedClients.size() <= _adapter.getSelectedClients().size()) {
-////            _selectedClients = _adapter.getSelectedClients();
-////        }
-//        _adapter.setSelectedClients(_selectedClients);
-//        savedInstanceState.putSerializable(SharedConstants.SELECTEDCLIENTLIST, _selectedClients);
-//    }
-//
-//    @Override
-//    public void onRestoreInstanceState(Bundle savedInstanceState) {
-//        super.onRestoreInstanceState(savedInstanceState);
-//        _adapter = new InflateClients(this, _allClients, _linearlayoutListView);
-//        _selectedClients = (ArrayList<BEClient>) savedInstanceState.getSerializable((SharedConstants.SELECTEDCLIENTLIST));
-//        if (!_selectedClients.isEmpty()) {
-//            _adapter.setSelectedClients(_selectedClients);
-//        }
-//        _adapter.inflateView();
-//    }
 
     private void findViews() {
         _txtUserData = (TextView) findViewById(R.id.userData);
@@ -140,7 +77,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void setListeners() {
-//
         _btnDownloadList.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -149,32 +85,22 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-
     //DOWNLOAD THE SELECTED ITEMS TO DB
     private void onClickDownloadList() {
-        ArrayList<BEClient> selectedClients = _adapter.getSelectedClients();
-        if (selectedClients.isEmpty()) {
+        if (_SELECTEDCLIENTS.isEmpty()) {
             Toast.makeText(this, "Du har ikke valgt kunder", Toast.LENGTH_SHORT).show();
         } else {
-            /**
-             * Er dette irriterende ??
-             */
-            if (selectedClients.size() == 1) {
+            if (_SELECTEDCLIENTS.size() == 1) {
                 Intent showClientIntent = new Intent();
                 showClientIntent.setClass(this, ClientDataActivity.class);
-                _clientController.createClientList(selectedClients);
-                showClientIntent.putExtra(SharedConstants.CLIENT, selectedClients.get(0));
-                b.putSerializable(SharedConstants.SELECTEDCLIENTLIST, selectedClients);
+                _clientController.createClientList(_SELECTEDCLIENTS);
+                showClientIntent.putExtra(SharedConstants.CLIENT, _SELECTEDCLIENTS.get(0));
                 startActivity(showClientIntent);
-                //Send listen med flere items til ClientActivity
             } else {
                 Intent clientIntent = new Intent();
                 clientIntent.setClass(this, ClientActivity.class);
-                clientIntent.putExtra(SharedConstants.SELECTEDCLIENTLIST, selectedClients);
-                getIntent().putExtra(SharedConstants.SELECTEDCLIENTLIST, selectedClients);
-                _selectedClients = selectedClients;
-//                _adapter.setSelectedClients(selectedClients);
-                _clientController.createClientList(selectedClients);
+                clientIntent.putExtra(SharedConstants.SELECTEDCLIENTLIST, MainActivity._SELECTEDCLIENTS);
+                _clientController.createClientList(_SELECTEDCLIENTS);
                 startActivity(clientIntent);
             }
         }

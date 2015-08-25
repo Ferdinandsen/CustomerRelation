@@ -81,7 +81,6 @@ public class InflateClient {
                 for (BEClient cl : _selectedClients) {
                     if (cl.getId() == c.getId()) {
                         mLinearView.setBackgroundColor(Color.parseColor("#00B2EE"));
-
                     }
                 }
             }
@@ -110,6 +109,7 @@ public class InflateClient {
                         } else {
                             v.setBackgroundColor(Color.parseColor("#00B2EE"));
                             test = v;
+                            _selectedClient = c;
                         }
                     }
                 }

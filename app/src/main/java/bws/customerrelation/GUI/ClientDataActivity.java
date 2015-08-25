@@ -63,7 +63,7 @@ public class ClientDataActivity extends AppCompatActivity {
     public void onRestoreInstanceState(Bundle savedInstanceState) {
         super.onRestoreInstanceState(savedInstanceState);
         selectedClient = (BEClient) savedInstanceState.getSerializable(SharedConstants.SELECTEDCLIENT);
-//        _adapter = new MainActivityListViewAdapter(this, R.layout.cell_main_activity, _selectedClients, _selectedClient);
+//        _adapter = new MainActivityListViewAdapter(this, R.layout.cell_main_activity, _INFLATECLIENTS, _selectedClient);
         canvasList.setAdapter(adapter);
     }
 
