@@ -11,7 +11,7 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
-import bws.customerrelation.Model.BEClient;
+import bws.customerrelation.Model.BECompany;
 import bws.customerrelation.R;
 
 /**
@@ -19,24 +19,24 @@ import bws.customerrelation.R;
  */
 public class InflateClients {
     LinearLayout _mLinearListView;
-    ArrayList<BEClient> _allClients;
+    ArrayList<BECompany> _allClients;
     Activity _context;
-    static ArrayList<BEClient> _INFLATECLIENTS;
+    static ArrayList<BECompany> _INFLATECLIENTS;
     final static String TAG = "Inflate";
 
 
-    public InflateClients(Activity context, ArrayList<BEClient> list, LinearLayout layout) {
+    public InflateClients(Activity context, ArrayList<BECompany> list, LinearLayout layout) {
         _allClients = list;
         _context = context;
         _mLinearListView = layout;
         if (_INFLATECLIENTS == null) {
-            _INFLATECLIENTS = new ArrayList<BEClient>();
+            _INFLATECLIENTS = new ArrayList<BECompany>();
 
         }
     }
 
     public void inflateView() {
-        for (final BEClient c : _allClients) {
+        for (final BECompany c : _allClients) {
             /**
              * inflate items/ add items in linear layout instead of listview
              */
@@ -79,7 +79,7 @@ public class InflateClients {
              */
 
             if (_INFLATECLIENTS != null) {
-                for (BEClient cl : _INFLATECLIENTS) {
+                for (BECompany cl : _INFLATECLIENTS) {
                     if (cl.getId() == c.getId()) {
                         mView.setBackgroundColor(Color.parseColor("#00B2EE"));
                     }
@@ -114,7 +114,7 @@ public class InflateClients {
         }
     }
 
-    public ArrayList<BEClient> getSelectedClients() {
+    public ArrayList<BECompany> getSelectedClients() {
         return _INFLATECLIENTS;
     }
 }

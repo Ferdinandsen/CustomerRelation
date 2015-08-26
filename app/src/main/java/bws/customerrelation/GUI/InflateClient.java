@@ -10,7 +10,7 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
-import bws.customerrelation.Model.BEClient;
+import bws.customerrelation.Model.BECompany;
 import bws.customerrelation.R;
 
 /**
@@ -18,15 +18,15 @@ import bws.customerrelation.R;
  */
 public class InflateClient {
     LinearLayout mLinearListView;
-    ArrayList<BEClient> _allClients;
-    BEClient _selectedClient;
+    ArrayList<BECompany> _allClients;
+    BECompany _selectedClient;
     Context _context;
-    ArrayList<BEClient> _selectedClients;
+    ArrayList<BECompany> _selectedClients;
     View test;
 
 
-    public InflateClient(Context context, ArrayList<BEClient> list, LinearLayout layout) {
-        _selectedClients = new ArrayList<BEClient>();
+    public InflateClient(Context context, ArrayList<BECompany> list, LinearLayout layout) {
+        _selectedClients = new ArrayList<BECompany>();
         _selectedClient = null;
         _allClients = list;
         _context = context;
@@ -34,7 +34,7 @@ public class InflateClient {
     }
 
     public void inflateView() {
-        for (final BEClient c : _allClients) {
+        for (final BECompany c : _allClients) {
             /**
              * inflate items/ add items in linear layout instead of listview
              */
@@ -78,7 +78,7 @@ public class InflateClient {
              */
 
             if (_selectedClients != null) {
-                for (BEClient cl : _selectedClients) {
+                for (BECompany cl : _selectedClients) {
                     if (cl.getId() == c.getId()) {
                         mLinearView.setBackgroundColor(Color.parseColor("#00B2EE"));
                     }
@@ -117,11 +117,11 @@ public class InflateClient {
         }
     }
 
-    public BEClient getSelectedClient() {
+    public BECompany getSelectedClient() {
         return _selectedClient;
     }
 
-    public void setSelectedClient(BEClient cli) {
+    public void setSelectedClient(BECompany cli) {
         _selectedClient = cli;
         _selectedClients.add(cli);
     }

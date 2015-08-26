@@ -1,14 +1,9 @@
 package bws.customerrelation.GUI;
 
-import android.content.Context;
 import android.content.Intent;
-import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
-import android.view.Display;
 import android.view.View;
-import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -21,7 +16,7 @@ import java.util.ArrayList;
 import bws.customerrelation.Controller.ClientController;
 import bws.customerrelation.Controller.SharedConstants;
 import bws.customerrelation.Controller.UserController;
-import bws.customerrelation.Model.BEClient;
+import bws.customerrelation.Model.BECompany;
 import bws.customerrelation.Model.BEUser;
 import bws.customerrelation.R;
 
@@ -31,8 +26,8 @@ public class MainActivity extends AppCompatActivity {
     Button _btnDownloadList;
     LinearLayout _linearlayoutListView;
     BEUser _user;
-    ArrayList<BEClient> _allClients;
-    static ArrayList<BEClient> _SELECTEDCLIENTS = new ArrayList<BEClient>();
+    ArrayList<BECompany> _allClients;
+    static ArrayList<BECompany> _SELECTEDCLIENTS = new ArrayList<BECompany>();
     ClientController _clientController;
     UserController _userController;
     private static String TAG = "MainActivity";

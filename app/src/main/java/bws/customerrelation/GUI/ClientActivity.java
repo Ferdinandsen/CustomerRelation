@@ -4,7 +4,6 @@ package bws.customerrelation.GUI;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
@@ -14,14 +13,14 @@ import java.util.ArrayList;
 
 import bws.customerrelation.Controller.ClientController;
 import bws.customerrelation.Controller.SharedConstants;
-import bws.customerrelation.Model.BEClient;
+import bws.customerrelation.Model.BECompany;
 import bws.customerrelation.R;
 
 public class ClientActivity extends AppCompatActivity {
     LinearLayout _linearLayout;
     Button btnShowClient;
-    ArrayList<BEClient> _selectedClients;
-    BEClient _selectedClient;
+    ArrayList<BECompany> _selectedClients;
+    BECompany _selectedClient;
     ClientController _clientController;
     InflateClient _adapter;
     final static String TAG = "ClientActivity";
@@ -32,7 +31,7 @@ public class ClientActivity extends AppCompatActivity {
         Bundle b = getIntent().getExtras();
         setContentView(R.layout.activity_client);
         _clientController = new ClientController(this);
-        _selectedClients = (ArrayList<BEClient>) b.getSerializable(SharedConstants.SELECTEDCLIENTLIST);
+        _selectedClients = (ArrayList<BECompany>) b.getSerializable(SharedConstants.SELECTEDCLIENTLIST);
         findViews();
         PopulateClients();
         setListeners();
@@ -52,7 +51,7 @@ public class ClientActivity extends AppCompatActivity {
     @Override
     protected void onRestoreInstanceState(Bundle savedInstanceState) {
         super.onRestoreInstanceState(savedInstanceState);
-        _selectedClient = (BEClient) savedInstanceState.getSerializable(SharedConstants.CLIENT);
+        _selectedClient = (BECompany) savedInstanceState.getSerializable(SharedConstants.CLIENT);
         _adapter = new InflateClient(this, _selectedClients, _linearLayout);
         _adapter.setSelectedClient(_selectedClient);
         _adapter.inflateView();
@@ -88,8 +87,8 @@ public class ClientActivity extends AppCompatActivity {
         _linearLayout = (LinearLayout) findViewById(R.id.linear_listview);
     }
 
-//    private ArrayAdapter<BEClient> createNewAdapter() {
-//        return new ArrayAdapter<BEClient>(
+//    private ArrayAdapter<BECompany> createNewAdapter() {
+//        return new ArrayAdapter<BECompany>(
 //                this,
 //                android.R.layout.simple_list_item_1,
 //                android.R.id.text1,
