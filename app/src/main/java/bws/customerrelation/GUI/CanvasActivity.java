@@ -1,26 +1,21 @@
 package bws.customerrelation.GUI;
 
-import android.content.Context;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EdgeEffect;
 import android.widget.EditText;
-import android.widget.Toast;
 
 import bws.customerrelation.Controller.ClientController;
 import bws.customerrelation.Controller.SharedConstants;
-import bws.customerrelation.Model.BEClient;
+import bws.customerrelation.Model.BECompany;
 import bws.customerrelation.R;
 
 public class CanvasActivity extends AppCompatActivity {
     Button btnSave;
     EditText txtCanvas;
     ClientController _clientController;
-    BEClient selectedClient;
+    BECompany selectedClient;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,7 +29,7 @@ public class CanvasActivity extends AppCompatActivity {
     }
 
     private void populateData(Bundle b) {
-        selectedClient = (BEClient)b.getSerializable(SharedConstants.CLIENT);
+        selectedClient = (BECompany)b.getSerializable(SharedConstants.CLIENT);
     }
 
     private void setListeners() {

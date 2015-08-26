@@ -1,38 +1,30 @@
 package bws.customerrelation.GUI;
 
 import android.content.Context;
-import android.graphics.Color;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.ImageView;
-import android.widget.TextView;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
 
-import bws.customerrelation.Model.BEClient;
-import bws.customerrelation.R;
+import bws.customerrelation.Model.BECompany;
 
 /**
  * Created by Jaje on 20-Aug-15.
  */
-public class MainActivityListViewAdapter extends ArrayAdapter<BEClient> {
+public class MainActivityListViewAdapter extends ArrayAdapter<BECompany> {
     ArrayList<View> _views;
     ArrayList<Integer> _selectedItems;
-    ArrayList<BEClient> _clients;
-    BEClient _selectedClient;
+    ArrayList<BECompany> _clients;
+    BECompany _selectedClient;
 
-    public MainActivityListViewAdapter(Context mainActivity, int resource, ArrayList<BEClient> objects, ArrayList<Integer> selectedItems) {
+    public MainActivityListViewAdapter(Context mainActivity, int resource, ArrayList<BECompany> objects, ArrayList<Integer> selectedItems) {
         super(mainActivity, resource, objects);
         _clients = objects;
         _views = new ArrayList<View>();
         _selectedItems = selectedItems;
     }
 
-    public MainActivityListViewAdapter(Context clientActivity, int resource, ArrayList<BEClient> list, BEClient selectedClient) {
+    public MainActivityListViewAdapter(Context clientActivity, int resource, ArrayList<BECompany> list, BECompany selectedClient) {
         super(clientActivity, resource, list);
         _clients = list;
         _views = new ArrayList<View>();
@@ -53,7 +45,7 @@ public class MainActivityListViewAdapter extends ArrayAdapter<BEClient> {
 //            v = _views.get(i);
 //        }
 //        v.setBackgroundColor(Color.parseColor("#FFFFFF"));
-//        BEClient c = _clients.get(position);
+//        BECompany c = _clients.get(position);
 //
 //        TextView company = (TextView) v.findViewById(R.id.companyName);
 //        TextView canvasAmount = (TextView) v.findViewById(R.id.canvasAmount);

@@ -7,10 +7,8 @@ import android.database.sqlite.SQLiteStatement;
 
 import java.util.ArrayList;
 
-import bws.customerrelation.Controller.SharedConstants;
 import bws.customerrelation.Model.BECanvas;
-import bws.customerrelation.Model.BEClient;
-import bws.customerrelation.Model.BEUser;
+import bws.customerrelation.Model.BECompany;
 
 /**
  * Created by Jacob Ferdinandsen on 12-08-2015.
@@ -32,7 +30,7 @@ public class DAOClient {
         _db = openHelper.getWritableDatabase();
     }
 
-    public long insert(BEClient client) {
+    public long insert(BECompany client) {
         _sql = _db.compileStatement(_INSERT);
         _sql.bindString(1, client.getFirstName());
         _sql.bindString(2, client.getLastName());
@@ -43,15 +41,15 @@ public class DAOClient {
         return _sql.executeInsert();
     }
 
-    public ArrayList<BEClient> getAllClients() {
-        ArrayList<BEClient> clients = new ArrayList<BEClient>();
+    public ArrayList<BECompany> getAllClients() {
+        ArrayList<BECompany> clients = new ArrayList<BECompany>();
         Cursor cursor = _db.query(DAConstants.TABLE_CLIENT,
                 new String[]{"Id", "Firstname", "Lastname", "Email", "Password", "Company", "PhoneNumber"},
                 null, null, null, null,
                 "Id desc");
         if (cursor.moveToFirst()) {
             do {
-                clients.add(new BEClient(cursor.getInt(0), cursor.getString(1), cursor.getString(2), cursor.getString(3), cursor.getString(4), cursor.getString(5), cursor.getInt(6),false));
+                clients.add(new BECompany(cursor.getInt(0), cursor.getString(1), cursor.getString(2), cursor.getString(3), cursor.getString(4), cursor.getString(5), cursor.getInt(6)));
             } while (cursor.moveToNext());
         }
         if (cursor != null && !cursor.isClosed()) {
@@ -60,15 +58,15 @@ public class DAOClient {
         return clients;
     }
 
-    public ArrayList<BEClient> getAllClientsFromDevice() {
-        ArrayList<BEClient> clients = new ArrayList<BEClient>();
+    public ArrayList<BECompany> getAllClientsFromDevice() {
+        ArrayList<BECompany> clients = new ArrayList<BECompany>();
         Cursor cursor = _db.query(DAConstants.TABLE_CLIENTLIST,
                 new String[]{"Id", "Firstname", "Lastname", "Email", "Password", "Company", "PhoneNumber"},
                 null, null, null, null,
                 "Firstname desc");
         if (cursor.moveToFirst()) {
             do {
-                clients.add(new BEClient(cursor.getInt(0), cursor.getString(1), cursor.getString(2), cursor.getString(3), cursor.getString(4), cursor.getString(5), cursor.getInt(6),false));
+                clients.add(new BECompany(cursor.getInt(0), cursor.getString(1), cursor.getString(2), cursor.getString(3), cursor.getString(4), cursor.getString(5), cursor.getInt(6)));
             } while (cursor.moveToNext());
         }
         if (cursor != null && !cursor.isClosed()) {
@@ -82,7 +80,7 @@ public class DAOClient {
 
     }
 
-    public long insertClientOnList(BEClient client) {
+    public long insertClientOnList(BECompany client) {
         _sql = _db.compileStatement(_INSERTCLIENT);
         _sql.bindString(1, "" + client.getId());
         _sql.bindString(2, client.getFirstName());
@@ -94,13 +92,13 @@ public class DAOClient {
         return _sql.executeInsert();
     }
 
-    public long insertCanvas(String canvas, BEClient client) {
+    public long insertCanvas(String canvas, BECompany client) {
         _sql = _db.compileStatement(_INSERTCANVAS);
         _sql.bindString(1, "" + client.getId());
         _sql.bindString(2, canvas);
         return _sql.executeInsert();
     }
-    public ArrayList<BECanvas> getAllCanvasByClientId(BEClient client){
+    public ArrayList<BECanvas> getAllCanvasByClientId(BECompany client){
         ArrayList<BECanvas> canvasList = new ArrayList<>();
         Cursor cursor = _db.query(DAConstants.TABLE_CANVAS,
                 new String[]{"Id", "ClientId", "Canvas"},
@@ -117,12 +115,12 @@ public class DAOClient {
         return canvasList;
     }
     //Hent en specifik user's, Client liste ud fra AD
-//    public ArrayList<BEClient> getUsersClients(BEUser user) {
+//    public ArrayList<BECompany> getUsersClients(BEUser user) {
 //
-//        ArrayList<BEClient> clients = new ArrayList<BEClient>();
+//        ArrayList<BECompany> clients = new ArrayList<BECompany>();
 //        Cursor cursor = _db.query( //INDSÆT DET KORREKTE );
 //        if (cursor.moveToFirst()) {
-//            clients.add(new BEClient(cursor.getInt(0), cursor.getString(1), cursor.getString(2), cursor.getString(3), cursor.getString(4), cursor.getString(5), cursor.getInt(6)));
+//            clients.add(new BECompany(cursor.getInt(0), cursor.getString(1), cursor.getString(2), cursor.getString(3), cursor.getString(4), cursor.getString(5), cursor.getInt(6)));
 //        }
 //        if (cursor != null && !cursor.isClosed()) {
 //            cursor.close();

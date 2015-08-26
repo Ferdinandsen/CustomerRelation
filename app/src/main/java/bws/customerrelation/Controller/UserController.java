@@ -5,9 +5,7 @@ import android.app.Activity;
 
 import java.util.ArrayList;
 
-import bws.customerrelation.DAL.DAOClient;
 import bws.customerrelation.DAL.DAOUser;
-import bws.customerrelation.Model.BEClient;
 import bws.customerrelation.Model.BEUser;
 
 /**

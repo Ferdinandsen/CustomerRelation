@@ -3,8 +3,6 @@ package bws.customerrelation.GUI;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
@@ -16,7 +14,7 @@ import java.util.ArrayList;
 import bws.customerrelation.Controller.ClientController;
 import bws.customerrelation.Controller.SharedConstants;
 import bws.customerrelation.Model.BECanvas;
-import bws.customerrelation.Model.BEClient;
+import bws.customerrelation.Model.BECompany;
 import bws.customerrelation.R;
 
 public class ClientDataActivity extends AppCompatActivity {
@@ -30,7 +28,7 @@ public class ClientDataActivity extends AppCompatActivity {
     TextView zipcode_city;
 
     ListView canvasList;
-    BEClient selectedClient;
+    BECompany selectedClient;
     Button btnCreateCanvas;
     MainActivityListViewAdapter adapter;
     ArrayList<BECanvas> clientCanvaslist;
@@ -44,7 +42,7 @@ public class ClientDataActivity extends AppCompatActivity {
         setContentView(R.layout.activity_client_data);
         Bundle b = getIntent().getExtras();
         _clientController = new ClientController(this);
-        selectedClient = (BEClient) b.getSerializable(SharedConstants.CLIENT);
+        selectedClient = (BECompany) b.getSerializable(SharedConstants.CLIENT);
         findViews();
         populateData();
         setListeners();
@@ -62,7 +60,7 @@ public class ClientDataActivity extends AppCompatActivity {
     @Override
     public void onRestoreInstanceState(Bundle savedInstanceState) {
         super.onRestoreInstanceState(savedInstanceState);
-        selectedClient = (BEClient) savedInstanceState.getSerializable(SharedConstants.SELECTEDCLIENT);
+        selectedClient = (BECompany) savedInstanceState.getSerializable(SharedConstants.SELECTEDCLIENT);
 //        _adapter = new MainActivityListViewAdapter(this, R.layout.cell_main_activity, _INFLATECLIENTS, _selectedClient);
         canvasList.setAdapter(adapter);
     }

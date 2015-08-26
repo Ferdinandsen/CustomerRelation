@@ -1,7 +1,6 @@
 package bws.customerrelation.GUI;
 
 import android.content.Context;
-import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,7 +10,7 @@ import android.widget.TextView;
 import java.util.ArrayList;
 
 import bws.customerrelation.Model.BECanvas;
-import bws.customerrelation.Model.BEClient;
+import bws.customerrelation.Model.BECompany;
 import bws.customerrelation.R;
 
 /**
@@ -19,10 +18,10 @@ import bws.customerrelation.R;
  */
 public class ClientDataActivityListViewAdapter extends ArrayAdapter<BECanvas> {
     ArrayList<View> _views;
-    BEClient _selectedClient;
+    BECompany _selectedClient;
     ArrayList<BECanvas> _canvas;
 
-    public ClientDataActivityListViewAdapter(Context activity, int resource, ArrayList<BECanvas> list, BEClient selectedClient) {
+    public ClientDataActivityListViewAdapter(Context activity, int resource, ArrayList<BECanvas> list, BECompany selectedClient) {
         super(activity, resource, list);
         _canvas = list;
         _views = new ArrayList<View>();
