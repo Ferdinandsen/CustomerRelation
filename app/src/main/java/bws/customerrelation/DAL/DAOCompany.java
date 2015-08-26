@@ -4,16 +4,20 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteStatement;
+import android.util.Log;
+
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 
+import bws.customerrelation.DAL.Gateway.GetJSONFromAPI;
 import bws.customerrelation.Model.BECanvas;
 import bws.customerrelation.Model.BECompany;
 
 /**
  * Created by Jacob Ferdinandsen on 12-08-2015.
  */
-public class DAOClient {
+public class DAOCompany {
 
     Context _context;
     SQLiteDatabase _db;
@@ -24,7 +28,7 @@ public class DAOClient {
     String _INSERTCLIENT = "INSERT INTO " + DAConstants.TABLE_CLIENTLIST + "(Id ,Firstname, Lastname, Email, Password, Company, PhoneNumber) VALUES (?,?, ?, ?, ?, ?, ?)";
     String _INSERTCANVAS = "INSERT INTO " + DAConstants.TABLE_CANVAS + "(ClientID, Canvas) VALUES (? ,?)";
 
-    public DAOClient(Context context) {
+    public DAOCompany(Context context) {
         _context = context;
         OpenHelper openHelper = new OpenHelper(_context);
         _db = openHelper.getWritableDatabase();
@@ -39,6 +43,27 @@ public class DAOClient {
         _sql.bindString(5, client.getCompany());
         _sql.bindString(6, "" + client.getPhoneNumber());
         return _sql.executeInsert();
+    }
+
+    public ArrayList<BECompany> getCompanyFromApi() {
+        ArrayList<BECompany> companyList = new ArrayList<>();
+        String URL = "";
+        JSONObject obj;
+        GetJSONFromAPI api = new GetJSONFromAPI();
+        api.execute(URL);
+        try {
+            obj = api.get();
+            companyList = ConvertFromJsonToBE(obj);
+        } catch (Exception e) {
+            Log.e("Api get", "Error when trying to connect to api", e);
+        }
+        return companyList;
+    }
+
+    //KONVERTER JSON TIL BECOMPANY OG ADD TIL ARRAYLIST
+    private ArrayList<BECompany> ConvertFromJsonToBE(JSONObject obj) {
+        //TODO
+        return null;
     }
 
     public ArrayList<BECompany> getAllClients() {
@@ -98,11 +123,12 @@ public class DAOClient {
         _sql.bindString(2, canvas);
         return _sql.executeInsert();
     }
-    public ArrayList<BECanvas> getAllCanvasByClientId(BECompany client){
+
+    public ArrayList<BECanvas> getAllCanvasByClientId(BECompany client) {
         ArrayList<BECanvas> canvasList = new ArrayList<>();
         Cursor cursor = _db.query(DAConstants.TABLE_CANVAS,
                 new String[]{"Id", "ClientId", "Canvas"},
-                "ClientId=?", new String[]{""+client.getId()}, null, null,
+                "ClientId=?", new String[]{"" + client.getId()}, null, null,
                 "Id desc");
         if (cursor.moveToFirst()) {
             do {

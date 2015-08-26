@@ -1,10 +1,7 @@
 package bws.customerrelation.DAL.Gateway;
 
-import android.app.ProgressDialog;
-import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
-import android.widget.EditText;
 import android.widget.TextView;
 
 import org.apache.http.client.HttpClient;
@@ -16,16 +13,9 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
-import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
 import java.net.URL;
-import java.net.URLConnection;
-import java.net.URLEncoder;
 import java.util.ArrayList;
-
-import bws.customerrelation.GUI.MainActivity;
 
 /**
  * Created by Jacob Ferdinandsen on 25-08-2015.
@@ -34,9 +24,9 @@ public class GetJSONFromAPI extends AsyncTask<String, Void, JSONObject> {
 
     ArrayList<?> JsonArray;
     final HttpClient httpClient = new DefaultHttpClient();
-    String content;
-    String data = "";
-    String error;
+    String result;
+    //    String data = "";
+//    String error;
     //    ProgressDialog progressDialog = new ProgressDialog();
 //    Context _context;
 //    EditText userInput;
@@ -91,8 +81,7 @@ public class GetJSONFromAPI extends AsyncTask<String, Void, JSONObject> {
                 return null;
             }
 
-
-            content = sb.toString();
+            result = sb.toString();
 
 //        } catch (MalformedURLException e) {
 //            error = e.getMessage();
@@ -115,7 +104,7 @@ public class GetJSONFromAPI extends AsyncTask<String, Void, JSONObject> {
             JSONObject jsonObject = null;
 
             try {
-                jsonObject = new JSONObject(content);
+                jsonObject = new JSONObject(result);
             } catch (JSONException e) {
                 Log.e("JSON", "Error creating JSON", e);
             }
@@ -133,13 +122,13 @@ public class GetJSONFromAPI extends AsyncTask<String, Void, JSONObject> {
 //        if (error != null) {
 //            serverDataReceiver.setText("error " + error);
 //        } else {
-//            serverDataReceiver.setText(content);
+//            serverDataReceiver.setText(result);
 
 //            String output = "";
 //            JSONObject jsonRespons;
 //
 //            try {
-//                jsonRespons = new JSONObject(content);
+//                jsonRespons = new JSONObject(result);
 //                JSONArray jsonArray = jsonRespons.optJSONArray("android");
 //
 //                for (int i = 0; i < jsonArray.length(); i++) {
