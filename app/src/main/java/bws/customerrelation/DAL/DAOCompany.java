@@ -6,6 +6,8 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteStatement;
 import android.util.Log;
 
+import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
@@ -49,16 +51,16 @@ public class DAOCompany {
 
     public ArrayList<BECompany> getCompanyFromApi() {
         ArrayList<BECompany> companyList = new ArrayList<>();
-//        String URL = "";
-//        JSONObject obj;
-//        GetJSONFromAPI api = new GetJSONFromAPI();
-//        api.execute(URL);
+        String URL = "http://skynet.bws.dk/Applications/smsAndroid.nsf/(CanvasByCompany)?readviewentries&outputformat=json&start=1&count=10&restrict=2C7EFD49ADD61732C1256C2C002FEF71#";
+        JSONArray obj;
+        GetJSONFromAPI api = new GetJSONFromAPI();
+        api.execute(URL);
 
         try {
-            soapHelper = new SoapHelper();
-            soapHelper.execute();
-//            obj = api.get();
-//            companyList = ConvertFromJsonToBE(obj);
+//            soapHelper = new SoapHelper();
+//            soapHelper.execute();
+            obj = api.get();
+            companyList = ConvertFromJsonToBE(obj);
         } catch (Exception e) {
             Log.e("Api get", "Error when trying to connect to api", e);
         }
@@ -66,9 +68,15 @@ public class DAOCompany {
     }
 
     //KONVERTER JSON TIL BECOMPANY OG ADD TIL ARRAYLIST
-    private ArrayList<BECompany> ConvertFromJsonToBE(JSONObject obj) {
-        //TODO
-        return null;
+    private ArrayList<BECompany> ConvertFromJsonToBE(JSONArray array) throws JSONException {
+        JSONObject obj = new JSONObject();
+        ArrayList<BECompany> mList = new ArrayList<>();
+        for (int i = 0; i < array.length(); i++) {
+            obj = array.getJSONObject(i);
+            BECompany company = new BECompany(obj.getString("name"),null,null,null,null,0);
+            mList.add(company);
+        }
+        return mList;
     }
 
     public ArrayList<BECompany> getAllClients() {

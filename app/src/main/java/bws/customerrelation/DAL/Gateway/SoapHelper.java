@@ -39,6 +39,7 @@ public class SoapHelper extends AsyncTask<String, Void, ArrayList<?>> {
 
         envelope.setOutputSoapObject(request);
         envelope.dotNet = false;
+        envelope.setAddAdornments(false);
 
         try {
             SoapObject result;
@@ -55,7 +56,6 @@ public class SoapHelper extends AsyncTask<String, Void, ArrayList<?>> {
                 result = (SoapObject) envelope.bodyIn;
             }
 
-            Log.v("SOAP Helper", "TEST STRING : " + result.toString());
             if (result != null) {
                 String test = result.toString();
                 Log.v("SOAP Helper", "TEST STRING : " + test);

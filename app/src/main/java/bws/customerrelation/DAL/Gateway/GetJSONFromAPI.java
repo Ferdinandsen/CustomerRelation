@@ -3,27 +3,33 @@ package bws.customerrelation.DAL.Gateway;
 import android.os.AsyncTask;
 import android.util.Log;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.json.JSONTokener;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
+import java.net.URI;
 import java.net.URL;
 import java.util.ArrayList;
 
 /**
  * Created by Jacob Ferdinandsen on 25-08-2015.
  */
-public class GetJSONFromAPI extends AsyncTask<String, Void, JSONObject> {
+public class GetJSONFromAPI extends AsyncTask<String, Void, JSONArray> {
 
-    ArrayList<?> JsonArray;
-    final HttpClient httpClient = new DefaultHttpClient();
+    JSONArray JsonArray;
+    JSONObject jsnobject;
     String result;
     //    String data = "";
 //    String error;
@@ -49,16 +55,19 @@ public class GetJSONFromAPI extends AsyncTask<String, Void, JSONObject> {
     }
 
     @Override
-    protected JSONObject doInBackground(String... params) {
+    protected JSONArray doInBackground(String... params) {
+
         HttpURLConnection connection = null;
         BufferedReader br = null;
         URL url;
         try {
+//            HttpResponse = httpClient.execute(new HttpGet(url);
             url = new URL(params[0]);
 
+//            url = new URL("http://skynet.bws.dk/Applications/smsAndroid.nsf/(CanvasByCompany)?readviewentries&outputformat=json&start=1&count=10&restrict=2C7EFD49ADD61732C1256C2C002FEF71#");
             connection = (HttpURLConnection) url.openConnection();
 //            connection.setDoOutput(true);
-            connection.setRequestMethod("GET");
+//            connection.setRequestMethod("GET");
             connection.connect();
 
 //            OutputStreamWriter osw = new OutputStreamWriter(connection.getOutputStream());
@@ -66,12 +75,12 @@ public class GetJSONFromAPI extends AsyncTask<String, Void, JSONObject> {
 //            osw.flush();
 
             InputStream is = connection.getInputStream();
+//            InputStreamReader is =  new InputStreamReader();
             StringBuilder sb = new StringBuilder();
             if (is == null) {
-                return null;
+                    return null;
             }
-
-            br = new BufferedReader(new InputStreamReader(is));
+            br = new BufferedReader(new InputStreamReader(is,"iso-8859-1"));
             String line;
 
             while ((line = br.readLine()) != null) {
@@ -80,7 +89,7 @@ public class GetJSONFromAPI extends AsyncTask<String, Void, JSONObject> {
             if (sb.length() == 0) {
                 return null;
             }
-
+            is.close();
             result = sb.toString();
 
 //        } catch (MalformedURLException e) {
@@ -89,7 +98,7 @@ public class GetJSONFromAPI extends AsyncTask<String, Void, JSONObject> {
         } catch (IOException e) {
             Log.e("Get Clients", "Error ", e);
             return null;
-        } finally {
+        }
             if (connection != null) {
                 connection.disconnect();
             }
@@ -101,15 +110,18 @@ public class GetJSONFromAPI extends AsyncTask<String, Void, JSONObject> {
                 }
             }
 //            return null;
-            JSONObject jsonObject = null;
-
+//            JsonArray = null;
+            int size = 0;
             try {
-                jsonObject = new JSONObject(result);
+//               JsonArray =  new JSONTokener(result).nextValue();
+               jsnobject = new JSONObject(result);
+//                JsonArray = new JSONArray(result);
             } catch (JSONException e) {
                 Log.e("JSON", "Error creating JSON", e);
             }
-            return jsonObject;
-        }
+
+            return JsonArray;
+
     }
 
 
