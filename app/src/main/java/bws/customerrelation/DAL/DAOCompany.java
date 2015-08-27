@@ -11,6 +11,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 
 import bws.customerrelation.DAL.Gateway.GetJSONFromAPI;
+import bws.customerrelation.DAL.Gateway.SoapHelper;
 import bws.customerrelation.Model.BECanvas;
 import bws.customerrelation.Model.BECompany;
 
@@ -22,6 +23,7 @@ public class DAOCompany {
     Context _context;
     SQLiteDatabase _db;
     SQLiteStatement _sql;
+    SoapHelper soapHelper;
     //Dummy use
     String _INSERT = "INSERT INTO " + DAConstants.TABLE_CLIENT + "(Firstname, Lastname, Email, Password, Company, PhoneNumber) VALUES (?, ?, ?, ?, ?, ?)";
     //DL
@@ -47,13 +49,16 @@ public class DAOCompany {
 
     public ArrayList<BECompany> getCompanyFromApi() {
         ArrayList<BECompany> companyList = new ArrayList<>();
-        String URL = "";
-        JSONObject obj;
-        GetJSONFromAPI api = new GetJSONFromAPI();
-        api.execute(URL);
+//        String URL = "";
+//        JSONObject obj;
+//        GetJSONFromAPI api = new GetJSONFromAPI();
+//        api.execute(URL);
+
         try {
-            obj = api.get();
-            companyList = ConvertFromJsonToBE(obj);
+            soapHelper = new SoapHelper();
+            soapHelper.execute();
+//            obj = api.get();
+//            companyList = ConvertFromJsonToBE(obj);
         } catch (Exception e) {
             Log.e("Api get", "Error when trying to connect to api", e);
         }
