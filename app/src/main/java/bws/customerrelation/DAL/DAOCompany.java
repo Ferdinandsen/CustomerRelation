@@ -29,7 +29,8 @@ public class DAOCompany {
     //Dummy use
     String _INSERT = "INSERT INTO " + DAConstants.TABLE_CLIENT + "(Firstname, Lastname, Email, Password, Company, PhoneNumber) VALUES (?, ?, ?, ?, ?, ?)";
     //DL
-    String _INSERTCLIENT = "INSERT INTO " + DAConstants.TABLE_CLIENTLIST + "(Id ,Firstname, Lastname, Email, Password, Company, PhoneNumber) VALUES (?,?, ?, ?, ?, ?, ?)";
+    String _INSERTCLIENT = "INSERT INTO " + DAConstants.TABLE_CLIENTLIST + "(Id, CompanyName, Address, City, Zip, Country, Phone, Fax, Email, SeNo, " +
+            "SalesArea, BusinessRelation, CompanyGroup, CompanyClosed, companyHomepage) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
     String _INSERTCANVAS = "INSERT INTO " + DAConstants.TABLE_CANVAS + "(ClientID, Canvas) VALUES (? ,?)";
 
     public DAOCompany(Context context) {
@@ -38,20 +39,20 @@ public class DAOCompany {
         _db = openHelper.getWritableDatabase();
     }
 
-    public long insert(BECompany client) {
-        _sql = _db.compileStatement(_INSERT);
-        _sql.bindString(1, client.getFirstName());
-        _sql.bindString(2, client.getLastName());
-        _sql.bindString(3, client.getEmail());
-        _sql.bindString(4, client.getPassword());
-        _sql.bindString(5, client.getCompany());
-        _sql.bindString(6, "" + client.getPhoneNumber());
-        return _sql.executeInsert();
-    }
+//    public long insert(BECompany client) {
+//        _sql = _db.compileStatement(_INSERT);
+//        _sql.bindString(1, client.getFirstName());
+//        _sql.bindString(2, client.getLastName());
+//        _sql.bindString(3, client.getEmail());
+//        _sql.bindString(4, client.getPassword());
+//        _sql.bindString(5, client.getCompany());
+//        _sql.bindString(6, "" + client.getPhoneNumber());
+//        return _sql.executeInsert();
+//    }
 
     public ArrayList<BECompany> getCompanyFromApi() {
         ArrayList<BECompany> companyList = new ArrayList<>();
-        String URL = "http://skynet.bws.dk/Applications/smsAndroid.nsf/(CanvasByCompany)?readviewentries&outputformat=json&start=1&count=10&restrict=2C7EFD49ADD61732C1256C2C002FEF71#";
+        String URL = "http://skynet.bws.dk/Applications/smsAndroid.nsf/LookupCompanyNameAndUNID?readviewentries&outputformat=json&start=1&count=10&restrict=2C7EFD49ADD61732C1256C2C002FEF71#";
         JSONArray obj;
         GetJSONFromAPI api = new GetJSONFromAPI();
         api.execute(URL);
@@ -67,22 +68,50 @@ public class DAOCompany {
         return companyList;
     }
 
-    //KONVERTER JSON TIL BECOMPANY OG ADD TIL ARRAYLIST
+    //KONVERTER JSON OG ADD TIL ARRAYLIST
     private ArrayList<BECompany> ConvertFromJsonToBE(JSONArray array) throws JSONException {
         JSONObject obj = new JSONObject();
         JSONArray obj1 = new JSONArray();
-        JSONObject obj2 = new JSONObject();
 
         ArrayList<BECompany> mList = new ArrayList<>();
         for (int i = 0; i < array.length(); i++) {
             obj = array.getJSONObject(i);
             obj1 = obj.getJSONArray("entrydata");
-            obj2 = obj1.getJSONObject(0).getJSONObject("text");
-            BECompany company = new BECompany(null, null, null, null, obj2.getString("0"), obj.getInt("@children"));
-
-            mList.add(company);
+            mList.add(setCompanyBE(obj1));
         }
         return mList;
+    }
+
+    private BECompany setCompanyBE(JSONArray array) throws JSONException {
+        int id;
+        String zip, country, phone, fax, email, seNo, salesArea, businessRelation, companyGroup,
+                companyName, address, city, companyHomepage;
+        Boolean companyClosed;
+
+        JSONArray array1 = new JSONArray();
+        for (int y = 0; y < array.length(); y++) {
+            array1.put(array.getJSONObject(y).getJSONObject("text").toString());
+        }
+
+        id = Integer.parseInt(array1.get(0).toString());
+        companyName = (String) array1.get(1);
+        address = (String) array1.get(2);
+        city = (String) array1.get(3);
+        zip = (String) array1.get(4);
+        country = (String) array1.get(5);
+        phone = (String) array1.get(6);
+        fax = (String) array1.get(7);
+        email = (String) array1.get(8);
+        seNo = (String) array1.get(9);
+        salesArea = (String) array1.get(10);
+        businessRelation = (String) array1.get(11);
+        companyGroup = (String) array1.get(12);
+        companyClosed = (Boolean) array1.get(13);
+        companyHomepage = (String) array1.get(14);
+
+        BECompany company = new BECompany(id, companyName, address, city, zip, country, phone, fax, email, seNo, salesArea, businessRelation, companyGroup, companyClosed,
+                companyHomepage);
+        return company;
     }
 
     public ArrayList<BECompany> getAllClients() {
@@ -126,19 +155,27 @@ public class DAOCompany {
 
     public long insertClientOnList(BECompany client) {
         _sql = _db.compileStatement(_INSERTCLIENT);
-        _sql.bindString(1, "" + client.getId());
-        _sql.bindString(2, "" + client.getFirstName());
-        _sql.bindString(3, "" + client.getLastName());
-        _sql.bindString(4, "" + client.getEmail());
-        _sql.bindString(5, "" + client.getPassword());
-        _sql.bindString(6, client.getCompany());
-        _sql.bindString(7, "" + client.getPhoneNumber());
+        _sql.bindString(1, "" + client.getM_id());
+        _sql.bindString(2, "" + client.getM_companyName());
+        _sql.bindString(3, "" + client.getM_address());
+        _sql.bindString(4, "" + client.getM_city());
+        _sql.bindString(5, "" + client.getM_zipCode());
+        _sql.bindString(6, "" + client.getM_country());
+        _sql.bindString(7, "" + client.getM_telephone());
+        _sql.bindString(8, "" + client.getM_fax());
+        _sql.bindString(9, "" + client.getM_email());
+        _sql.bindString(10, "" + client.getM_seNo());
+        _sql.bindString(11, "" + client.getM_salesArea());
+        _sql.bindString(12, "" + client.getM_businessRelation());
+        _sql.bindString(13, "" + client.getM_companyGroup());
+        _sql.bindString(14, "" + client.getM_closedCompany());
+        _sql.bindString(15, "" + client.getM_homepage());
         return _sql.executeInsert();
     }
 
     public long insertCanvas(String canvas, BECompany client) {
         _sql = _db.compileStatement(_INSERTCANVAS);
-        _sql.bindString(1, "" + client.getId());
+        _sql.bindString(1, "" + client.getM_id());
         _sql.bindString(2, canvas);
         return _sql.executeInsert();
     }
@@ -147,7 +184,7 @@ public class DAOCompany {
         ArrayList<BECanvas> canvasList = new ArrayList<>();
         Cursor cursor = _db.query(DAConstants.TABLE_CANVAS,
                 new String[]{"Id", "ClientId", "Canvas"},
-                "ClientId=?", new String[]{"" + client.getId()}, null, null,
+                "ClientId=?", new String[]{"" + client.getM_id()}, null, null,
                 "Id desc");
         if (cursor.moveToFirst()) {
             do {

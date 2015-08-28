@@ -52,7 +52,7 @@ public class ClientDataActivityListViewAdapter extends ArrayAdapter<BECanvas> {
             company.setText(c.getId());
         }
         if (company != null) {
-            canvasAmount.setText("" + _selectedClient.getFirstName());
+            canvasAmount.setText("" + _selectedClient.getM_companyName());
         }
 //        for (int x : _canvas)
 //            if (position == x) {

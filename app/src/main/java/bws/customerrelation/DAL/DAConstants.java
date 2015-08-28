@@ -2,7 +2,7 @@ package bws.customerrelation.DAL;
 
 public class DAConstants {
     public static String DATABASE_NAME = "sqlite.db";
-    public static int DATABASE_VERSION = 15;
+    public static int DATABASE_VERSION = 16;
 
     public static String TABLE_USER = "tb_user";
     public static String TABLE_CLIENT= "tb_client";

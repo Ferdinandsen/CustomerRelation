@@ -44,7 +44,7 @@ public class ClientDataActivity extends AppCompatActivity {
         _clientController = new ClientController(this);
         selectedClient = (BECompany) b.getSerializable(SharedConstants.CLIENT);
         findViews();
-        populateData();
+//        populateData();
         setListeners();
         if (savedInstanceState == null) {
 //            _adapter = new ClientDataActivityListViewAdapter(this, R.layout.cell_main_activity, clientCanvaslist, _selectedClient);
@@ -65,18 +65,18 @@ public class ClientDataActivity extends AppCompatActivity {
         canvasList.setAdapter(adapter);
     }
 
-    private void populateData() {
-        firstName.setText("First Name: " + selectedClient.getFirstName());
-        lastName.setText("Last Name: " + selectedClient.getLastName());
-        company.setText("Company Name: " + selectedClient.getCompany());
-        telephone.setText("Phone Number: " + selectedClient.getPhoneNumber());
-        clientCanvaslist = _clientController.getAllCanvasByClientId(selectedClient);
-    }
+//    private void populateData() {
+//        firstName.setText("First Name: " + selectedClient.getFirstName());
+//        lastName.setText("Last Name: " + selectedClient.getLastName());
+//        company.setText("Company Name: " + selectedClient.getCompany());
+//        telephone.setText("Phone Number: " + selectedClient.getPhoneNumber());
+//        clientCanvaslist = _clientController.getAllCanvasByClientId(selectedClient);
+//    }
 
     @Override
     public void onResume() {
         super.onResume();
-        populateData();
+//        populateData();
     }
 
     private void findViews() {

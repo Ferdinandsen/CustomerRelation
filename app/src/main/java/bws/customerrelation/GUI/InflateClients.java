@@ -59,8 +59,8 @@ public class InflateClients {
              * set item into row
              */
 
-            final String fName = c.getCompany();
-            final String canvas = "Canvas amount: " + c.getPhoneNumber();
+            final String fName = c.getM_companyName();
+            final String canvas = "Canvas amount: " + c.getM_telephone();
             mFirstName.setText(fName);
             mLastName.setText(canvas);
 
@@ -81,7 +81,7 @@ public class InflateClients {
 
             if (_INFLATECLIENTS != null) {
                 for (BECompany cl : _INFLATECLIENTS) {
-                    if (cl.getCompany().equals(c.getCompany())) {
+                    if (cl.getM_CompanyId() == c.getM_CompanyId()) {
                         mView.setBackgroundColor(Color.parseColor("#00B2EE"));
                     }
                 }
