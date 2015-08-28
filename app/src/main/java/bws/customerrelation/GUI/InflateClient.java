@@ -52,14 +52,15 @@ public class InflateClient {
                     .findViewById(R.id.canvasAmount);
             final CheckBox mCheckBox = (CheckBox) mLinearView
                     .findViewById(R.id.checkbox);
+            mCheckBox.setVisibility(View.INVISIBLE);
             /**
              * set item into row
              */
 
-            final String fName = c.getFirstName();
-            final String lName = "" + c.getId();
+            final String fName = c.getCompany();
+            final String canvas = "Amount of canvas " + c.getPhoneNumber();
             mFirstName.setText(fName);
-            mLastName.setText(lName);
+            mLastName.setText(canvas);
 
             /**
              * changes background to white
@@ -79,7 +80,7 @@ public class InflateClient {
 
             if (_selectedClients != null) {
                 for (BECompany cl : _selectedClients) {
-                    if (cl.getId() == c.getId()) {
+                    if (cl.getCompany().equals(c.getCompany())) {
                         mLinearView.setBackgroundColor(Color.parseColor("#00B2EE"));
                     }
                 }

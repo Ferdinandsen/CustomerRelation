@@ -3,32 +3,24 @@ package bws.customerrelation.DAL.Gateway;
 import android.os.AsyncTask;
 import android.util.Log;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import org.apache.http.HttpResponse;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.impl.client.DefaultHttpClient;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.json.JSONTokener;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
-import java.net.URI;
 import java.net.URL;
-import java.util.ArrayList;
 
 /**
  * Created by Jacob Ferdinandsen on 25-08-2015.
  */
 public class GetJSONFromAPI extends AsyncTask<String, Void, JSONArray> {
 
-    JSONArray JsonArray;
+    JSONArray jsonArray;
     JSONObject jsnobject;
     String result;
     //    String data = "";
@@ -110,17 +102,18 @@ public class GetJSONFromAPI extends AsyncTask<String, Void, JSONArray> {
                 }
             }
 //            return null;
-//            JsonArray = null;
+//            jsonArray = null;
             int size = 0;
             try {
-//               JsonArray =  new JSONTokener(result).nextValue();
+//               jsonArray =  new JSONTokener(result).nextValue();
                jsnobject = new JSONObject(result);
-//                JsonArray = new JSONArray(result);
+                jsonArray = (JSONArray) jsnobject.get("viewentry");
+//                jsonArray = new JSONArray(result);
             } catch (JSONException e) {
                 Log.e("JSON", "Error creating JSON", e);
             }
 
-            return JsonArray;
+            return jsonArray;
 
     }
 

@@ -70,10 +70,16 @@ public class DAOCompany {
     //KONVERTER JSON TIL BECOMPANY OG ADD TIL ARRAYLIST
     private ArrayList<BECompany> ConvertFromJsonToBE(JSONArray array) throws JSONException {
         JSONObject obj = new JSONObject();
+        JSONArray obj1 = new JSONArray();
+        JSONObject obj2 = new JSONObject();
+
         ArrayList<BECompany> mList = new ArrayList<>();
         for (int i = 0; i < array.length(); i++) {
             obj = array.getJSONObject(i);
-            BECompany company = new BECompany(obj.getString("name"),null,null,null,null,0);
+            obj1 = obj.getJSONArray("entrydata");
+            obj2 = obj1.getJSONObject(0).getJSONObject("text");
+            BECompany company = new BECompany(null, null, null, null, obj2.getString("0"), obj.getInt("@children"));
+
             mList.add(company);
         }
         return mList;
@@ -121,10 +127,10 @@ public class DAOCompany {
     public long insertClientOnList(BECompany client) {
         _sql = _db.compileStatement(_INSERTCLIENT);
         _sql.bindString(1, "" + client.getId());
-        _sql.bindString(2, client.getFirstName());
-        _sql.bindString(3, client.getLastName());
-        _sql.bindString(4, client.getEmail());
-        _sql.bindString(5, client.getPassword());
+        _sql.bindString(2, "" + client.getFirstName());
+        _sql.bindString(3, "" + client.getLastName());
+        _sql.bindString(4, "" + client.getEmail());
+        _sql.bindString(5, "" + client.getPassword());
         _sql.bindString(6, client.getCompany());
         _sql.bindString(7, "" + client.getPhoneNumber());
         return _sql.executeInsert();
