@@ -27,10 +27,10 @@ public class DAOCompany {
     SQLiteStatement _sql;
     SoapHelper soapHelper;
     //Dummy use
-    String _INSERT = "INSERT INTO " + DAConstants.TABLE_CLIENT + "(Firstname, Lastname, Email, Password, Company, PhoneNumber) VALUES (?, ?, ?, ?, ?, ?)";
+    String _INSERT = "INSERT INTO " + DAConstants.TABLE_COMPANY + "(Firstname, Lastname, Email, Password, Company, PhoneNumber) VALUES (?, ?, ?, ?, ?, ?)";
     //DL
-    String _INSERTCLIENT = "INSERT INTO " + DAConstants.TABLE_CLIENTLIST + "(Id, CompanyName, Address, City, Zip, Country, Phone, Fax, Email, SeNo, " +
-            "SalesArea, BusinessRelation, CompanyGroup, CompanyClosed, companyHomepage) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+    String _INSERTCLIENT = "INSERT INTO " + DAConstants.TABLE_COMPANYLIST + "(Id, CompanyName, Address, City, Zip, Country, Phone, Fax, Email, SeNo, " +
+            "SalesArea, BusinessRelation, CompanyGroup, CompanyClosed, CompanyHomepage) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
     String _INSERTCANVAS = "INSERT INTO " + DAConstants.TABLE_CANVAS + "(ClientID, Canvas) VALUES (? ,?)";
 
     public DAOCompany(Context context) {
@@ -68,6 +68,8 @@ public class DAOCompany {
         return companyList;
     }
 
+
+
     //KONVERTER JSON OG ADD TIL ARRAYLIST
     private ArrayList<BECompany> ConvertFromJsonToBE(JSONArray array) throws JSONException {
         JSONObject obj = new JSONObject();
@@ -83,17 +85,16 @@ public class DAOCompany {
     }
 
     private BECompany setCompanyBE(JSONArray array) throws JSONException {
-        int id;
-        String zip, country, phone, fax, email, seNo, salesArea, businessRelation, companyGroup,
+        String id, zip, country, phone, fax, email, seNo, salesArea, businessRelation, companyGroup,
                 companyName, address, city, companyHomepage;
         Boolean companyClosed;
 
-        JSONArray array1 = new JSONArray();
+        ArrayList<String> array1 = new ArrayList<>();
         for (int y = 0; y < array.length(); y++) {
-            array1.put(array.getJSONObject(y).getJSONObject("text").toString());
+            array1.add(array.getJSONObject(y).getJSONObject("text").getString("0"));
         }
 
-        id = Integer.parseInt(array1.get(0).toString());
+        id = array1.get(0);
         companyName = (String) array1.get(1);
         address = (String) array1.get(2);
         city = (String) array1.get(3);
@@ -106,7 +107,11 @@ public class DAOCompany {
         salesArea = (String) array1.get(10);
         businessRelation = (String) array1.get(11);
         companyGroup = (String) array1.get(12);
-        companyClosed = (Boolean) array1.get(13);
+        Boolean bol;
+        if(array1.get(13).equals("") || array1.get(13).toLowerCase().equals("false")){
+            companyClosed = false;
+        }
+        else{companyClosed = true;}
         companyHomepage = (String) array1.get(14);
 
         BECompany company = new BECompany(id, companyName, address, city, zip, country, phone, fax, email, seNo, salesArea, businessRelation, companyGroup, companyClosed,
@@ -116,7 +121,7 @@ public class DAOCompany {
 
     public ArrayList<BECompany> getAllClients() {
         ArrayList<BECompany> clients = new ArrayList<BECompany>();
-        Cursor cursor = _db.query(DAConstants.TABLE_CLIENT,
+        Cursor cursor = _db.query(DAConstants.TABLE_COMPANY,
                 new String[]{"Id", "Firstname", "Lastname", "Email", "Password", "Company", "PhoneNumber"},
                 null, null, null, null,
                 "Id desc");
@@ -133,10 +138,10 @@ public class DAOCompany {
 
     public ArrayList<BECompany> getAllClientsFromDevice() {
         ArrayList<BECompany> clients = new ArrayList<BECompany>();
-        Cursor cursor = _db.query(DAConstants.TABLE_CLIENTLIST,
-                new String[]{"Id", "Firstname", "Lastname", "Email", "Password", "Company", "PhoneNumber"},
+        Cursor cursor = _db.query(DAConstants.TABLE_COMPANYLIST,
+        new String[]{"Id","IdCompany", "CompanyName", "Address", "City", "Zip", "Country", "Phone","Fax","Email", "SeNo", "SalesArea", "BusinessRelation", "CompanyGroup", "CompanyClosed", "CompanyHomepage"},
                 null, null, null, null,
-                "Firstname desc");
+                null);
         if (cursor.moveToFirst()) {
             do {
                 clients.add(new BECompany(cursor.getInt(0), cursor.getString(1), cursor.getString(2), cursor.getString(3), cursor.getString(4), cursor.getString(5), cursor.getInt(6)));
@@ -149,11 +154,11 @@ public class DAOCompany {
     }
 
     public void deleteAllClients() {
-        _db.execSQL("DELETE FROM " + DAConstants.TABLE_CLIENTLIST + " WHERE ID != " + 100000);
+        _db.execSQL("DELETE FROM " + DAConstants.TABLE_COMPANYLIST + " WHERE ID != " + 100000);
 
     }
 
-    public long insertClientOnList(BECompany client) {
+    public long insertCompanyOnDevice(BECompany client) {
         _sql = _db.compileStatement(_INSERTCLIENT);
         _sql.bindString(1, "" + client.getM_id());
         _sql.bindString(2, "" + client.getM_companyName());
@@ -173,12 +178,12 @@ public class DAOCompany {
         return _sql.executeInsert();
     }
 
-    public long insertCanvas(String canvas, BECompany client) {
-        _sql = _db.compileStatement(_INSERTCANVAS);
-        _sql.bindString(1, "" + client.getM_id());
-        _sql.bindString(2, canvas);
-        return _sql.executeInsert();
-    }
+//    public long insertCanvas(String canvas, BECompany client) {
+//        _sql = _db.compileStatement(_INSERTCANVAS);
+//        _sql.bindString(1, "" + client.getM_id());
+//        _sql.bindString(2, canvas);
+//        return _sql.executeInsert();
+//    }
 
     public ArrayList<BECanvas> getAllCanvasByClientId(BECompany client) {
         ArrayList<BECanvas> canvasList = new ArrayList<>();
@@ -188,7 +193,7 @@ public class DAOCompany {
                 "Id desc");
         if (cursor.moveToFirst()) {
             do {
-                canvasList.add(new BECanvas(cursor.getInt(0), cursor.getInt(1), cursor.getString(2)));
+                canvasList.add(new BECanvas(cursor.getInt(0), cursor.getString(1), cursor.getString(2)));
             } while (cursor.moveToNext());
         }
         if (cursor != null && !cursor.isClosed()) {

@@ -50,8 +50,6 @@ public class InflateClients {
 
             TextView mFirstName = (TextView) mView
                     .findViewById(R.id.companyName);
-            final TextView mLastName = (TextView) mView
-                    .findViewById(R.id.canvasAmount);
             final CheckBox mCheckBox = (CheckBox) mView
                     .findViewById(R.id.checkbox);
             mCheckBox.setVisibility(View.INVISIBLE);
@@ -60,9 +58,9 @@ public class InflateClients {
              */
 
             final String fName = c.getM_companyName();
-            final String canvas = "Canvas amount: " + c.getM_telephone();
+
             mFirstName.setText(fName);
-            mLastName.setText(canvas);
+
 
             /**
              * changes background to white
@@ -81,7 +79,8 @@ public class InflateClients {
 
             if (_INFLATECLIENTS != null) {
                 for (BECompany cl : _INFLATECLIENTS) {
-                    if (cl.getM_CompanyId() == c.getM_CompanyId()) {
+
+                    if (cl.getM_companyId().equals(c.getM_companyId())) {
                         mView.setBackgroundColor(Color.parseColor("#00B2EE"));
                     }
                 }

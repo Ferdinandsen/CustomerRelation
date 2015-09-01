@@ -8,6 +8,7 @@ import android.widget.EditText;
 
 import bws.customerrelation.Controller.ClientController;
 import bws.customerrelation.Controller.SharedConstants;
+import bws.customerrelation.Model.BECanvas;
 import bws.customerrelation.Model.BECompany;
 import bws.customerrelation.R;
 
@@ -33,20 +34,20 @@ public class CanvasActivity extends AppCompatActivity {
     }
 
     private void setListeners() {
-        btnSave.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onClickBtnSave();
-            }
-        });
+//        btnSave.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                onClickBtnSave();
+//            }
+//        });
     }
 
-    private void onClickBtnSave() {
-        String canvas = txtCanvas.getText().toString();
-    _clientController.saveCanvas(canvas,selectedClient);
-        finish();
-
-    }
+//    private void onClickBtnSave() {
+//        BECanvas canvas = txtCanvas.getText().toString();
+//    _clientController.saveCanvas(canvas);
+//        finish();
+//
+//    }
 
     private void findViews() {
         btnSave = (Button) findViewById(R.id.btnSave);

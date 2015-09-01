@@ -13,13 +13,17 @@ public class OpenHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         db.execSQL("CREATE TABLE " + DAConstants.TABLE_USER + " (Id INTEGER PRIMARY KEY, Firstname TEXT, Lastname TEXT, Email TEXT, Password TEXT, PhoneNumber INTEGER)");
-        db.execSQL("CREATE TABLE " + DAConstants.TABLE_CLIENT + " (Id INTEGER PRIMARY KEY, Firstname TEXT, Lastname TEXT, Email TEXT, Password TEXT, Company TEXT, PhoneNumber INTEGER)");
-        db.execSQL("CREATE TABLE " + DAConstants.TABLE_CLIENTLIST + "(Id INTEGER PRIMARY KEY, IdCompany INTEGER, CompanyName TEXT, Adress TEXT," +
+        db.execSQL("CREATE TABLE " + DAConstants.TABLE_COMPANY + " (Id INTEGER PRIMARY KEY, Firstname TEXT, Lastname TEXT, Email TEXT, Password TEXT, Company TEXT, PhoneNumber INTEGER)");
+        db.execSQL("CREATE TABLE " + DAConstants.TABLE_COMPANYLIST + "(Id INTEGER PRIMARY KEY, IdCompany INTEGER, CompanyName TEXT, Address TEXT," +
                 "City TEXT,Zip TEXT,Country TEXT,Phone TEXT,Fax TEXT, " +
                 "Email TEXT,SeNo TEXT, SalesArea TEXT,BusinessRelation TEXT, " +
-                "CompanyGroup TEXT, CompanyClosed TEXT,CompanyHomnepage TEXT )");
+                "CompanyGroup TEXT, CompanyClosed TEXT,CompanyHomepage TEXT )");
 
-        db.execSQL("CREATE TABLE " + DAConstants.TABLE_CANVAS + "(Id INTEGER PRIMARY KEY , ClientId INTEGER, Canvas TEXT)");
+        db.execSQL("CREATE TABLE " + DAConstants.TABLE_CANVAS + "CompanyId TEXT, CanvasID TEXT PRIMARY KEY,Subject TEXT, " +
+                "VisitBy TEXT, TypeOfVisit TEXT, Date TEXT, FollowUpDate TEXT, FollowUpSalesman TEXT, From TEXT, " +
+                "ToInternal TEXT, Region TEXT, Country TEXT, TypeOfTransport TEXT, ActivityType TEXT, " +
+                "BusinessArea TEXT, Office TEXT, Text TEXT)");
+
 //        db.execSQL("CREATE TABLE " + DAConstants.TABLE_MESSAGE + "(Id INTEGER PRIMARY KEY, UserFrom INTEGER, UserTo INTEGER, Message TEXT, Date_Created DATETIME)");
 //        db.execSQL("CREATE TABLE " + DAConstants.TABLE_REQUEST + "(Id INTEGER PRIMARY KEY, UserFrom INTEGER, UserTo INTEGER, RequestMessage TEXT, Date_Created DATETIME)");
 //        db.execSQL("CREATE TABLE " + DAConstants.TABLE_COMMENT + "(Id INTEGER PRIMARY KEY, PostId INTEGER, UserId INTEGER, Message TEXT, Date_Created DATETIME)");
@@ -29,8 +33,8 @@ public class OpenHelper extends SQLiteOpenHelper {
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         db.execSQL("DROP TABLE IF EXISTS " + DAConstants.TABLE_USER);
-        db.execSQL("DROP TABLE IF EXISTS " + DAConstants.TABLE_CLIENT);
-        db.execSQL("DROP TABLE IF EXISTS " + DAConstants.TABLE_CLIENTLIST);
+        db.execSQL("DROP TABLE IF EXISTS " + DAConstants.TABLE_COMPANY);
+        db.execSQL("DROP TABLE IF EXISTS " + DAConstants.TABLE_COMPANYLIST);
         db.execSQL("DROP TABLE IF EXISTS " + DAConstants.TABLE_CANVAS);
 //        db.execSQL("DROP TABLE IF EXISTS " + DAConstants.TABLE_MESSAGE);
 //        db.execSQL("DROP TABLE IF EXISTS " + DAConstants.TABLE_REQUEST);

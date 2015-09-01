@@ -10,7 +10,7 @@ public class BECompany implements Serializable {
      * GENERAL TAB
      */
     private int m_id;
-    private int m_CompanyId;
+    private String m_companyId;
     private String m_firstName;
     private String m_lastName;
 
@@ -43,12 +43,12 @@ public class BECompany implements Serializable {
     private String m_exportArea;
     private String m_importArea;
 
-    public BECompany(int id, int companyId, String companyName, String address, String city,
+    public BECompany(int id, String companyId, String companyName, String address, String city,
                      String zip, String country, String phone, String fax,
                      String email, String seNo, String salesArea, String businessRelation,
                      String companyGroup, Boolean companyClosed, String companyHomepage) {
         m_id = id;
-        m_CompanyId = companyId;
+        m_companyId = companyId;
         m_companyName = companyName;
         m_address = address;
         m_city = city;
@@ -65,11 +65,11 @@ public class BECompany implements Serializable {
         m_homepage = companyHomepage;
     }
 
-    public BECompany(int id, String companyName, String address, String city,
+    public BECompany(String companyId, String companyName, String address, String city,
                      String zip, String country, String phone, String fax,
                      String email, String seNo, String salesArea, String businessRelation,
                      String companyGroup, Boolean companyClosed, String companyHomepage) {
-        m_id = id;
+        m_companyId = companyId;
         m_companyName = companyName;
         m_address = address;
         m_city = city;
@@ -123,12 +123,12 @@ public class BECompany implements Serializable {
         this.m_id = m_id;
     }
 
-    public int getM_CompanyId() {
-        return m_CompanyId;
+    public String getM_companyId() {
+        return m_companyId;
     }
 
-    public void setM_CompanyId(int m_CompanyId) {
-        this.m_CompanyId = m_CompanyId;
+    public void setM_companyId(String m_companyId) {
+        this.m_companyId = m_companyId;
     }
 
     public String getM_firstName() {

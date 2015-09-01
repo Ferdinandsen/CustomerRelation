@@ -20,15 +20,15 @@
             android:textColor="#000000"
             android:text="@string/company" />
 
-        <TextView
-            android:id="@+id/canvasAmount"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:textSize="16sp"
-            android:layout_marginLeft="5dp"
-            android:textColor="#000000"
-            android:text="@string/canvasAmount" />
+        <!--<TextView-->
+            <!--android:id="@+id/canvasAmount"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_gravity="center"-->
+            <!--android:textSize="16sp"-->
+            <!--android:layout_marginLeft="5dp"-->
+            <!--android:textColor="#000000"-->
+             <!--/>-->
 
         <CheckBox
             android:id="@+id/checkbox"

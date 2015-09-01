@@ -13,6 +13,7 @@ import android.widget.Toast;
 import java.util.ArrayList;
 
 
+import bws.customerrelation.Controller.CanvasController;
 import bws.customerrelation.Controller.ClientController;
 import bws.customerrelation.Controller.SharedConstants;
 import bws.customerrelation.Controller.UserController;
@@ -30,6 +31,7 @@ public class MainActivity extends AppCompatActivity {
     static ArrayList<BECompany> _SELECTEDCLIENTS = new ArrayList<BECompany>();
     ClientController _clientController;
     UserController _userController;
+    CanvasController _canvasController;
     private static String TAG = "MainActivity";
     InflateClients _adapter;
 
@@ -42,6 +44,7 @@ public class MainActivity extends AppCompatActivity {
         _user = (BEUser) b.getSerializable(SharedConstants.USER);
         _userController = new UserController(this);
         _clientController = new ClientController(this);
+        _canvasController = new CanvasController(this);
 
         findViews();
         setListeners();
@@ -90,14 +93,16 @@ public class MainActivity extends AppCompatActivity {
             if (_SELECTEDCLIENTS.size() == 1) {
                 Intent showClientIntent = new Intent();
                 showClientIntent.setClass(this, ClientDataActivity.class);
-                _clientController.createClientList(_SELECTEDCLIENTS);
+                _clientController.createCompanyList(_SELECTEDCLIENTS);
+                _canvasController.createCanvasList();
                 showClientIntent.putExtra(SharedConstants.CLIENT, _SELECTEDCLIENTS.get(0));
                 startActivity(showClientIntent);
-            } else {
+                } else {
                 Intent clientIntent = new Intent();
                 clientIntent.setClass(this, ClientActivity.class);
                 clientIntent.putExtra(SharedConstants.SELECTEDCLIENTLIST, MainActivity._SELECTEDCLIENTS);
-                _clientController.createClientList(_SELECTEDCLIENTS);
+                _clientController.createCompanyList(_SELECTEDCLIENTS);
+                _canvasController.createCanvasList();
                 startActivity(clientIntent);
             }
         }

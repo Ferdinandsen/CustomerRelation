@@ -4,6 +4,7 @@ import android.app.Activity;
 
 import java.util.ArrayList;
 
+import bws.customerrelation.DAL.DAOCanvas;
 import bws.customerrelation.DAL.DAOCompany;
 import bws.customerrelation.Model.BECanvas;
 import bws.customerrelation.Model.BECompany;
@@ -13,11 +14,13 @@ import bws.customerrelation.Model.BECompany;
  */
 public class ClientController {
     DAOCompany _daoCompany;
+    DAOCanvas _daoCanvas;
     Activity _activity;
 
     public ClientController(Activity context) {
         _activity = context;
         _daoCompany = new DAOCompany(_activity);
+        _daoCanvas = new DAOCanvas(_activity);
 
     }
 
@@ -49,7 +52,7 @@ public class ClientController {
         _daoCompany.deleteAllClients();
     }
 
-    public void createClientList(ArrayList<BECompany> clients) {
+    public void createCompanyList(ArrayList<BECompany> clients) {
         ArrayList<BECompany> fuck = new ArrayList<BECompany>();
         for (BECompany clie : clients) {
             fuck.add(clie);
@@ -59,12 +62,12 @@ public class ClientController {
 
         if (test.isEmpty()) {
             for (BECompany x : fuck) {
-                _daoCompany.insertClientOnList(x);
+                _daoCompany.insertCompanyOnDevice(x);
             }
         } else {
             for (BECompany x : fuck) {
                 for (BECompany y : test) {
-                    if (x.getM_CompanyId() == y.getM_CompanyId())
+                    if (x.getM_companyId() == y.getM_companyId())
                         test1.add(x);
                 }
             }
@@ -72,7 +75,7 @@ public class ClientController {
                 fuck.remove(x);
 
             for (BECompany x : fuck) {
-                _daoCompany.insertClientOnList(x);
+                _daoCompany.insertCompanyOnDevice(x);
             }
         }
     }
@@ -81,8 +84,8 @@ public class ClientController {
         return _daoCompany.getAllClientsFromDevice();
     }
 
-    public long saveCanvas(String canvas, BECompany client) {
-        return _daoCompany.insertCanvas(canvas, client);
+    public long saveCanvas(BECanvas canvas) {
+        return _daoCanvas.insertCanvas(canvas);
     }
 
     public ArrayList<BECanvas> getAllCanvasByClientId(BECompany client) {

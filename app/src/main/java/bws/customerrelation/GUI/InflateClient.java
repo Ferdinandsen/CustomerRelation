@@ -80,7 +80,7 @@ public class InflateClient {
 
             if (_selectedClients != null) {
                 for (BECompany cl : _selectedClients) {
-                    if (cl.getM_CompanyId() == c.getM_CompanyId()) {
+                    if (cl.getM_companyId() == c.getM_companyId()) {
                         mLinearView.setBackgroundColor(Color.parseColor("#00B2EE"));
                     }
                 }
