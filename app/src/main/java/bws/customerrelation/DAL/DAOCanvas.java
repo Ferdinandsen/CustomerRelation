@@ -25,12 +25,11 @@ public class DAOCanvas {
     Context _context;
     SQLiteDatabase _db;
     SQLiteStatement _sql;
-    SoapHelper soapHelper;
 
     //DL
     String _INSERTCANVAS = "INSERT INTO " + DAConstants.TABLE_CANVAS + "( CompanyId, CanvasID, Subject, VisitBy, " +
             "TypeOfVisit, Date, FollowUpDate, FollowUpSalesman, " +
-            "From, ToInternal, Region, Country, TypeOfTransport, " +
+            "Sender, ToInternal, Region, Country, TypeOfTransport, " +
             "ActivityType, BusinessArea, Office, Text) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 
     public DAOCanvas(Context context) {
@@ -79,18 +78,11 @@ public class DAOCanvas {
 
         ArrayList<String> array1 = new ArrayList<>();
         for (int y = 0; y < array.length(); y++) {
-            int col = array.getJSONObject(y).getInt("@columnnumber");
-            String tst = "Date";
-            String tst1 = "FollowUpDate";
-            String tst2 = "SendTo";
-            if (array.getJSONObject(y).getString("@name").equals(tst) || array.getJSONObject(y).getString("@name").equals(tst1)) {
-                if (array.getJSONObject(y).isNull("text")) {
-                    array1.add("NULL");
-                } else {
-                    array1.add(array.getJSONObject(y).getJSONObject("datetime").getString("0"));
-                }
-            } else if (array.getJSONObject(y).getString("@name").equals(tst2) && array.getJSONObject(y).isNull("text")) {
 
+
+            if (!array.getJSONObject(y).isNull("text")) {
+                array1.add(array.getJSONObject(y).getJSONObject("text").getString("0"));
+            } else if (!array.getJSONObject(y).isNull("textlist")) {
                 JSONArray ara = array.getJSONObject(y).getJSONObject("textlist").getJSONArray("text");
 
                 String res = "";
@@ -99,12 +91,8 @@ public class DAOCanvas {
                     res += ara.getJSONObject(i).getString("0");
                 }
                 array1.add(res);
-            } else {
-                if (array.getJSONObject(y).isNull("text")) {
-                    array1.add("NULL");
-                } else {
-                    array1.add(array.getJSONObject(y).getJSONObject("text").getString("0"));
-                }
+            } else if (!array.getJSONObject(y).isNull("datetime")) {
+                array1.add(array.getJSONObject(y).getJSONObject("datetime").getString("0"));
             }
         }
 
@@ -173,6 +161,7 @@ public class DAOCanvas {
         return canvasList;
     }
 
+    //TODO 
     public ArrayList<BECanvas> getAllCanvasFromDevice() {
         ArrayList<BECanvas> canvasList = new ArrayList<>();
         Cursor cursor = _db.query(DAConstants.TABLE_CANVAS,

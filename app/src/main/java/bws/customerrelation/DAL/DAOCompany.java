@@ -25,13 +25,11 @@ public class DAOCompany {
     Context _context;
     SQLiteDatabase _db;
     SQLiteStatement _sql;
-    SoapHelper soapHelper;
     //Dummy use
     String _INSERT = "INSERT INTO " + DAConstants.TABLE_COMPANY + "(Firstname, Lastname, Email, Password, Company, PhoneNumber) VALUES (?, ?, ?, ?, ?, ?)";
     //DL
-    String _INSERTCLIENT = "INSERT INTO " + DAConstants.TABLE_COMPANYLIST + "(Id, CompanyName, Address, City, Zip, Country, Phone, Fax, Email, SeNo, " +
+    String _INSERTCOMPANY = "INSERT INTO " + DAConstants.TABLE_COMPANY + "(CompanyId, CompanyName, Address, City, Zip, Country, Phone, Fax, Email, SeNo, " +
             "SalesArea, BusinessRelation, CompanyGroup, CompanyClosed, CompanyHomepage) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
-    String _INSERTCANVAS = "INSERT INTO " + DAConstants.TABLE_CANVAS + "(ClientID, Canvas) VALUES (? ,?)";
 
     public DAOCompany(Context context) {
         _context = context;
@@ -119,32 +117,34 @@ public class DAOCompany {
         return company;
     }
 
-    public ArrayList<BECompany> getAllClients() {
-        ArrayList<BECompany> clients = new ArrayList<BECompany>();
-        Cursor cursor = _db.query(DAConstants.TABLE_COMPANY,
-                new String[]{"Id", "Firstname", "Lastname", "Email", "Password", "Company", "PhoneNumber"},
-                null, null, null, null,
-                "Id desc");
-        if (cursor.moveToFirst()) {
-            do {
-                clients.add(new BECompany(cursor.getInt(0), cursor.getString(1), cursor.getString(2), cursor.getString(3), cursor.getString(4), cursor.getString(5), cursor.getInt(6)));
-            } while (cursor.moveToNext());
-        }
-        if (cursor != null && !cursor.isClosed()) {
-            cursor.close();
-        }
-        return clients;
-    }
+//    public ArrayList<BECompany> getAllClients() {
+//        ArrayList<BECompany> clients = new ArrayList<BECompany>();
+//        Cursor cursor = _db.query(DAConstants.TABLE_COMPANY,
+//                new String[]{"Id", "Firstname", "Lastname", "Email", "Password", "Company", "PhoneNumber"},
+//                null, null, null, null,
+//                "Id desc");
+//        if (cursor.moveToFirst()) {
+//            do {
+//                clients.add(new BECompany(cursor.getInt(0), cursor.getString(1), cursor.getString(2), cursor.getString(3), cursor.getString(4), cursor.getString(5), cursor.getInt(6)));
+//            } while (cursor.moveToNext());
+//        }
+//        if (cursor != null && !cursor.isClosed()) {
+//            cursor.close();
+//        }
+//        return clients;
+//    }
 
     public ArrayList<BECompany> getAllClientsFromDevice() {
         ArrayList<BECompany> clients = new ArrayList<BECompany>();
-        Cursor cursor = _db.query(DAConstants.TABLE_COMPANYLIST,
-        new String[]{"Id","IdCompany", "CompanyName", "Address", "City", "Zip", "Country", "Phone","Fax","Email", "SeNo", "SalesArea", "BusinessRelation", "CompanyGroup", "CompanyClosed", "CompanyHomepage"},
+        Cursor cursor = _db.query(DAConstants.TABLE_COMPANY,
+        new String[]{"CompanyId", "CompanyName", "Address", "City", "Zip", "Country", "Phone","Fax","Email", "SeNo", "SalesArea", "BusinessRelation", "CompanyGroup", "CompanyClosed", "CompanyHomepage"},
                 null, null, null, null,
                 null);
         if (cursor.moveToFirst()) {
             do {
-                clients.add(new BECompany(cursor.getInt(0), cursor.getString(1), cursor.getString(2), cursor.getString(3), cursor.getString(4), cursor.getString(5), cursor.getInt(6)));
+             boolean bol = Boolean.valueOf(cursor.getString(13));
+
+                clients.add(new BECompany(cursor.getString(0), cursor.getString(1), cursor.getString(2), cursor.getString(3), cursor.getString(4), cursor.getString(5), cursor.getString(6),cursor.getString(7), cursor.getString(8), cursor.getString(9), cursor.getString(10), cursor.getString(11), cursor.getString(12), bol, cursor.getString(14)));
             } while (cursor.moveToNext());
         }
         if (cursor != null && !cursor.isClosed()) {
@@ -154,12 +154,12 @@ public class DAOCompany {
     }
 
     public void deleteAllClients() {
-        _db.execSQL("DELETE FROM " + DAConstants.TABLE_COMPANYLIST + " WHERE ID != " + 100000);
+        _db.execSQL("DELETE FROM " + DAConstants.TABLE_COMPANY + " WHERE CompanyId != " + 100000);
 
     }
 
     public long insertCompanyOnDevice(BECompany client) {
-        _sql = _db.compileStatement(_INSERTCLIENT);
+        _sql = _db.compileStatement(_INSERTCOMPANY);
         _sql.bindString(1, "" + client.getM_id());
         _sql.bindString(2, "" + client.getM_companyName());
         _sql.bindString(3, "" + client.getM_address());

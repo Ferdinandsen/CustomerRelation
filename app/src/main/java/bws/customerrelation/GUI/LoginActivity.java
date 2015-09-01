@@ -47,8 +47,6 @@ public class LoginActivity extends AppCompatActivity {
     private void testSetup() {
         _userController.createDummyUsers();
         Log.v(TAG, "TEST - Users: " + _userController.getAllUsers().size());
-//        _clientController.createDummyClients();
-        Log.v(TAG, "TEST - Clients: " + _clientController.getAllClients().size());
     }
 
     private void findViews() {

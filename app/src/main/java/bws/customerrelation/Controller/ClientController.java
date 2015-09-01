@@ -40,9 +40,9 @@ public class ClientController {
 //        }
 //    }
 
-    public ArrayList<BECompany> getAllClients() {
-        return _daoCompany.getAllClients();
-    }
+//    public ArrayList<BECompany> getAllClients() {
+//        return _daoCompany.getAllClients();
+//    }
 
     public ArrayList<BECompany> getCompanyFromApi() {
         return _daoCompany.getCompanyFromApi();
@@ -53,28 +53,28 @@ public class ClientController {
     }
 
     public void createCompanyList(ArrayList<BECompany> clients) {
-        ArrayList<BECompany> fuck = new ArrayList<BECompany>();
+        ArrayList<BECompany> localCompanies = new ArrayList<BECompany>();
         for (BECompany clie : clients) {
-            fuck.add(clie);
+            localCompanies.add(clie);
         }
         ArrayList<BECompany> test = getAllClientsFromDevice();
         ArrayList<BECompany> test1 = new ArrayList<>();
 
         if (test.isEmpty()) {
-            for (BECompany x : fuck) {
+            for (BECompany x : localCompanies) {
                 _daoCompany.insertCompanyOnDevice(x);
             }
         } else {
-            for (BECompany x : fuck) {
+            for (BECompany x : localCompanies) {
                 for (BECompany y : test) {
                     if (x.getM_companyId() == y.getM_companyId())
                         test1.add(x);
                 }
             }
             for (BECompany x : test1)
-                fuck.remove(x);
+                localCompanies.remove(x);
 
-            for (BECompany x : fuck) {
+            for (BECompany x : localCompanies) {
                 _daoCompany.insertCompanyOnDevice(x);
             }
         }

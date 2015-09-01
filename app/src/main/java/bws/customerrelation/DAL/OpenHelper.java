@@ -13,14 +13,13 @@ public class OpenHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         db.execSQL("CREATE TABLE " + DAConstants.TABLE_USER + " (Id INTEGER PRIMARY KEY, Firstname TEXT, Lastname TEXT, Email TEXT, Password TEXT, PhoneNumber INTEGER)");
-        db.execSQL("CREATE TABLE " + DAConstants.TABLE_COMPANY + " (Id INTEGER PRIMARY KEY, Firstname TEXT, Lastname TEXT, Email TEXT, Password TEXT, Company TEXT, PhoneNumber INTEGER)");
-        db.execSQL("CREATE TABLE " + DAConstants.TABLE_COMPANYLIST + "(Id INTEGER PRIMARY KEY, IdCompany INTEGER, CompanyName TEXT, Address TEXT," +
+        db.execSQL("CREATE TABLE " + DAConstants.TABLE_COMPANY + "(CompanyId TEXT PRIMARY KEY, CompanyName TEXT, Address TEXT," +
                 "City TEXT,Zip TEXT,Country TEXT,Phone TEXT,Fax TEXT, " +
                 "Email TEXT,SeNo TEXT, SalesArea TEXT,BusinessRelation TEXT, " +
                 "CompanyGroup TEXT, CompanyClosed TEXT,CompanyHomepage TEXT )");
 
-        db.execSQL("CREATE TABLE " + DAConstants.TABLE_CANVAS + "CompanyId TEXT, CanvasID TEXT PRIMARY KEY,Subject TEXT, " +
-                "VisitBy TEXT, TypeOfVisit TEXT, Date TEXT, FollowUpDate TEXT, FollowUpSalesman TEXT, From TEXT, " +
+        db.execSQL("CREATE TABLE " + DAConstants.TABLE_CANVAS + "(CompanyId TEXT, CanvasID TEXT PRIMARY KEY,Subject TEXT, " +
+                "VisitBy TEXT, TypeOfVisit TEXT, Date TEXT, FollowUpDate TEXT, FollowUpSalesman TEXT, Sender TEXT, " +
                 "ToInternal TEXT, Region TEXT, Country TEXT, TypeOfTransport TEXT, ActivityType TEXT, " +
                 "BusinessArea TEXT, Office TEXT, Text TEXT)");
 
@@ -34,7 +33,7 @@ public class OpenHelper extends SQLiteOpenHelper {
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         db.execSQL("DROP TABLE IF EXISTS " + DAConstants.TABLE_USER);
         db.execSQL("DROP TABLE IF EXISTS " + DAConstants.TABLE_COMPANY);
-        db.execSQL("DROP TABLE IF EXISTS " + DAConstants.TABLE_COMPANYLIST);
+        db.execSQL("DROP TABLE IF EXISTS " + DAConstants.TABLE_COMPANY);
         db.execSQL("DROP TABLE IF EXISTS " + DAConstants.TABLE_CANVAS);
 //        db.execSQL("DROP TABLE IF EXISTS " + DAConstants.TABLE_MESSAGE);
 //        db.execSQL("DROP TABLE IF EXISTS " + DAConstants.TABLE_REQUEST);

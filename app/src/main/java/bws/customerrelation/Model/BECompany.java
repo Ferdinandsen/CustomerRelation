@@ -10,14 +10,14 @@ public class BECompany implements Serializable {
      * GENERAL TAB
      */
     private int m_id;
-    private String m_companyId;
     private String m_firstName;
     private String m_lastName;
 
+    private String m_companyId;
     private String m_email;
     private String m_password;
     private String m_companyName;
-    private int m_phoneNumber;
+    private String m_phoneNumber;
     private String m_zipCode;
     private String m_address;
     private String m_city;
@@ -43,28 +43,6 @@ public class BECompany implements Serializable {
     private String m_exportArea;
     private String m_importArea;
 
-    public BECompany(int id, String companyId, String companyName, String address, String city,
-                     String zip, String country, String phone, String fax,
-                     String email, String seNo, String salesArea, String businessRelation,
-                     String companyGroup, Boolean companyClosed, String companyHomepage) {
-        m_id = id;
-        m_companyId = companyId;
-        m_companyName = companyName;
-        m_address = address;
-        m_city = city;
-        m_zipCode = zip;
-        m_country = country;
-        m_telephone = phone;
-        m_fax = fax;
-        m_email = email;
-        m_seNo = seNo;
-        m_salesArea = salesArea;
-        m_businessRelation = businessRelation;
-        m_companyGroup = companyGroup;
-        m_isCompanyClosed = companyClosed;
-        m_homepage = companyHomepage;
-    }
-
     public BECompany(String companyId, String companyName, String address, String city,
                      String zip, String country, String phone, String fax,
                      String email, String seNo, String salesArea, String businessRelation,
@@ -85,35 +63,6 @@ public class BECompany implements Serializable {
         m_isCompanyClosed = companyClosed;
         m_homepage = companyHomepage;
     }
-
-    /*
-    *Only for use Dummy Data
-    */
-
-    public BECompany(String firstName, String lastName, String email, String password, String company, int phoneNumber) {
-        m_firstName = firstName;
-        m_lastName = lastName;
-        m_email = email;
-        m_password = password;
-        m_companyName = company;
-        m_phoneNumber = phoneNumber;
-
-    }
-
-    /*
-    *Only for use Dummy Data
-    */
-    public BECompany(int id, String firstName, String lastName, String email, String password, String company, int phoneNumber) {
-        m_id = id;
-        m_firstName = firstName;
-        m_lastName = lastName;
-        m_email = email;
-        m_password = password;
-        m_companyName = company;
-        m_phoneNumber = phoneNumber;
-
-    }
-
 
     public int getM_id() {
         return m_id;
@@ -171,11 +120,11 @@ public class BECompany implements Serializable {
         this.m_companyName = m_companyName;
     }
 
-    public int getM_phoneNumber() {
+    public String getM_phoneNumber() {
         return m_phoneNumber;
     }
 
-    public void setM_phoneNumber(int m_phoneNumber) {
+    public void setM_phoneNumber(String m_phoneNumber) {
         this.m_phoneNumber = m_phoneNumber;
     }
 
