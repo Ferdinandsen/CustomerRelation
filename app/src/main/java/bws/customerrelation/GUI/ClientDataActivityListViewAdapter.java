@@ -28,7 +28,6 @@ public class ClientDataActivityListViewAdapter extends ArrayAdapter<BECanvas> {
         _selectedClient = selectedClient;
     }
 
-
     @Override
     public View getView(int position, View v, ViewGroup parent) {
         if (v == null) {
@@ -43,7 +42,6 @@ public class ClientDataActivityListViewAdapter extends ArrayAdapter<BECanvas> {
         }
 
         BECanvas c = _canvas.get(position);
-
 
         TextView company = (TextView) v.findViewById(R.id.companyName);
         TextView canvasAmount = (TextView) v.findViewById(R.id.canvasAmount);

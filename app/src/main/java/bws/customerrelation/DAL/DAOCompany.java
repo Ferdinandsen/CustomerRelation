@@ -25,9 +25,7 @@ public class DAOCompany {
     Context _context;
     SQLiteDatabase _db;
     SQLiteStatement _sql;
-    //Dummy use
-    String _INSERT = "INSERT INTO " + DAConstants.TABLE_COMPANY + "(Firstname, Lastname, Email, Password, Company, PhoneNumber) VALUES (?, ?, ?, ?, ?, ?)";
-    //DL
+
     String _INSERTCOMPANY = "INSERT INTO " + DAConstants.TABLE_COMPANY + "(CompanyId, CompanyName, Address, City, Zip, Country, Phone, Fax, Email, SeNo, " +
             "SalesArea, BusinessRelation, CompanyGroup, CompanyClosed, CompanyHomepage) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 
@@ -37,17 +35,6 @@ public class DAOCompany {
         _db = openHelper.getWritableDatabase();
     }
 
-//    public long insert(BECompany client) {
-//        _sql = _db.compileStatement(_INSERT);
-//        _sql.bindString(1, client.getFirstName());
-//        _sql.bindString(2, client.getLastName());
-//        _sql.bindString(3, client.getEmail());
-//        _sql.bindString(4, client.getPassword());
-//        _sql.bindString(5, client.getCompany());
-//        _sql.bindString(6, "" + client.getPhoneNumber());
-//        return _sql.executeInsert();
-//    }
-
     public ArrayList<BECompany> getCompanyFromApi() {
         ArrayList<BECompany> companyList = new ArrayList<>();
         String URL = "http://skynet.bws.dk/Applications/smsAndroid.nsf/LookupCompanyNameAndUNID?readviewentries&outputformat=json&start=1&count=10&restrict=2C7EFD49ADD61732C1256C2C002FEF71#";
@@ -56,8 +43,6 @@ public class DAOCompany {
         api.execute(URL);
 
         try {
-//            soapHelper = new SoapHelper();
-//            soapHelper.execute();
             obj = api.get();
             companyList = ConvertFromJsonToBE(obj);
         } catch (Exception e) {
@@ -65,8 +50,6 @@ public class DAOCompany {
         }
         return companyList;
     }
-
-
 
     //KONVERTER JSON OG ADD TIL ARRAYLIST
     private ArrayList<BECompany> ConvertFromJsonToBE(JSONArray array) throws JSONException {
@@ -117,23 +100,6 @@ public class DAOCompany {
         return company;
     }
 
-//    public ArrayList<BECompany> getAllClients() {
-//        ArrayList<BECompany> clients = new ArrayList<BECompany>();
-//        Cursor cursor = _db.query(DAConstants.TABLE_COMPANY,
-//                new String[]{"Id", "Firstname", "Lastname", "Email", "Password", "Company", "PhoneNumber"},
-//                null, null, null, null,
-//                "Id desc");
-//        if (cursor.moveToFirst()) {
-//            do {
-//                clients.add(new BECompany(cursor.getInt(0), cursor.getString(1), cursor.getString(2), cursor.getString(3), cursor.getString(4), cursor.getString(5), cursor.getInt(6)));
-//            } while (cursor.moveToNext());
-//        }
-//        if (cursor != null && !cursor.isClosed()) {
-//            cursor.close();
-//        }
-//        return clients;
-//    }
-
     public ArrayList<BECompany> getAllClientsFromDevice() {
         ArrayList<BECompany> clients = new ArrayList<BECompany>();
         Cursor cursor = _db.query(DAConstants.TABLE_COMPANY,
@@ -155,7 +121,6 @@ public class DAOCompany {
 
     public void deleteAllClients() {
         _db.execSQL("DELETE FROM " + DAConstants.TABLE_COMPANY + " WHERE CompanyId != " + 100000);
-
     }
 
     public long insertCompanyOnDevice(BECompany client) {
@@ -177,13 +142,6 @@ public class DAOCompany {
         _sql.bindString(15, "" + client.getM_homepage());
         return _sql.executeInsert();
     }
-
-//    public long insertCanvas(String canvas, BECompany client) {
-//        _sql = _db.compileStatement(_INSERTCANVAS);
-//        _sql.bindString(1, "" + client.getM_id());
-//        _sql.bindString(2, canvas);
-//        return _sql.executeInsert();
-//    }
 
     public ArrayList<BECanvas> getAllCanvasByClientId(BECompany client) {
         ArrayList<BECanvas> canvasList = new ArrayList<>();

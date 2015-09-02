@@ -21,28 +21,7 @@ public class ClientController {
         _activity = context;
         _daoCompany = new DAOCompany(_activity);
         _daoCanvas = new DAOCanvas(_activity);
-
     }
-
-//    public void createDummyClients() {
-//        int test = _daoCompany.getAllClients().size();
-//        if (_daoCompany.getAllClients().size() < 10) {
-//            _daoCompany.insert(new BECompany("André", "Psy", "SejerejekillerxX@live.dk", "hej123", "BWS", 0));
-//            _daoCompany.insert(new BECompany("Thomas", "Petersen", "PsykoMegetOverklar@msn.com", "hej123", "BWS", 0));
-//            _daoCompany.insert(new BECompany("Bob", "Olesen", "bobolesen@hotmail.com", "hej123", "BWS", 0));
-//            _daoCompany.insert(new BECompany("Kevin", "Ørskov", "yoyo@live.dk", "hej123", "BWS", 0));
-//            _daoCompany.insert(new BECompany("Jacob", "Jakobsen", "feedthehorse@yumyum.com", "hej123", "BWS", 0));
-//            _daoCompany.insert(new BECompany("Trine", "Hansen", "thansen@fakta.com", "hej123", "BWS", 0));
-//            _daoCompany.insert(new BECompany("Anne", "Dahl", "adahl@gmail.com", "hej123", "BWS", 0));
-//            _daoCompany.insert(new BECompany("Thue", "Emilsen", "Volume@onmypc.com", "hej123", "BWS", 0));
-//            _daoCompany.insert(new BECompany("Mette", "Enevoldsen", "menevold@live.dk", "hej123", "BWS", 0));
-//            _daoCompany.insert(new BECompany("Kasper", "Juul", "kjuu@live.dk", "hej123", "BWS", 0));
-//        }
-//    }
-
-//    public ArrayList<BECompany> getAllClients() {
-//        return _daoCompany.getAllClients();
-//    }
 
     public ArrayList<BECompany> getCompanyFromApi() {
         return _daoCompany.getCompanyFromApi();

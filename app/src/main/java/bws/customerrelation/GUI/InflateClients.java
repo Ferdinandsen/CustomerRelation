@@ -24,7 +24,6 @@ public class InflateClients {
     static ArrayList<BECompany> _INFLATECLIENTS;
     final static String TAG = "Inflate";
 
-
     public InflateClients(Activity context, ArrayList<BECompany> list, LinearLayout layout) {
         _allClients = list;
         _context = context;
@@ -60,7 +59,6 @@ public class InflateClients {
             final String fName = c.getM_companyName();
 
             mFirstName.setText(fName);
-
 
             /**
              * changes background to white

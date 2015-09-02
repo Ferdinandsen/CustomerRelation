@@ -31,10 +31,7 @@ public class ClientDataActivity extends AppCompatActivity {
     BECompany selectedClient;
     Button btnCreateCanvas;
     MainActivityListViewAdapter adapter;
-    ArrayList<BECanvas> clientCanvaslist;
     ClientController _clientController;
-    int _selectedCanvasPosition;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,7 +44,6 @@ public class ClientDataActivity extends AppCompatActivity {
 //        populateData();
         setListeners();
         if (savedInstanceState == null) {
-//            _adapter = new ClientDataActivityListViewAdapter(this, R.layout.cell_main_activity, clientCanvaslist, _selectedClient);
             canvasList.setAdapter(adapter);
         }
     }
@@ -61,7 +57,6 @@ public class ClientDataActivity extends AppCompatActivity {
     public void onRestoreInstanceState(Bundle savedInstanceState) {
         super.onRestoreInstanceState(savedInstanceState);
         selectedClient = (BECompany) savedInstanceState.getSerializable(SharedConstants.SELECTEDCLIENT);
-//        _adapter = new MainActivityListViewAdapter(this, R.layout.cell_main_activity, _INFLATECLIENTS, _selectedClient);
         canvasList.setAdapter(adapter);
     }
 
@@ -117,27 +112,4 @@ public class ClientDataActivity extends AppCompatActivity {
         canvasIntent.putExtra(SharedConstants.CLIENT, selectedClient);
         startActivity(canvasIntent);
     }
-
-
-//    @Override
-//    public boolean onCreateOptionsMenu(Menu menu) {
-//        // Inflate the menu; this adds items to the action bar if it is present.
-//        getMenuInflater().inflate(R.menu.menu_client_data, menu);
-//        return true;
-//    }
-//
-//    @Override
-//    public boolean onOptionsItemSelected(MenuItem item) {
-//        // Handle action bar item clicks here. The action bar will
-//        // automatically handle clicks on the Home/Up button, so long
-//        // as you specify a parent activity in AndroidManifest.xml.
-//        int id = item.getItemId();
-//
-//        //noinspection SimplifiableIfStatement
-//        if (id == R.id.action_settings) {
-//            return true;
-//        }
-//
-//        return super.onOptionsItemSelected(item);
-//    }
 }

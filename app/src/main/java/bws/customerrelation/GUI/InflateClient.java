@@ -24,7 +24,6 @@ public class InflateClient {
     ArrayList<BECompany> _selectedClients;
     View test;
 
-
     public InflateClient(Context context, ArrayList<BECompany> list, LinearLayout layout) {
         _selectedClients = new ArrayList<BECompany>();
         _selectedClient = null;
