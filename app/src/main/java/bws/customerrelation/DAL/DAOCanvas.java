@@ -40,13 +40,11 @@ public class DAOCanvas {
     public ArrayList<BECanvas> getAllCanvasFromAPI() {
         ArrayList<BECanvas> companyList = new ArrayList<>();
         String URL = "http://skynet.bws.dk/Applications/smsAndroid.nsf/(CanvasByCompany)?readviewentries&outputformat=json&start=1&count=10&restrict=2C7EFD49ADD61732C1256C2C002FEF71#";
-        JSONArray obj;
+        JSONObject obj;
         GetJSONFromAPI api = new GetJSONFromAPI();
         api.execute(URL);
 
         try {
-//            soapHelper = new SoapHelper();
-//            soapHelper.execute();
             obj = api.get();
             companyList = ConvertFromJsonToBE(obj);
         } catch (Exception e) {
@@ -56,13 +54,14 @@ public class DAOCanvas {
     }
 
     //KONVERTER JSON OG ADD TIL ARRAYLIST
-    private ArrayList<BECanvas> ConvertFromJsonToBE(JSONArray array) throws JSONException {
-        JSONObject obj = new JSONObject();
-        JSONArray obj1 = new JSONArray();
+    private ArrayList<BECanvas> ConvertFromJsonToBE(JSONObject object) throws JSONException {
+        JSONObject obj;
+        JSONArray obj1;
+        JSONArray jsonArray = (JSONArray) object.get("viewentry");
 
         ArrayList<BECanvas> mList = new ArrayList<>();
-        for (int i = 0; i < array.length(); i++) {
-            obj = array.getJSONObject(i);
+        for (int i = 0; i < jsonArray.length(); i++) {
+            obj = jsonArray.getJSONObject(i);
             obj1 = obj.getJSONArray("entrydata");
             mList.add(setBECanvas(obj1));
         }
@@ -94,7 +93,6 @@ public class DAOCanvas {
                 array1.add(array.getJSONObject(y).getJSONObject("datetime").getString("0"));
             }
         }
-
 
         companyId = (String) array1.get(0);
         canvasId = array1.get(1);
@@ -163,8 +161,8 @@ public class DAOCanvas {
     public ArrayList<BECanvas> getAllCanvasFromDevice() {
         ArrayList<BECanvas> canvasList = new ArrayList<>();
         Cursor cursor = _db.query(DAConstants.TABLE_CANVAS,
-                new String[]{"companyId", "canvasId","Subject","VisitBy",  "TypeOfVisit",
-                        "date", "FollowUpDate","FollowUpSalesman", "Sender", "ToInternal", "Region", "Country",
+                new String[]{"companyId", "canvasId", "Subject", "VisitBy", "TypeOfVisit",
+                        "date", "FollowUpDate", "FollowUpSalesman", "Sender", "ToInternal", "Region", "Country",
                         "TypeOfTransport", "ActivityType", "BusinessArea", "Office", "text"}, null, null, null, null, null);
         if (cursor.moveToFirst()) {
             do {

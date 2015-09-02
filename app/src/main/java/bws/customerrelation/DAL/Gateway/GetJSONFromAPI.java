@@ -17,7 +17,7 @@ import java.net.URL;
 /**
  * Created by Jacob Ferdinandsen on 25-08-2015.
  */
-public class GetJSONFromAPI extends AsyncTask<String, Void, JSONArray> {
+public class GetJSONFromAPI extends AsyncTask<String, Void, JSONObject> {
 
     JSONArray jsonArray;
     JSONObject jsnobject;
@@ -29,17 +29,15 @@ public class GetJSONFromAPI extends AsyncTask<String, Void, JSONArray> {
     }
 
     @Override
-    protected JSONArray doInBackground(String... params) {
+    protected JSONObject doInBackground(String... params) {
 
         HttpURLConnection connection = null;
         BufferedReader br = null;
         URL url;
         try {
             url = new URL(params[0]);
-
             connection = (HttpURLConnection) url.openConnection();
             connection.connect();
-
             InputStream is = connection.getInputStream();
             StringBuilder sb = new StringBuilder();
             if (is == null) {
@@ -56,7 +54,6 @@ public class GetJSONFromAPI extends AsyncTask<String, Void, JSONArray> {
             }
             is.close();
             result = sb.toString();
-
         } catch (IOException e) {
             Log.e("Get Clients", "Error ", e);
             return null;
@@ -74,12 +71,12 @@ public class GetJSONFromAPI extends AsyncTask<String, Void, JSONArray> {
 
         try {
             jsnobject = new JSONObject(result);
-            jsonArray = (JSONArray) jsnobject.get("viewentry");
+//            jsonArray = (JSONArray) jsnobject.get("viewentry");
         } catch (JSONException e) {
             Log.e("JSON", "Error creating JSON", e);
         }
 
-        return jsonArray;
+        return jsnobject;
 
     }
 }
