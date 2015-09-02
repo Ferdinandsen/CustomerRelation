@@ -15,9 +15,9 @@ public class OpenHelper extends SQLiteOpenHelper {
         db.execSQL("CREATE TABLE " + DAConstants.TABLE_USER + " (Id INTEGER PRIMARY KEY, Firstname TEXT, Lastname TEXT, Email TEXT, Password TEXT, PhoneNumber INTEGER)");
 
         db.execSQL("CREATE TABLE " + DAConstants.TABLE_COMPANY + "(CompanyId TEXT PRIMARY KEY, CompanyName TEXT, Address TEXT," +
-                "City TEXT,Zip TEXT,Country TEXT,Phone TEXT,Fax TEXT, " +
-                "Email TEXT,SeNo TEXT, SalesArea TEXT,BusinessRelation TEXT, " +
-                "CompanyGroup TEXT, CompanyClosed TEXT,CompanyHomepage TEXT )");
+                "City TEXT, Zip TEXT, Country TEXT, Phone TEXT, Fax TEXT, " +
+                "Email TEXT, SeNo TEXT, SalesArea TEXT, BusinessRelation TEXT, " +
+                "CompanyGroup TEXT, CompanyClosed TEXT, CompanyHomepage TEXT )");
 
         db.execSQL("CREATE TABLE " + DAConstants.TABLE_CANVAS + "(CompanyId TEXT, CanvasID TEXT PRIMARY KEY,Subject TEXT, " +
                 "VisitBy TEXT, TypeOfVisit TEXT, Date TEXT, FollowUpDate TEXT, FollowUpSalesman TEXT, Sender TEXT, " +

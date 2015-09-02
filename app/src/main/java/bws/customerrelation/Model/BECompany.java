@@ -9,9 +9,6 @@ public class BECompany implements Serializable {
     /**
      * GENERAL TAB
      */
-    private int m_id;
-    private String m_firstName;
-    private String m_lastName;
 
     private String m_companyId;
     private String m_email;
@@ -47,6 +44,7 @@ public class BECompany implements Serializable {
                      String zip, String country, String phone, String fax,
                      String email, String seNo, String salesArea, String businessRelation,
                      String companyGroup, Boolean companyClosed, String companyHomepage) {
+
         m_companyId = companyId;
         m_companyName = companyName;
         m_address = address;
@@ -64,36 +62,12 @@ public class BECompany implements Serializable {
         m_homepage = companyHomepage;
     }
 
-    public int getM_id() {
-        return m_id;
-    }
-
-    public void setM_id(int m_id) {
-        this.m_id = m_id;
-    }
-
     public String getM_companyId() {
         return m_companyId;
     }
 
     public void setM_companyId(String m_companyId) {
         this.m_companyId = m_companyId;
-    }
-
-    public String getM_firstName() {
-        return m_firstName;
-    }
-
-    public void setM_firstName(String m_firstName) {
-        this.m_firstName = m_firstName;
-    }
-
-    public String getM_lastName() {
-        return m_lastName;
-    }
-
-    public void setM_lastName(String m_lastName) {
-        this.m_lastName = m_lastName;
     }
 
     public String getM_email() {

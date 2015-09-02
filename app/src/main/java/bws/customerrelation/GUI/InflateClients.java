@@ -67,7 +67,7 @@ public class InflateClients {
             _mLinearListView.setBackgroundColor(Color.parseColor("#ffffff"));
 
             /**
-             * add view in top linear
+             * add oldView in top linear
              */
             _mLinearListView.addView(mView);
 
@@ -77,7 +77,6 @@ public class InflateClients {
 
             if (_INFLATECLIENTS != null) {
                 for (BECompany cl : _INFLATECLIENTS) {
-
                     if (cl.getM_companyId().equals(c.getM_companyId())) {
                         mView.setBackgroundColor(Color.parseColor("#00B2EE"));
                     }
@@ -99,6 +98,7 @@ public class InflateClients {
                     boolean isChecked = mCheckBox.isChecked();
 
                     mCheckBox.setChecked(!isChecked);
+
                     if (isChecked) {
                         v.setBackgroundColor(Color.parseColor("#ffffff"));
                         _INFLATECLIENTS.remove(c);

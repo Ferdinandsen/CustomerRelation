@@ -36,18 +36,19 @@ public class ClientController {
         for (BECompany clie : clients) {
             localCompanies.add(clie);
         }
-        ArrayList<BECompany> test = getAllClientsFromDevice();
+        ArrayList<BECompany> deviceCompanies = getAllClientsFromDevice();
         ArrayList<BECompany> test1 = new ArrayList<>();
 
-        if (test.isEmpty()) {
+        if (deviceCompanies.isEmpty()) {
             for (BECompany x : localCompanies) {
                 _daoCompany.insertCompanyOnDevice(x);
             }
         } else {
             for (BECompany x : localCompanies) {
-                for (BECompany y : test) {
-                    if (x.getM_companyId() == y.getM_companyId())
+                for (BECompany y : deviceCompanies) {
+                    if (x.getM_companyId().equals(y.getM_companyId())) {
                         test1.add(x);
+                    }
                 }
             }
             for (BECompany x : test1)

@@ -17,19 +17,16 @@ import bws.customerrelation.R;
  * Created by Jaje on 20-Aug-15.
  */
 public class InflateClient {
-    LinearLayout mLinearListView;
+    LinearLayout mLinearListLayout;
     ArrayList<BECompany> _allClients;
-    BECompany _selectedClient;
+    static BECompany _SELECTEDCOMPANY;
     Context _context;
-    ArrayList<BECompany> _selectedClients;
-    View test;
+    View oldView;
 
     public InflateClient(Context context, ArrayList<BECompany> list, LinearLayout layout) {
-        _selectedClients = new ArrayList<BECompany>();
-        _selectedClient = null;
         _allClients = list;
         _context = context;
-        mLinearListView = layout;
+        mLinearListLayout = layout;
     }
 
     public void inflateView() {
@@ -47,8 +44,6 @@ public class InflateClient {
 
             TextView mFirstName = (TextView) mLinearView
                     .findViewById(R.id.companyName);
-            final TextView mLastName = (TextView) mLinearView
-                    .findViewById(R.id.canvasAmount);
             final CheckBox mCheckBox = (CheckBox) mLinearView
                     .findViewById(R.id.checkbox);
             mCheckBox.setVisibility(View.INVISIBLE);
@@ -57,32 +52,27 @@ public class InflateClient {
              */
 
             final String fName = c.getM_companyName();
-            final String canvas = "Amount of canvas " + c.getM_telephone();
             mFirstName.setText(fName);
-            mLastName.setText(canvas);
 
             /**
              * changes background to white
              */
 
-            mLinearListView.setBackgroundColor(Color.parseColor("#ffffff"));
+            mLinearListLayout.setBackgroundColor(Color.parseColor("#ffffff"));
 
             /**
-             * add view in top linear
+             * add oldView in top linear
              */
 
-            mLinearListView.addView(mLinearView);
+            mLinearListLayout.addView(mLinearView);
 
             /**
              * IF the client is in_selectedClients, highlight it again
              */
 
-            if (_selectedClients != null) {
-                for (BECompany cl : _selectedClients) {
-                    if (cl.getM_companyId() == c.getM_companyId()) {
-                        mLinearView.setBackgroundColor(Color.parseColor("#00B2EE"));
-                    }
-                }
+            if (_SELECTEDCOMPANY != null) {
+                if (_SELECTEDCOMPANY.getM_companyId().equals(c.getM_companyId()))
+                    mLinearView.setBackgroundColor(Color.parseColor("#00B2EE")); //blåååååå
             }
 
             /**
@@ -96,33 +86,30 @@ public class InflateClient {
 
                     mCheckBox.setChecked(!isChecked);
 
-                    if (_selectedClient != null && isChecked) {
+                    if (_SELECTEDCOMPANY != null && isChecked) {
                         v.setBackgroundColor(Color.parseColor("#ffffff"));
-                        _selectedClient = null;
+                        _SELECTEDCOMPANY = null;
+                        oldView = null;
                     } else {
-                        if (test != null) {
+                        if (oldView != null) {
                             v.setBackgroundColor(Color.parseColor("#00B2EE"));
-                            ((CheckBox) test.findViewById(R.id.checkbox)).setChecked(false);
-                            _selectedClient = c;
-                            test.setBackgroundColor(Color.parseColor("#ffffff"));
-                            test = v;
+                            ((CheckBox) oldView.findViewById(R.id.checkbox)).setChecked(false);
+                            _SELECTEDCOMPANY = c;
+                            oldView.setBackgroundColor(Color.parseColor("#ffffff")); // hvid
+                            oldView = v;
                         } else {
-                            v.setBackgroundColor(Color.parseColor("#00B2EE"));
-                            test = v;
-                            _selectedClient = c;
+                            v.setBackgroundColor(Color.parseColor("#00B2EE")); // blååååå
+                            oldView = v;
+                            _SELECTEDCOMPANY = c;
                         }
                     }
+                    ClientActivity.SELECTEDCOMPANY = _SELECTEDCOMPANY;
                 }
             });
         }
     }
 
     public BECompany getSelectedClient() {
-        return _selectedClient;
-    }
-
-    public void setSelectedClient(BECompany cli) {
-        _selectedClient = cli;
-        _selectedClients.add(cli);
+        return _SELECTEDCOMPANY;
     }
 }

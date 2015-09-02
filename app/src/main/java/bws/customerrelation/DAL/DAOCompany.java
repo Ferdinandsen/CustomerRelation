@@ -125,7 +125,7 @@ public class DAOCompany {
 
     public long insertCompanyOnDevice(BECompany client) {
         _sql = _db.compileStatement(_INSERTCOMPANY);
-        _sql.bindString(1, "" + client.getM_id());
+        _sql.bindString(1, "" + client.getM_companyId());
         _sql.bindString(2, "" + client.getM_companyName());
         _sql.bindString(3, "" + client.getM_address());
         _sql.bindString(4, "" + client.getM_city());
@@ -147,7 +147,7 @@ public class DAOCompany {
         ArrayList<BECanvas> canvasList = new ArrayList<>();
         Cursor cursor = _db.query(DAConstants.TABLE_CANVAS,
                 new String[]{"Id", "ClientId", "Canvas"},
-                "ClientId=?", new String[]{"" + client.getM_id()}, null, null,
+                "ClientId=?", new String[]{"" + client.getM_companyId()}, null, null,
                 "Id desc");
         if (cursor.moveToFirst()) {
             do {

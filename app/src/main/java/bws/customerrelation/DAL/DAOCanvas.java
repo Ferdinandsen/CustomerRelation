@@ -147,7 +147,7 @@ public class DAOCanvas {
         ArrayList<BECanvas> canvasList = new ArrayList<>();
         Cursor cursor = _db.query(DAConstants.TABLE_CANVAS,
                 new String[]{"Id", "ClientId", "Canvas"},
-                "ClientId=?", new String[]{"" + client.getM_id()}, null, null,
+                "ClientId=?", new String[]{"" + client.getM_companyId()}, null, null,
                 "Id desc");
         if (cursor.moveToFirst()) {
             do {
@@ -160,7 +160,6 @@ public class DAOCanvas {
         return canvasList;
     }
 
-    //TODO 
     public ArrayList<BECanvas> getAllCanvasFromDevice() {
         ArrayList<BECanvas> canvasList = new ArrayList<>();
         Cursor cursor = _db.query(DAConstants.TABLE_CANVAS,
