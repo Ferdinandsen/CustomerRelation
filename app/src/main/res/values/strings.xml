@@ -17,13 +17,13 @@
     <string name="btnGet">Show Client</string>
     <string name="title_activity_client_data">ClientDataActivity</string>
 
-    <string name="firstName">First Name</string>
-    <string name="lastName">Last Name</string>
-    <string name="company">Company</string>
-    <string name="address">Address</string>
-    <string name="seNumber">SE no</string>
-    <string name="telephone">Telephone</string>
-    <string name="zipcode_city">Zip</string>
+    <string name="group">Group: </string>
+    <string name="businessRelation">Business relation: </string>
+    <string name="company">Company name: </string>
+    <string name="address">Address: </string>
+    <string name="seNumber">SE no: </string>
+    <string name="telephone">Telephone: </string>
+    <string name="zipcode_city">Zip: </string>
 
     <string name="btnCreateCanvas">Create New Canvas</string>
 

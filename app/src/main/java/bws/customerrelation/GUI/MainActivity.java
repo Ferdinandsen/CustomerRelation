@@ -67,7 +67,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void populateClientList() {
-//        _allClients = _clientController.getAllClients();
+//        _allCanvas = _canvasController.getAllClients();
 
         _allClients = _clientController.getCompanyFromApi();
     }

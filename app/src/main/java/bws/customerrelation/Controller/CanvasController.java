@@ -30,6 +30,7 @@ public class CanvasController {
         ArrayList<BECanvas> dlCanvas = _daoCanvas.getAllCanvasFromDevice();
         ArrayList<BECompany> test = _clientController.getAllClientsFromDevice();
         //FØRSTE GANG - INDSÆTTER ALLE
+
         if (dlCanvas.size() == 0) {
             for (BECompany clie : dlCompanies) {
                 for (BECanvas canvas : APIcanvas) {
@@ -60,5 +61,7 @@ public class CanvasController {
     public ArrayList<BECanvas> getAllCanvasFromAPI() {
         return _daoCanvas.getAllCanvasFromAPI();
     }
-
+    public ArrayList<BECanvas> getAllCanvasByClientId(BECompany client) {
+        return _daoCanvas.getAllCanvasByClientId(client);
+    }
 }

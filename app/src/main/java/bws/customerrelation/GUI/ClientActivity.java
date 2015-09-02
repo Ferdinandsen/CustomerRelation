@@ -31,7 +31,6 @@ public class ClientActivity extends AppCompatActivity {
         Bundle b = getIntent().getExtras();
         setContentView(R.layout.activity_client);
         _clientController = new ClientController(this);
-//        _selectedClients = (ArrayList<BECompany>) b.getSerializable(SharedConstants.SELECTEDCLIENTLIST);
         findViews();
         PopulateClients();
         setListeners();
@@ -55,7 +54,6 @@ public class ClientActivity extends AppCompatActivity {
     private void onClickBtnShowClient() {
         Intent clientDataIntent = new Intent();
         clientDataIntent.setClass(this, ClientDataActivity.class);
-        SELECTEDCOMPANY = _adapter.getSelectedClient();
         if (SELECTEDCOMPANY != null) {
             clientDataIntent.putExtra(SharedConstants.CLIENT, SELECTEDCOMPANY);
             startActivity(clientDataIntent);

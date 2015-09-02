@@ -26,7 +26,7 @@ public class DAOCanvas {
     SQLiteStatement _sql;
 
     //DL
-    String _INSERTCANVAS = "INSERT INTO " + DAConstants.TABLE_CANVAS + "( CompanyId, CanvasID, Subject, VisitBy, " +
+    String _INSERTCANVAS = "INSERT INTO " + DAConstants.TABLE_CANVAS + "( CompanyId, CanvasId, Subject, VisitBy, " +
             "TypeOfVisit, Date, FollowUpDate, FollowUpSalesman, " +
             "Sender, ToInternal, Region, Country, TypeOfTransport, " +
             "ActivityType, BusinessArea, Office, Text) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
@@ -39,7 +39,7 @@ public class DAOCanvas {
 
     public ArrayList<BECanvas> getAllCanvasFromAPI() {
         ArrayList<BECanvas> companyList = new ArrayList<>();
-        String URL = "http://skynet.bws.dk/Applications/smsAndroid.nsf/(CanvasByCompany)?readviewentries&outputformat=json&start=1&count=10&restrict=2C7EFD49ADD61732C1256C2C002FEF71#";
+        String URL = "http://skynet.bws.dk/Applications/smsAndroid.nsf/(CanvasByCompany)?readviewentries&outputformat=json&start=1&count=1000&restrict=2C7EFD49ADD61732C1256C2C002FEF71#";
         JSONObject obj;
         GetJSONFromAPI api = new GetJSONFromAPI();
         api.execute(URL);
@@ -91,6 +91,8 @@ public class DAOCanvas {
                 array1.add(res);
             } else if (!array.getJSONObject(y).isNull("datetime")) {
                 array1.add(array.getJSONObject(y).getJSONObject("datetime").getString("0"));
+            } else {
+                array1.add("NULL");
             }
         }
 
@@ -141,15 +143,19 @@ public class DAOCanvas {
         return _sql.executeInsert();
     }
 
-    public ArrayList<BECanvas> getAllCanvasByClientId(BECompany client) {
+    public ArrayList<BECanvas> getAllCanvasByClientId(BECompany company) {
         ArrayList<BECanvas> canvasList = new ArrayList<>();
         Cursor cursor = _db.query(DAConstants.TABLE_CANVAS,
-                new String[]{"Id", "ClientId", "Canvas"},
-                "ClientId=?", new String[]{"" + client.getM_companyId()}, null, null,
-                "Id desc");
+                new String[]{"CompanyId", "CanvasId", "Subject", "VisitBy", "TypeOfVisit",
+                        "Date", "FollowUpDate", "FollowUpSalesman", "Sender", "ToInternal", "Region", "Country",
+                        "TypeOfTransport", "ActivityType", "BusinessArea", "Office", "Text"},
+                "CompanyId=?", new String[]{"" + company.getM_companyId()}, null, null,
+                null);
         if (cursor.moveToFirst()) {
             do {
-                canvasList.add(new BECanvas(cursor.getInt(0), cursor.getString(1), cursor.getString(2)));
+                canvasList.add(new BECanvas(cursor.getString(0), cursor.getString(1), cursor.getString(2), cursor.getString(3), cursor.getString(4),
+                        cursor.getString(5), cursor.getString(6), cursor.getString(7), cursor.getString(8), cursor.getString(9), cursor.getString(10),
+                        cursor.getString(11), cursor.getString(12), cursor.getString(13), cursor.getString(11), cursor.getString(12), cursor.getString(13)));
             } while (cursor.moveToNext());
         }
         if (cursor != null && !cursor.isClosed()) {
@@ -161,12 +167,14 @@ public class DAOCanvas {
     public ArrayList<BECanvas> getAllCanvasFromDevice() {
         ArrayList<BECanvas> canvasList = new ArrayList<>();
         Cursor cursor = _db.query(DAConstants.TABLE_CANVAS,
-                new String[]{"companyId", "canvasId", "Subject", "VisitBy", "TypeOfVisit",
-                        "date", "FollowUpDate", "FollowUpSalesman", "Sender", "ToInternal", "Region", "Country",
-                        "TypeOfTransport", "ActivityType", "BusinessArea", "Office", "text"}, null, null, null, null, null);
+                new String[]{"CompanyId", "CanvasId", "Subject", "VisitBy", "TypeOfVisit",
+                        "Date", "FollowUpDate", "FollowUpSalesman", "Sender", "ToInternal", "Region", "Country",
+                        "TypeOfTransport", "ActivityType", "BusinessArea", "Office", "Text"}, null, null, null, null, null);
         if (cursor.moveToFirst()) {
             do {
-                canvasList.add(new BECanvas(cursor.getInt(0), cursor.getString(1), cursor.getString(2)));
+                canvasList.add(new BECanvas(cursor.getString(0), cursor.getString(1), cursor.getString(2), cursor.getString(3), cursor.getString(4),
+                        cursor.getString(5), cursor.getString(6), cursor.getString(7), cursor.getString(8), cursor.getString(9), cursor.getString(10),
+                        cursor.getString(11), cursor.getString(12), cursor.getString(13), cursor.getString(11), cursor.getString(12), cursor.getString(13)));
             } while (cursor.moveToNext());
         }
         if (cursor != null && !cursor.isClosed()) {

@@ -37,8 +37,8 @@ public class DAOCompany {
 
     public ArrayList<BECompany> getCompanyFromApi() {
         ArrayList<BECompany> companyList = new ArrayList<>();
-        String URL = "http://skynet.bws.dk/Applications/smsAndroid.nsf/LookupCompanyNameAndUNID?readviewentries&outputformat=json&start=1&count=10&restrict=2C7EFD49ADD61732C1256C2C002FEF71#";
-        JSONArray obj;
+        String URL = "http://skynet.bws.dk/Applications/smsAndroid.nsf/LookupCompanyNameAndUNID?readviewentries&outputformat=json&start=1&count=100&restrict=2C7EFD49ADD61732C1256C2C002FEF71#";
+        JSONObject obj;
         GetJSONFromAPI api = new GetJSONFromAPI();
         api.execute(URL);
 
@@ -52,16 +52,20 @@ public class DAOCompany {
     }
 
     //KONVERTER JSON OG ADD TIL ARRAYLIST
-    private ArrayList<BECompany> ConvertFromJsonToBE(JSONArray array) throws JSONException {
+    private ArrayList<BECompany> ConvertFromJsonToBE(JSONObject object) throws JSONException {
         JSONObject obj = new JSONObject();
         JSONArray obj1 = new JSONArray();
 
+        JSONArray jsonArray = (JSONArray) object.get("viewentry");
+
         ArrayList<BECompany> mList = new ArrayList<>();
-        for (int i = 0; i < array.length(); i++) {
-            obj = array.getJSONObject(i);
+        for (int i = 0; i < jsonArray.length(); i++) {
+            obj = jsonArray.getJSONObject(i);
+            float flo = Float.parseFloat(obj.getString("@position"));
+            if(flo % 1 == 0){
             obj1 = obj.getJSONArray("entrydata");
-            mList.add(setCompanyBE(obj1));
-        }
+                      mList.add(setCompanyBE(obj1));
+        }}
         return mList;
     }
 
@@ -72,7 +76,13 @@ public class DAOCompany {
 
         ArrayList<String> array1 = new ArrayList<>();
         for (int y = 0; y < array.length(); y++) {
-            array1.add(array.getJSONObject(y).getJSONObject("text").getString("0"));
+            if (!array.getJSONObject(y).isNull("text")) {
+                array1.add(array.getJSONObject(y).getJSONObject("text").getString("0"));
+            }
+            else {
+                array1.add("NULL");
+            }
+
         }
 
         id = array1.get(0);
@@ -103,14 +113,17 @@ public class DAOCompany {
     public ArrayList<BECompany> getAllClientsFromDevice() {
         ArrayList<BECompany> clients = new ArrayList<BECompany>();
         Cursor cursor = _db.query(DAConstants.TABLE_COMPANY,
-        new String[]{"CompanyId", "CompanyName", "Address", "City", "Zip", "Country", "Phone","Fax","Email", "SeNo", "SalesArea", "BusinessRelation", "CompanyGroup", "CompanyClosed", "CompanyHomepage"},
+        new String[]{"CompanyId", "CompanyName", "Address", "City", "Zip", "Country", "Phone",
+                "Fax","Email", "SeNo", "SalesArea", "BusinessRelation", "CompanyGroup", "CompanyClosed", "CompanyHomepage"},
                 null, null, null, null,
                 null);
         if (cursor.moveToFirst()) {
             do {
              boolean bol = Boolean.valueOf(cursor.getString(13));
 
-                clients.add(new BECompany(cursor.getString(0), cursor.getString(1), cursor.getString(2), cursor.getString(3), cursor.getString(4), cursor.getString(5), cursor.getString(6),cursor.getString(7), cursor.getString(8), cursor.getString(9), cursor.getString(10), cursor.getString(11), cursor.getString(12), bol, cursor.getString(14)));
+                clients.add(new BECompany(cursor.getString(0), cursor.getString(1), cursor.getString(2), cursor.getString(3), cursor.getString(4),
+                        cursor.getString(5), cursor.getString(6),cursor.getString(7), cursor.getString(8), cursor.getString(9), cursor.getString(10),
+                        cursor.getString(11), cursor.getString(12), bol, cursor.getString(14)));
             } while (cursor.moveToNext());
         }
         if (cursor != null && !cursor.isClosed()) {

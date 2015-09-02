@@ -10,106 +10,120 @@
     tools:context="bws.customerrelation.GUI.ClientDataActivity">
 
     <LinearLayout
-        android:id="@+id/linearLayout3"
-        android:layout_width="wrap_content"
+        android:id="@+id/scrollview"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_above="@+id/LinearButtonLayout"
+        android:layout_below="@+id/linearLayoutData"
+        android:orientation="vertical">
+
+        <ScrollView
+            android:id="@+id/canvasListView"
+            android:layout_width="match_parent"
+            android:layout_height="fill_parent">
+
+            <LinearLayout
+                android:id="@+id/linear_scroll"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:id="@+id/linear_listview"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical" />
+            </LinearLayout>
+        </ScrollView>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linearLayoutData"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:layout_below="@+id/linearLayout5"
-        android:layout_alignParentStart="true"
-        android:layout_above="@+id/linearLayout2"
-        android:weightSum="1">
-        >
+        android:orientation="horizontal"
+        android:weightSum="1"
+        android:layout_alignParentEnd="true"
+        android:baselineAligned="false">
 
-        <ListView
-            android:id="@+id/canvasList"
+
+        <LinearLayout
+            android:id="@+id/linearLayout4"
             android:layout_width="wrap_content"
-            android:layout_height="300dp"
-            android:layout_weight="0.98">
+            android:layout_height="fill_parent"
+            android:orientation="vertical"
+            android:layout_weight="0.5">
 
-        </ListView>
+            <TextView
+                android:id="@+id/companyName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/companyName" />
+
+            <TextView
+                android:id="@+id/address"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/address" />
+
+            <TextView
+                android:id="@+id/zipcode_city"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/zipcode_city" />
+
+            <TextView
+                android:id="@+id/businessRelation"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/businessRelation" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/linearLayout5"
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent"
+            android:orientation="vertical"
+            android:layout_weight="0.5">
+
+            <TextView
+                android:id="@+id/group"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/group" />
+
+            <TextView
+                android:id="@+id/telephone"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/telephone" />
+
+            <TextView
+                android:id="@+id/seNumber"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/seNumber" />
+
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/LinearButtonLayout"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:gravity="center_horizontal">
 
         <Button
             android:id="@+id/btnCreateCanvas"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/btnCreateCanvas"
-            android:layout_gravity="center_horizontal"
-            android:layout_alignParentTop="true"
-            android:layout_centerHorizontal="true" />
+            android:text="@string/btnCreateCanvas" />
 
     </LinearLayout>
 
-    <LinearLayout
-        android:id="@+id/linearLayout2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentStart="true"
-        android:orientation="horizontal">
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/linearLayout4"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:gravity="end"
-        android:layout_gravity="right"
-        android:layout_alignParentTop="true"
-        android:layout_alignEnd="@+id/linearLayout3">
-
-        <TextView
-            android:id="@+id/firstName"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/firstName"/>
-
-        <TextView
-            android:id="@+id/lastName"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/lastName"/>
-
-        <TextView
-            android:id="@+id/telephone"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/telephone"/>
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/linearLayout5"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:layout_gravity="left"
-        android:gravity="start">
-
-        <TextView
-            android:id="@+id/company"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/company" />
-
-        <TextView
-            android:id="@+id/address"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/address" />
-
-        <TextView
-            android:id="@+id/zipcode_city"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/zipcode_city"/>
-
-        <TextView
-            android:id="@+id/seNumber"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/seNumber"/>
-
-    </LinearLayout>
 
 </RelativeLayout>

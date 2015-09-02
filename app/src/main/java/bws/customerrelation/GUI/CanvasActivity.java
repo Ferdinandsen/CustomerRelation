@@ -44,7 +44,7 @@ public class CanvasActivity extends AppCompatActivity {
 
 //    private void onClickBtnSave() {
 //        BECanvas canvas = txtCanvas.getText().toString();
-//    _clientController.saveCanvas(canvas);
+//    _canvasController.saveCanvas(canvas);
 //        finish();
 //
 //    }

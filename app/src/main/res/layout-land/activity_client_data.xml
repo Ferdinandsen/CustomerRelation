@@ -63,13 +63,13 @@
             android:id="@+id/firstName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/firstName"/>
+            android:text="@string/companyName"/>
 
         <TextView
             android:id="@+id/lastName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/lastName"/>
+            android:text="@string/address"/>
 
         <TextView
             android:id="@+id/telephone"

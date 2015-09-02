@@ -71,8 +71,11 @@ public class InflateClient {
              */
 
             if (_SELECTEDCOMPANY != null) {
-                if (_SELECTEDCOMPANY.getM_companyId().equals(c.getM_companyId()))
+                if (_SELECTEDCOMPANY.getM_companyId().equals(c.getM_companyId())) {
                     mLinearView.setBackgroundColor(Color.parseColor("#00B2EE")); //blåååååå
+                    oldView = mLinearView;
+                    mCheckBox.setChecked(true);
+                }
             }
 
             /**
@@ -86,7 +89,7 @@ public class InflateClient {
 
                     mCheckBox.setChecked(!isChecked);
 
-                    if (_SELECTEDCOMPANY != null && isChecked) {
+                    if (_SELECTEDCOMPANY != null && isChecked && _SELECTEDCOMPANY.getM_companyId().equals(c.getM_companyId())) {
                         v.setBackgroundColor(Color.parseColor("#ffffff"));
                         _SELECTEDCOMPANY = null;
                         oldView = null;
