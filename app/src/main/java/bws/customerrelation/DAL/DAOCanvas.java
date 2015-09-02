@@ -13,7 +13,6 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 
 import bws.customerrelation.DAL.Gateway.GetJSONFromAPI;
-import bws.customerrelation.DAL.Gateway.SoapHelper;
 import bws.customerrelation.Model.BECanvas;
 import bws.customerrelation.Model.BECompany;
 
@@ -130,13 +129,13 @@ public class DAOCanvas {
         _sql.bindString(4, canvas.getM_TypeOfVisit());
         _sql.bindString(5, canvas.getM_date());
         _sql.bindString(6, canvas.getM_FollowUpDate());
-        _sql.bindString(7, canvas.getM_FollowUpBy());
-        _sql.bindString(8, canvas.getM_From());
+        _sql.bindString(7, canvas.getM_FollowUpSalesman());
+        _sql.bindString(8, canvas.getM_Sender());
         _sql.bindString(9, canvas.getM_ToInternal());
         _sql.bindString(10, canvas.getM_Region());
         _sql.bindString(11, canvas.getM_Country());
         _sql.bindString(12, canvas.getM_TypeOfTransport());
-        _sql.bindString(13, canvas.getM_Activity());
+        _sql.bindString(13, canvas.getM_ActivityType());
         _sql.bindString(14, canvas.getM_BusinessArea());
         _sql.bindString(15, canvas.getM_Office());
         _sql.bindString(16, canvas.getM_text());
@@ -165,7 +164,9 @@ public class DAOCanvas {
     public ArrayList<BECanvas> getAllCanvasFromDevice() {
         ArrayList<BECanvas> canvasList = new ArrayList<>();
         Cursor cursor = _db.query(DAConstants.TABLE_CANVAS,
-                new String[]{"Id", "ClientId", "Canvas"}, null, null, null, null, null);
+                new String[]{"companyId", "canvasId","Subject","VisitBy",  "TypeOfVisit",
+                        "date", "FollowUpDate","FollowUpSalesman", "Sender", "ToInternal", "Region", "Country",
+                        "TypeOfTransport", "ActivityType", "BusinessArea", "Office", "text"}, null, null, null, null, null);
         if (cursor.moveToFirst()) {
             do {
                 canvasList.add(new BECanvas(cursor.getInt(0), cursor.getString(1), cursor.getString(2)));

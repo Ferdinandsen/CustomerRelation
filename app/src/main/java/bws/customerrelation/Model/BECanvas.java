@@ -11,14 +11,14 @@ public class BECanvas {
     private String m_VisitBy;
     private String m_Subject;
     private String m_date;
-    private String m_FollowUpBy;
+    private String m_FollowUpSalesman;
     private String m_FollowUpDate;
-    private String m_From;
+    private String m_Sender;
     private String m_ToInternal;
     private String m_Region;
     private String m_Country;
     private String m_TypeOfTransport;
-    private String m_Activity;
+    private String m_ActivityType;
     private String m_BusinessArea;
     private String m_Office;
     private String m_text;
@@ -31,23 +31,23 @@ public class BECanvas {
     }
 
     public BECanvas(String canvasId, String companyId, String TypeOfVisit, String VisitBy,
-                     String Subject, String date, String FollowUpBy, String FollowUpDate,
-                     String From, String ToInternal, String Region, String Country,
-                     String TypeOfTransport, String Activity, String BusinessArea, String Office, String text) {
+                     String Subject, String date, String FollowUpSalesman, String FollowUpDate,
+                     String Sender, String ToInternal, String Region, String Country,
+                     String TypeOfTransport, String ActivityType, String BusinessArea, String Office, String text) {
         m_canvasId = canvasId;
         m_companyId = companyId;
         m_TypeOfVisit = TypeOfVisit;
         m_VisitBy = VisitBy;
         m_Subject = Subject;
         m_date = date;
-        m_FollowUpBy = FollowUpBy;
+        m_FollowUpSalesman = FollowUpSalesman;
         m_FollowUpDate = FollowUpDate;
-        m_From = From;
+        m_Sender = Sender;
         m_ToInternal = ToInternal;
         m_Region = Region;
         m_Country = Country;
         m_TypeOfTransport = TypeOfTransport;
-        m_Activity = Activity;
+        m_ActivityType = ActivityType;
         m_BusinessArea = BusinessArea;
         m_Office = Office;
 
@@ -120,12 +120,12 @@ public class BECanvas {
         this.m_date = m_date;
     }
 
-    public String getM_FollowUpBy() {
-        return m_FollowUpBy;
+    public String getM_FollowUpSalesman() {
+        return m_FollowUpSalesman;
     }
 
-    public void setM_FollowUpBy(String m_FollowUpBy) {
-        this.m_FollowUpBy = m_FollowUpBy;
+    public void setM_FollowUpSalesman(String m_FollowUpSalesman) {
+        this.m_FollowUpSalesman = m_FollowUpSalesman;
     }
 
     public String getM_FollowUpDate() {
@@ -136,12 +136,12 @@ public class BECanvas {
         this.m_FollowUpDate = m_FollowUpDate;
     }
 
-    public String getM_From() {
-        return m_From;
+    public String getM_Sender() {
+        return m_Sender;
     }
 
-    public void setM_From(String m_From) {
-        this.m_From = m_From;
+    public void setM_Sender(String m_Sender) {
+        this.m_Sender = m_Sender;
     }
 
     public String getM_ToInternal() {
@@ -176,12 +176,12 @@ public class BECanvas {
         this.m_TypeOfTransport = m_TypeOfTransport;
     }
 
-    public String getM_Activity() {
-        return m_Activity;
+    public String getM_ActivityType() {
+        return m_ActivityType;
     }
 
-    public void setM_Activity(String m_Activity) {
-        this.m_Activity = m_Activity;
+    public void setM_ActivityType(String m_ActivityType) {
+        this.m_ActivityType = m_ActivityType;
     }
 
     public String getM_BusinessArea() {

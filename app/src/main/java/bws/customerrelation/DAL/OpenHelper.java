@@ -13,6 +13,7 @@ public class OpenHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         db.execSQL("CREATE TABLE " + DAConstants.TABLE_USER + " (Id INTEGER PRIMARY KEY, Firstname TEXT, Lastname TEXT, Email TEXT, Password TEXT, PhoneNumber INTEGER)");
+
         db.execSQL("CREATE TABLE " + DAConstants.TABLE_COMPANY + "(CompanyId TEXT PRIMARY KEY, CompanyName TEXT, Address TEXT," +
                 "City TEXT,Zip TEXT,Country TEXT,Phone TEXT,Fax TEXT, " +
                 "Email TEXT,SeNo TEXT, SalesArea TEXT,BusinessRelation TEXT, " +
