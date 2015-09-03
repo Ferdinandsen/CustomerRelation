@@ -17,7 +17,7 @@ import bws.customerrelation.R;
 /**
  * Created by Jaje on 20-Aug-15.
  */
-public class ClientDataActivityListViewAdapter {
+public class InflateClientData {
 
     /**
      * Created by Jaje on 20-Aug-15.
@@ -28,7 +28,7 @@ public class ClientDataActivityListViewAdapter {
     Context _context;
     View oldView;
 
-    public ClientDataActivityListViewAdapter(Context context, ArrayList<BECanvas> list, LinearLayout layout) {
+    public InflateClientData(Context context, ArrayList<BECanvas> list, LinearLayout layout) {
         _allCanvas = list;
         _context = context;
         mLinearListLayout = layout;

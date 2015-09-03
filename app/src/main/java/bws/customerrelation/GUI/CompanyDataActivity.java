@@ -16,7 +16,7 @@ import bws.customerrelation.Model.BECanvas;
 import bws.customerrelation.Model.BECompany;
 import bws.customerrelation.R;
 
-public class ClientDataActivity extends AppCompatActivity {
+public class CompanyDataActivity extends AppCompatActivity {
 
     TextView companyName;
     TextView address;
@@ -27,9 +27,9 @@ public class ClientDataActivity extends AppCompatActivity {
     TextView seNumber;
 
     LinearLayout _LinearLayout;
-    BECanvas selectedCanvas;
+    static BECanvas SELECTEDCANVAS;
     Button btnCreateCanvas;
-    ClientDataActivityListViewAdapter _adapter;
+    InflateClientData _adapter;
     CanvasController _canvasController;
     ArrayList<BECanvas> companyCanvaslist;
     BECompany _selectedCompany;
@@ -39,14 +39,14 @@ public class ClientDataActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_client_data);
         _canvasController = new CanvasController(this);
-        _selectedCompany = ClientActivity.SELECTEDCOMPANY;
+        _selectedCompany = CompanyActivity.SELECTEDCOMPANY;
         findViews();
         populateData();
         setListeners();
-        _adapter = new ClientDataActivityListViewAdapter(this, companyCanvaslist, _LinearLayout);
+        _adapter = new InflateClientData(this, companyCanvaslist, _LinearLayout);
         _adapter.inflateView();
-        if (_adapter.getSelectedClient() != null) {
-            selectedCanvas = _adapter.getSelectedClient();
+        if (_adapter.getSelectedCanvas() != null) {
+            SELECTEDCANVAS = _adapter.getSelectedCanvas();
         }
     }
 
@@ -72,7 +72,7 @@ public class ClientDataActivity extends AppCompatActivity {
         zipcode_city = (TextView) findViewById(R.id.zipcode_city);
         group = (TextView) findViewById(R.id.group);
         btnCreateCanvas = (Button) findViewById(R.id.btnCreateCanvas);
-        _LinearLayout = (LinearLayout) findViewById(R.id.scrollview);
+        _LinearLayout = (LinearLayout) findViewById(R.id.linear_listview);
     }
 
     private void setListeners() {
