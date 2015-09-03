@@ -10,6 +10,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import bws.customerrelation.Controller.CanvasController;
 import bws.customerrelation.Controller.ClientController;
 import bws.customerrelation.Controller.SharedConstants;
 import bws.customerrelation.Controller.UserController;
@@ -26,6 +27,7 @@ public class LoginActivity extends AppCompatActivity {
 
     UserController _userController;
     ClientController _clientController;
+    CanvasController _canvasController;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,6 +35,7 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
         _userController = new UserController(this);
         _clientController = new ClientController(this);
+        _canvasController = new CanvasController(this);
         findViews();
         setListeners();
         testSetup();
@@ -42,6 +45,9 @@ public class LoginActivity extends AppCompatActivity {
 
     private void clearDBClientList() {
         _clientController.deleteAllClients();
+        _canvasController.deleteAllCanvas();
+
+
     }
 
     private void testSetup() {

@@ -16,14 +16,14 @@ import bws.customerrelation.Controller.SharedConstants;
 import bws.customerrelation.Model.BECompany;
 import bws.customerrelation.R;
 
-public class ClientActivity extends AppCompatActivity {
+public class CompanyActivity extends AppCompatActivity {
     LinearLayout _linearLayout;
     Button btnShowClient;
     ArrayList<BECompany> _selectedClients;
     static BECompany SELECTEDCOMPANY;
     ClientController _clientController;
     InflateClient _adapter;
-    final static String TAG = "ClientActivity";
+    final static String TAG = "CompanyActivity";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,7 +53,7 @@ public class ClientActivity extends AppCompatActivity {
 
     private void onClickBtnShowClient() {
         Intent clientDataIntent = new Intent();
-        clientDataIntent.setClass(this, ClientDataActivity.class);
+        clientDataIntent.setClass(this, CompanyDataActivity.class);
         if (SELECTEDCOMPANY != null) {
             clientDataIntent.putExtra(SharedConstants.CLIENT, SELECTEDCOMPANY);
             startActivity(clientDataIntent);

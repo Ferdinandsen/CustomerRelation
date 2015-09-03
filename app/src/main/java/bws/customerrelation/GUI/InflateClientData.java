@@ -11,24 +11,23 @@ import android.widget.TextView;
 import java.util.ArrayList;
 
 import bws.customerrelation.Model.BECanvas;
-import bws.customerrelation.Model.BECompany;
 import bws.customerrelation.R;
 
 /**
  * Created by Jaje on 20-Aug-15.
  */
-public class ClientDataActivityListViewAdapter {
+public class InflateClientData {
 
     /**
      * Created by Jaje on 20-Aug-15.
      */
     LinearLayout mLinearListLayout;
     ArrayList<BECanvas> _allCanvas;
-    static BECanvas SELECTEDCANVAS;
+    static BECanvas _SELECTEDCANVAS;
     Context _context;
     View oldView;
 
-    public ClientDataActivityListViewAdapter(Context context, ArrayList<BECanvas> list, LinearLayout layout) {
+    public InflateClientData(Context context, ArrayList<BECanvas> list, LinearLayout layout) {
         _allCanvas = list;
         _context = context;
         mLinearListLayout = layout;
@@ -47,7 +46,7 @@ public class ClientDataActivityListViewAdapter {
              * getting id of row.xml
              */
 
-            TextView mFirstName = (TextView) mLinearView
+            TextView desc = (TextView) mLinearView
                     .findViewById(R.id.companyName);
             final CheckBox mCheckBox = (CheckBox) mLinearView
                     .findViewById(R.id.checkbox);
@@ -56,8 +55,13 @@ public class ClientDataActivityListViewAdapter {
              * set item into row
              */
 
-            final String fName = c.getM_Subject();
-            mFirstName.setText(fName);
+            final String typeVisit = c.getM_TypeOfVisit();
+            final String subject = c.getM_Subject();
+            if (subject == null) {
+                desc.setText(typeVisit);
+            } else {
+                desc.setText(subject);
+            }
 
             /**
              * changes background to white
@@ -75,8 +79,8 @@ public class ClientDataActivityListViewAdapter {
              * IF the client is in_selectedClients, highlight it again
              */
 
-            if (SELECTEDCANVAS != null) {
-                if (SELECTEDCANVAS.getM_companyId().equals(c.getM_companyId())) {
+            if (_SELECTEDCANVAS != null) {
+                if (_SELECTEDCANVAS.getM_canvasId().equals(c.getM_canvasId())) {
                     mLinearView.setBackgroundColor(Color.parseColor("#00B2EE")); //blåååååå
                     oldView = mLinearView;
                     mCheckBox.setChecked(true);
@@ -94,31 +98,31 @@ public class ClientDataActivityListViewAdapter {
 
                     mCheckBox.setChecked(!isChecked);
 
-                    if (SELECTEDCANVAS != null && isChecked && SELECTEDCANVAS.getM_companyId().equals(c.getM_companyId())) {
+                    if (_SELECTEDCANVAS != null && isChecked && _SELECTEDCANVAS.getM_canvasId().equals(c.getM_canvasId())) {
                         v.setBackgroundColor(Color.parseColor("#ffffff"));
-                        SELECTEDCANVAS = null;
+                        _SELECTEDCANVAS = null;
                         oldView = null;
                     } else {
                         if (oldView != null) {
                             v.setBackgroundColor(Color.parseColor("#00B2EE"));
                             ((CheckBox) oldView.findViewById(R.id.checkbox)).setChecked(false);
-                            SELECTEDCANVAS = c;
+                            _SELECTEDCANVAS = c;
                             oldView.setBackgroundColor(Color.parseColor("#ffffff")); // hvid
                             oldView = v;
                         } else {
                             v.setBackgroundColor(Color.parseColor("#00B2EE")); // blååååå
                             oldView = v;
-                            SELECTEDCANVAS = c;
+                            _SELECTEDCANVAS = c;
                         }
                     }
-//                        ClientDataActivity.SELECTEDCOMPANY = SELECTEDCANVAS;
+                    CompanyDataActivity.SELECTEDCANVAS = _SELECTEDCANVAS;
                 }
             });
         }
     }
 
-    public BECanvas getSelectedClient() {
-        return SELECTEDCANVAS;
+    public BECanvas getSelectedCanvas() {
+        return _SELECTEDCANVAS;
     }
 }
 

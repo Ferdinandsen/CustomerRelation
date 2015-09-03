@@ -30,7 +30,7 @@ public class BECanvas {
         m_text = text;
     }
 
-    public BECanvas(String canvasId, String companyId, String TypeOfVisit, String VisitBy,
+    public BECanvas(String companyId,String canvasId, String TypeOfVisit, String VisitBy,
                      String Subject, String date, String FollowUpSalesman, String FollowUpDate,
                      String Sender, String ToInternal, String Region, String Country,
                      String TypeOfTransport, String ActivityType, String BusinessArea, String Office, String text) {
@@ -210,7 +210,7 @@ public class BECanvas {
 
     @Override
     public String toString() {
-        return m_id + " " + m_text;
+        return m_companyId + " " + m_Subject + " canvas id : " + m_canvasId;
     }
 
 
