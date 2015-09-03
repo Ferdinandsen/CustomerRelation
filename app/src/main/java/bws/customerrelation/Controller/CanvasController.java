@@ -29,8 +29,9 @@ public class CanvasController {
         ArrayList<BECanvas> APIcanvas = getAllCanvasFromAPI();
         ArrayList<BECanvas> dlCanvas = _daoCanvas.getAllCanvasFromDevice();
         ArrayList<BECompany> test = new ArrayList<>();
+        ArrayList<BECanvas> jsf = new ArrayList<>();
         //FØRSTE GANG - INDSÆTTER ALLE
-        for(BECompany x : dlCompanies){
+        for (BECompany x : dlCompanies) {
             test.add(x);
         }
 
@@ -68,6 +69,10 @@ public class CanvasController {
 
     public ArrayList<BECanvas> getAllCanvasByClientId(BECompany client) {
         return _daoCanvas.getAllCanvasByClientId(client);
+    }
+
+    public long saveCanvas(BECanvas canvas) {
+        return _daoCanvas.insertCanvas(canvas);
     }
 
     public void deleteAllCanvas() {

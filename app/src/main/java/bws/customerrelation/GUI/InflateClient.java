@@ -96,7 +96,7 @@ public class InflateClient {
                     } else {
                         if (oldView != null) {
                             v.setBackgroundColor(Color.parseColor("#00B2EE"));
-                            ((CheckBox) oldView.findViewById(R.id.checkbox)).setChecked(false);
+//                            ((CheckBox) oldView.findViewById(R.id.checkbox)).setChecked(false);
                             _SELECTEDCOMPANY = c;
                             oldView.setBackgroundColor(Color.parseColor("#ffffff")); // hvid
                             oldView = v;

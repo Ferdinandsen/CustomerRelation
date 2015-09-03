@@ -64,11 +64,4 @@ public class ClientController {
         return _daoCompany.getAllClientsFromDevice();
     }
 
-    public long saveCanvas(BECanvas canvas) {
-        return _daoCanvas.insertCanvas(canvas);
-    }
-
-    public ArrayList<BECanvas> getAllCanvasByClientId(BECompany client) {
-        return _daoCompany.getAllCanvasByClientId(client);
-    }
 }

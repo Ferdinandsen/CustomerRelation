@@ -95,12 +95,12 @@ public class MainActivity extends AppCompatActivity {
                 showClientIntent.setClass(this, CompanyDataActivity.class);
                 _clientController.createCompanyList(_SELECTEDCLIENTS);
                 _canvasController.createCanvasList();
-                showClientIntent.putExtra(SharedConstants.CLIENT, _SELECTEDCLIENTS.get(0));
+//                showClientIntent.putExtra(SharedConstants.CLIENT, _SELECTEDCLIENTS.get(0));
                 startActivity(showClientIntent);
                 } else {
                 Intent clientIntent = new Intent();
                 clientIntent.setClass(this, CompanyActivity.class);
-                clientIntent.putExtra(SharedConstants.SELECTEDCLIENTLIST, MainActivity._SELECTEDCLIENTS);
+//                clientIntent.putExtra(SharedConstants.SELECTEDCLIENTLIST, MainActivity._SELECTEDCLIENTS);
                 _clientController.createCompanyList(_SELECTEDCLIENTS);
                 _canvasController.createCanvasList();
                 startActivity(clientIntent);
