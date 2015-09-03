@@ -261,9 +261,9 @@ public class BECompany implements Serializable {
     public void setM_importArea(String m_importArea) {
         this.m_importArea = m_importArea;
     }
-//    @Override
-//    public String toString(){
-//        return m_companyName+ "   "+ m_companyId;
-//    }
+    @Override
+    public String toString(){
+        return m_companyName+ "   "+ m_companyId;
+    }
 
 }

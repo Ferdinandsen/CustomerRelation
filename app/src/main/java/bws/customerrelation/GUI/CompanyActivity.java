@@ -53,7 +53,7 @@ public class CompanyActivity extends AppCompatActivity {
 
     private void onClickBtnShowClient() {
         Intent clientDataIntent = new Intent();
-        clientDataIntent.setClass(this, ClientDataActivity.class);
+        clientDataIntent.setClass(this, CompanyDataActivity.class);
         if (SELECTEDCOMPANY != null) {
             clientDataIntent.putExtra(SharedConstants.CLIENT, SELECTEDCOMPANY);
             startActivity(clientDataIntent);

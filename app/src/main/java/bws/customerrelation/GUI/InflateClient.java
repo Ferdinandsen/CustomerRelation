@@ -106,7 +106,7 @@ public class InflateClient {
                             _SELECTEDCOMPANY = c;
                         }
                     }
-                    ClientActivity.SELECTEDCOMPANY = _SELECTEDCOMPANY;
+                    CompanyActivity.SELECTEDCOMPANY = _SELECTEDCOMPANY;
                 }
             });
         }

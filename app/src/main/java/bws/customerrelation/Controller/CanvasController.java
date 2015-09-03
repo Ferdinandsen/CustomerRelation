@@ -28,8 +28,11 @@ public class CanvasController {
         ArrayList<BECompany> dlCompanies = _clientController.getAllClientsFromDevice();
         ArrayList<BECanvas> APIcanvas = getAllCanvasFromAPI();
         ArrayList<BECanvas> dlCanvas = _daoCanvas.getAllCanvasFromDevice();
-        ArrayList<BECompany> test = _clientController.getAllClientsFromDevice();
+        ArrayList<BECompany> test = new ArrayList<>();
         //FØRSTE GANG - INDSÆTTER ALLE
+        for(BECompany x : dlCompanies){
+            test.add(x);
+        }
 
         if (dlCanvas.size() == 0) {
             for (BECompany clie : dlCompanies) {
@@ -40,10 +43,10 @@ public class CanvasController {
                 }
             } //ANDEN GANG...
         } else {
-            for (BECompany clie : dlCompanies) {
+            for (BECompany company : dlCompanies) {
                 for (BECanvas c : dlCanvas) {
-                    if (clie.getM_companyId().equals(c.getM_companyId())) {
-                        test.remove(clie);
+                    if (company.getM_companyId().equals(c.getM_companyId())) {
+                        test.remove(company);
                     }
                 }
             }
@@ -56,12 +59,18 @@ public class CanvasController {
                 }
             }
         }
+
     }
 
     public ArrayList<BECanvas> getAllCanvasFromAPI() {
         return _daoCanvas.getAllCanvasFromAPI();
     }
+
     public ArrayList<BECanvas> getAllCanvasByClientId(BECompany client) {
         return _daoCanvas.getAllCanvasByClientId(client);
+    }
+
+    public void deleteAllCanvas() {
+        _daoCanvas.deleteAllCanvas();
     }
 }

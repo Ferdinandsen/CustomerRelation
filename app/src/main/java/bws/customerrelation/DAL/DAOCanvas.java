@@ -26,7 +26,7 @@ public class DAOCanvas {
     SQLiteStatement _sql;
 
     //DL
-    String _INSERTCANVAS = "INSERT INTO " + DAConstants.TABLE_CANVAS + "( CompanyId, CanvasId, Subject, VisitBy, " +
+    String _INSERTCANVAS = "INSERT INTO " + DAConstants.TABLE_CANVAS + "(CompanyId, CanvasId, Subject, VisitBy, " +
             "TypeOfVisit, Date, FollowUpDate, FollowUpSalesman, " +
             "Sender, ToInternal, Region, Country, TypeOfTransport, " +
             "ActivityType, BusinessArea, Office, Text) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
@@ -70,9 +70,9 @@ public class DAOCanvas {
 
     private BECanvas setBECanvas(JSONArray array) throws JSONException {
         String canvasId, companyId, TypeOfVisit, VisitBy,
-                Subject, date, FollowUpBy, FollowUpDate,
-                From, ToInternal, Region, Country,
-                TypeOfTransport, Activity, BusinessArea, Office, text;
+                Subject, Date, FollowUpBy, FollowUpDate,
+                Sender, ToInternal, Region, Country,
+                TypeOfTransport, Activity, BusinessArea, Office, Text;
 
         ArrayList<String> array1 = new ArrayList<>();
         for (int y = 0; y < array.length(); y++) {
@@ -101,10 +101,10 @@ public class DAOCanvas {
         Subject = (String) array1.get(2);
         VisitBy = (String) array1.get(3);
         TypeOfVisit = (String) array1.get(4);
-        date = (String) array1.get(5);
+        Date = (String) array1.get(5);
         FollowUpDate = (String) array1.get(6);
         FollowUpBy = (String) array1.get(7);
-        From = (String) array1.get(8);
+        Sender = (String) array1.get(8);
         ToInternal = (String) array1.get(9);
         Region = (String) array1.get(10);
         Country = (String) array1.get(11);
@@ -112,33 +112,34 @@ public class DAOCanvas {
         Activity = (String) array1.get(13);
         BusinessArea = (String) array1.get(14);
         Office = (String) array1.get(15);
-        text = (String) array1.get(16);
+        Text = (String) array1.get(16);
 
-        BECanvas canvas = new BECanvas(companyId, canvasId, Subject, VisitBy, TypeOfVisit, date, FollowUpDate, FollowUpBy,
-                From, ToInternal, Region, Country,
-                TypeOfTransport, Activity, BusinessArea, Office, text);
+        BECanvas canvas = new BECanvas(companyId, canvasId, Subject, VisitBy, TypeOfVisit, Date, FollowUpDate, FollowUpBy,
+                Sender, ToInternal, Region, Country,
+                TypeOfTransport, Activity, BusinessArea, Office,
+                Text);
         return canvas;
     }
 
     public long insertCanvas(BECanvas canvas) {
         _sql = _db.compileStatement(_INSERTCANVAS);
-        _sql.bindString(0, canvas.getM_companyId());
-        _sql.bindString(1, canvas.getM_canvasId());
-        _sql.bindString(2, canvas.getM_Subject());
-        _sql.bindString(3, canvas.getM_VisitBy());
-        _sql.bindString(4, canvas.getM_TypeOfVisit());
-        _sql.bindString(5, canvas.getM_date());
-        _sql.bindString(6, canvas.getM_FollowUpDate());
-        _sql.bindString(7, canvas.getM_FollowUpSalesman());
-        _sql.bindString(8, canvas.getM_Sender());
-        _sql.bindString(9, canvas.getM_ToInternal());
-        _sql.bindString(10, canvas.getM_Region());
-        _sql.bindString(11, canvas.getM_Country());
-        _sql.bindString(12, canvas.getM_TypeOfTransport());
-        _sql.bindString(13, canvas.getM_ActivityType());
-        _sql.bindString(14, canvas.getM_BusinessArea());
-        _sql.bindString(15, canvas.getM_Office());
-        _sql.bindString(16, canvas.getM_text());
+        _sql.bindString(1, canvas.getM_companyId());
+        _sql.bindString(2, canvas.getM_canvasId());
+        _sql.bindString(3, canvas.getM_Subject());
+        _sql.bindString(4, canvas.getM_VisitBy());
+        _sql.bindString(5, canvas.getM_TypeOfVisit());
+        _sql.bindString(6, canvas.getM_date());
+        _sql.bindString(7, canvas.getM_FollowUpDate());
+        _sql.bindString(8, canvas.getM_FollowUpSalesman());
+        _sql.bindString(9, canvas.getM_Sender());
+        _sql.bindString(10, canvas.getM_ToInternal());
+        _sql.bindString(11, canvas.getM_Region());
+        _sql.bindString(12, canvas.getM_Country());
+        _sql.bindString(13, canvas.getM_TypeOfTransport());
+        _sql.bindString(14, canvas.getM_ActivityType());
+        _sql.bindString(15, canvas.getM_BusinessArea());
+        _sql.bindString(16, canvas.getM_Office());
+        _sql.bindString(17, canvas.getM_text());
 
         return _sql.executeInsert();
     }
@@ -181,5 +182,9 @@ public class DAOCanvas {
             cursor.close();
         }
         return canvasList;
+    }
+
+    public void deleteAllCanvas() {
+        _db.execSQL("DELETE FROM " + DAConstants.TABLE_CANVAS + " WHERE CanvasId != " + 100000);
     }
 }
