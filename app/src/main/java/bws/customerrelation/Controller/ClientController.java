@@ -6,7 +6,6 @@ import java.util.ArrayList;
 
 import bws.customerrelation.DAL.DAOCanvas;
 import bws.customerrelation.DAL.DAOCompany;
-import bws.customerrelation.Model.BECanvas;
 import bws.customerrelation.Model.BECompany;
 
 /**
@@ -16,11 +15,13 @@ public class ClientController {
     DAOCompany _daoCompany;
     DAOCanvas _daoCanvas;
     Activity _activity;
+    ArrayList<BECompany> _cacheList;
 
     public ClientController(Activity context) {
         _activity = context;
         _daoCompany = new DAOCompany(_activity);
         _daoCanvas = new DAOCanvas(_activity);
+        _cacheList = getCompanyFromApi();
     }
 
     public ArrayList<BECompany> getCompanyFromApi() {
@@ -64,4 +65,14 @@ public class ClientController {
         return _daoCompany.getAllClientsFromDevice();
     }
 
+    public ArrayList<BECompany> getCompaniesByInput(String s) {
+
+        ArrayList<BECompany> matchedCompanies = new ArrayList<>();
+        for (BECompany c : _cacheList) {
+            if (c.getM_companyName().toLowerCase().contains(s) || c.getM_seNo().toLowerCase().contains(s)) {
+                matchedCompanies.add(c);
+            }
+        }
+        return matchedCompanies;
+    }
 }

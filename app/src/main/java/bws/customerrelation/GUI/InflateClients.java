@@ -81,7 +81,7 @@ public class InflateClients {
                 for (BECompany cl : _INFLATECLIENTS) {
                     if (cl.getM_companyId().equals(c.getM_companyId())) {
                         mView.setBackgroundColor(Color.parseColor("#00B2EE"));
-                     }
+                    }
                 }
             }
 
@@ -98,7 +98,9 @@ public class InflateClients {
 
                 private void onMulitipleClickitemlist(View v) {
                     boolean isChecked = mCheckBox.isChecked();
-//boolean isdl = c.isDl();
+
+                    //boolean isdl = c.isDl();
+
                     mCheckBox.setChecked(!isChecked);
 
 //                    if (isdl) {
