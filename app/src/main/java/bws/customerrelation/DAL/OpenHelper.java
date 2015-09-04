@@ -19,7 +19,7 @@ public class OpenHelper extends SQLiteOpenHelper {
                 "Email TEXT, SeNo TEXT, SalesArea TEXT, BusinessRelation TEXT, " +
                 "CompanyGroup TEXT, CompanyClosed TEXT, CompanyHomepage TEXT )");
 
-        db.execSQL("CREATE TABLE " + DAConstants.TABLE_CANVAS + "(CompanyId TEXT, CanvasId TEXT PRIMARY KEY,Subject TEXT, " +
+        db.execSQL("CREATE TABLE " + DAConstants.TABLE_CANVAS + "(CompanyId TEXT, CanvasId TEXT PRIMARY KEY, Subject TEXT, " +
                 "VisitBy TEXT, TypeOfVisit TEXT, Date TEXT, FollowUpDate TEXT, FollowUpSalesman TEXT, Sender TEXT, " +
                 "ToInternal TEXT, Region TEXT, Country TEXT, TypeOfTransport TEXT, ActivityType TEXT, " +
                 "BusinessArea TEXT, Office TEXT, Text TEXT)");

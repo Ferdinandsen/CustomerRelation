@@ -13,7 +13,6 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 
 import bws.customerrelation.DAL.Gateway.GetJSONFromAPI;
-import bws.customerrelation.DAL.Gateway.SoapHelper;
 import bws.customerrelation.Model.BECanvas;
 import bws.customerrelation.Model.BECompany;
 
@@ -51,7 +50,10 @@ public class DAOCompany {
         return companyList;
     }
 
-    //KONVERTER JSON OG ADD TIL ARRAYLIST
+    /**
+     * KONVERTER JSON OG ADD TIL ARRAYLIST
+     */
+
     private ArrayList<BECompany> ConvertFromJsonToBE(JSONObject object) throws JSONException {
         JSONObject obj = new JSONObject();
         JSONArray obj1 = new JSONArray();
@@ -62,10 +64,11 @@ public class DAOCompany {
         for (int i = 0; i < jsonArray.length(); i++) {
             obj = jsonArray.getJSONObject(i);
             float flo = Float.parseFloat(obj.getString("@position"));
-            if(flo % 1 == 0){
-            obj1 = obj.getJSONArray("entrydata");
-                      mList.add(setCompanyBE(obj1));
-        }}
+            if (flo % 1 == 0) {
+                obj1 = obj.getJSONArray("entrydata");
+                mList.add(setCompanyBE(obj1));
+            }
+        }
         return mList;
     }
 
@@ -78,11 +81,9 @@ public class DAOCompany {
         for (int y = 0; y < array.length(); y++) {
             if (!array.getJSONObject(y).isNull("text")) {
                 array1.add(array.getJSONObject(y).getJSONObject("text").getString("0"));
-            }
-            else {
+            } else {
                 array1.add("NULL");
             }
-
         }
 
         id = array1.get(0);
@@ -99,31 +100,36 @@ public class DAOCompany {
         businessRelation = (String) array1.get(11);
         companyGroup = (String) array1.get(12);
         Boolean bol;
-        if(array1.get(13).equals("") || array1.get(13).toLowerCase().equals("false")){
+        if (array1.get(13).equals("") || array1.get(13).toLowerCase().equals("false")) {
             companyClosed = false;
+        } else {
+            companyClosed = true;
         }
-        else{companyClosed = true;}
         companyHomepage = (String) array1.get(14);
 
         BECompany company = new BECompany(id, companyName, address, city, zip, country, phone, fax, email, seNo, salesArea, businessRelation, companyGroup, companyClosed,
-                companyHomepage);
+                companyHomepage); //, false
         return company;
     }
 
     public ArrayList<BECompany> getAllClientsFromDevice() {
         ArrayList<BECompany> clients = new ArrayList<BECompany>();
         Cursor cursor = _db.query(DAConstants.TABLE_COMPANY,
-        new String[]{"CompanyId", "CompanyName", "Address", "City", "Zip", "Country", "Phone",
-                "Fax","Email", "SeNo", "SalesArea", "BusinessRelation", "CompanyGroup", "CompanyClosed", "CompanyHomepage"},
+                new String[]{"CompanyId", "CompanyName", "Address", "City", "Zip", "Country", "Phone",
+                        "Fax", "Email", "SeNo", "SalesArea", "BusinessRelation", "CompanyGroup", "CompanyClosed", "CompanyHomepage"},
                 null, null, null, null,
                 null);
         if (cursor.moveToFirst()) {
             do {
-             boolean bol = Boolean.valueOf(cursor.getString(13));
-
-                clients.add(new BECompany(cursor.getString(0), cursor.getString(1), cursor.getString(2), cursor.getString(3), cursor.getString(4),
-                        cursor.getString(5), cursor.getString(6),cursor.getString(7), cursor.getString(8), cursor.getString(9), cursor.getString(10),
-                        cursor.getString(11), cursor.getString(12), bol, cursor.getString(14)));
+                boolean bol = Boolean.valueOf(cursor.getString(13));
+//                boolean isDl = true; // sætter at den er dl, og ikke skal kunne deselectes fra mainActivity listen
+                BECompany compa = new BECompany(
+                        cursor.getString(0), cursor.getString(1), cursor.getString(2),
+                        cursor.getString(3), cursor.getString(4), cursor.getString(5),
+                        cursor.getString(6), cursor.getString(7), cursor.getString(8),
+                        cursor.getString(9), cursor.getString(10), cursor.getString(11),
+                        cursor.getString(12), bol, cursor.getString(14)); //, isDl
+                clients.add(compa);
             } while (cursor.moveToNext());
         }
         if (cursor != null && !cursor.isClosed()) {
@@ -172,18 +178,5 @@ public class DAOCompany {
         }
         return canvasList;
     }
-    //Hent en specifik user's, Client liste ud fra AD
-//    public ArrayList<BECompany> getUsersClients(BEUser user) {
-//
-//        ArrayList<BECompany> clients = new ArrayList<BECompany>();
-//        Cursor cursor = _db.query( //INDSÆT DET KORREKTE );
-//        if (cursor.moveToFirst()) {
-//            clients.add(new BECompany(cursor.getInt(0), cursor.getString(1), cursor.getString(2), cursor.getString(3), cursor.getString(4), cursor.getString(5), cursor.getInt(6)));
-//        }
-//        if (cursor != null && !cursor.isClosed()) {
-//            cursor.close();
-//        }
-//        return clients;
-//    }
 }
 

@@ -29,6 +29,7 @@ public class BECompany implements Serializable {
     private String m_salesArea;
     private String m_companyGroup;
     private Boolean m_isCompanyClosed;
+    private Boolean _isDl;
 
     /**
      * SALES INFO TAB
@@ -43,7 +44,7 @@ public class BECompany implements Serializable {
     public BECompany(String companyId, String companyName, String address, String city,
                      String zip, String country, String phone, String fax,
                      String email, String seNo, String salesArea, String businessRelation,
-                     String companyGroup, Boolean companyClosed, String companyHomepage) {
+                     String companyGroup, Boolean companyClosed, String companyHomepage) { //, Boolean isDl
 
         m_companyId = companyId;
         m_companyName = companyName;
@@ -60,6 +61,7 @@ public class BECompany implements Serializable {
         m_companyGroup = companyGroup;
         m_isCompanyClosed = companyClosed;
         m_homepage = companyHomepage;
+//        _isDl = isDl;
     }
 
     public String getM_companyId() {
@@ -260,6 +262,13 @@ public class BECompany implements Serializable {
 
     public void setM_importArea(String m_importArea) {
         this.m_importArea = m_importArea;
+    }
+    public Boolean isDl() {
+        return _isDl;
+    }
+
+    public void set_isDl(Boolean _isDl) {
+        this._isDl = _isDl;
     }
     @Override
     public String toString(){

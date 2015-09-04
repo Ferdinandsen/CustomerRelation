@@ -13,9 +13,20 @@
            <item name="android:titleTextStyle">@style/MyActionBarTitleText</item>
            <!--<item name="titleTextStyle">@style/MyActionBarTitleText</item>-->
        </style>
-    <style name="MyActionBarTitleText"
-        parent="TextAppearance.AppCompat.Widget.ActionBar.Title">
+    <style name="MyActionBarTitleText" parent="TextAppearance.AppCompat.Widget.ActionBar.Title">
         <!--<item name="android:textColor">@color/black</item>-->
         <!--<item name="textColor">@color/black</item>-->
     </style>
 </resources>
+
+<!--<resources>-->
+
+<!--&lt;!&ndash; Base application theme. &ndash;&gt;-->
+<!--<style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">-->
+    <!--<item name="colorPrimary">@color/deepBlueSky2</item>-->
+    <!--<item name="colorPrimaryDark">@color/deepBlueSky2</item>-->
+    <!--&lt;!&ndash; Customize your theme here. &ndash;&gt;-->
+
+<!--</style>-->
+
+<!--</resources>-->

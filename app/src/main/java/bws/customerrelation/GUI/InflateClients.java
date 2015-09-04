@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.CheckBox;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -52,6 +53,7 @@ public class InflateClients {
             final CheckBox mCheckBox = (CheckBox) mView
                     .findViewById(R.id.checkbox);
             mCheckBox.setVisibility(View.INVISIBLE);
+
             /**
              * set item into row
              */
@@ -97,11 +99,17 @@ public class InflateClients {
                 private void onMulitipleClickitemlist(View v) {
                     boolean isChecked = mCheckBox.isChecked();
 
+                    //boolean isdl = c.isDl();
+
                     mCheckBox.setChecked(!isChecked);
 
+//                    if (isdl) {
+//                        Toast.makeText(_context, "Unable to deselect downloaded companies", Toast.LENGTH_SHORT).show();
+//                    }
                     if (isChecked) {
                         v.setBackgroundColor(Color.parseColor("#ffffff"));
                         _INFLATECLIENTS.remove(c);
+
                     } else {
                         v.setBackgroundColor(Color.parseColor("#00B2EE"));
                         _INFLATECLIENTS.add(c);

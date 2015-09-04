@@ -35,8 +35,7 @@
     <string name="companyName">Company</string>
     <string name="canvasAmount">CanvasAmount</string>
 
-    <string name="hello_world">Hello world!</string>
-
+    <string name="txtSearchHint">search</string>
 
 
 </resources>

@@ -57,7 +57,7 @@ public class InflateClientData {
 
             final String typeVisit = c.getM_TypeOfVisit();
             final String subject = c.getM_Subject();
-            if (subject == null) {
+            if (subject == null || subject.equals("")) {
                 desc.setText(typeVisit);
             } else {
                 desc.setText(subject);

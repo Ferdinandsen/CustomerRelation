@@ -28,7 +28,7 @@ public class CompanyActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Bundle b = getIntent().getExtras();
+//        Bundle b = getIntent().getExtras();
         setContentView(R.layout.activity_client);
         _clientController = new ClientController(this);
         findViews();
@@ -55,7 +55,7 @@ public class CompanyActivity extends AppCompatActivity {
         Intent clientDataIntent = new Intent();
         clientDataIntent.setClass(this, CompanyDataActivity.class);
         if (SELECTEDCOMPANY != null) {
-            clientDataIntent.putExtra(SharedConstants.CLIENT, SELECTEDCOMPANY);
+//            clientDataIntent.putExtra(SharedConstants.CLIENT, SELECTEDCOMPANY);
             startActivity(clientDataIntent);
         } else {
             Toast.makeText(this, "Du skal vælge en kunde på listen", Toast.LENGTH_SHORT).show();

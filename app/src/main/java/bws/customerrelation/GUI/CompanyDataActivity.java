@@ -39,7 +39,8 @@ public class CompanyDataActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_client_data);
         _canvasController = new CanvasController(this);
-        _selectedCompany = CompanyActivity.SELECTEDCOMPANY;
+
+        _selectedCompany = CompanyActivity.SELECTEDCOMPANY != null ? CompanyActivity.SELECTEDCOMPANY : MainActivity._SELECTEDCLIENTS.get(0);
         findViews();
         populateData();
         setListeners();

@@ -26,7 +26,7 @@ public class DAOCanvas {
     SQLiteStatement _sql;
 
     //DL
-    String _INSERTCANVAS = "INSERT INTO " + DAConstants.TABLE_CANVAS + "(CompanyId, CanvasId, Subject, VisitBy, " +
+    String _INSERTCANVAS = "INSERT INTO " + DAConstants.TABLE_CANVAS + "(CanvasId, CompanyId, Subject, VisitBy, " +
             "TypeOfVisit, Date, FollowUpDate, FollowUpSalesman, " +
             "Sender, ToInternal, Region, Country, TypeOfTransport, " +
             "ActivityType, BusinessArea, Office, Text) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
@@ -53,7 +53,10 @@ public class DAOCanvas {
         return companyList;
     }
 
-    //KONVERTER JSON OG ADD TIL ARRAYLIST
+    /**
+     * KONVERTER JSON OG ADD TIL ARRAYLIST
+     */
+
     private ArrayList<BECanvas> ConvertFromJsonToBE(JSONObject object) throws JSONException {
         JSONObject obj;
         JSONArray obj1;
@@ -84,20 +87,20 @@ public class DAOCanvas {
                 JSONArray ara = array.getJSONObject(y).getJSONObject("textlist").getJSONArray("text");
 
                 String res = "";
-                //STRINGBUILDER ISTEDET!!!
+                StringBuilder sb = new StringBuilder(res);
                 for (int i = 0; i < ara.length(); i++) {
-                    res += ara.getJSONObject(i).getString("0");
+                    sb.append(ara.getJSONObject(i).getString("0"));
                 }
-                array1.add(res);
+                array1.add(sb.toString());
             } else if (!array.getJSONObject(y).isNull("datetime")) {
                 array1.add(array.getJSONObject(y).getJSONObject("datetime").getString("0"));
             } else {
-                array1.add("NULL");
+                array1.add("");
             }
         }
 
-        companyId = (String) array1.get(0);
-        canvasId = array1.get(1);
+        canvasId = array1.get(0);
+        companyId = (String) array1.get(1);
         Subject = (String) array1.get(2);
         VisitBy = (String) array1.get(3);
         TypeOfVisit = (String) array1.get(4);
@@ -114,7 +117,7 @@ public class DAOCanvas {
         Office = (String) array1.get(15);
         Text = (String) array1.get(16);
 
-        BECanvas canvas = new BECanvas(companyId, canvasId, Subject, VisitBy, TypeOfVisit, Date, FollowUpDate, FollowUpBy,
+        BECanvas canvas = new BECanvas(canvasId, companyId, Subject, VisitBy, TypeOfVisit, Date, FollowUpDate, FollowUpBy,
                 Sender, ToInternal, Region, Country,
                 TypeOfTransport, Activity, BusinessArea, Office,
                 Text);
@@ -123,8 +126,8 @@ public class DAOCanvas {
 
     public long insertCanvas(BECanvas canvas) {
         _sql = _db.compileStatement(_INSERTCANVAS);
-        _sql.bindString(1, canvas.getM_companyId());
-        _sql.bindString(2, canvas.getM_canvasId());
+        _sql.bindString(1, canvas.getM_canvasId());
+        _sql.bindString(2, canvas.getM_companyId());
         _sql.bindString(3, canvas.getM_Subject());
         _sql.bindString(4, canvas.getM_VisitBy());
         _sql.bindString(5, canvas.getM_TypeOfVisit());
@@ -147,7 +150,7 @@ public class DAOCanvas {
     public ArrayList<BECanvas> getAllCanvasByClientId(BECompany company) {
         ArrayList<BECanvas> canvasList = new ArrayList<>();
         Cursor cursor = _db.query(DAConstants.TABLE_CANVAS,
-                new String[]{"CompanyId", "CanvasId", "Subject", "VisitBy", "TypeOfVisit",
+                new String[]{"CanvasId", "CompanyId", "Subject", "VisitBy", "TypeOfVisit",
                         "Date", "FollowUpDate", "FollowUpSalesman", "Sender", "ToInternal", "Region", "Country",
                         "TypeOfTransport", "ActivityType", "BusinessArea", "Office", "Text"},
                 "CompanyId=?", new String[]{"" + company.getM_companyId()}, null, null,
@@ -168,7 +171,7 @@ public class DAOCanvas {
     public ArrayList<BECanvas> getAllCanvasFromDevice() {
         ArrayList<BECanvas> canvasList = new ArrayList<>();
         Cursor cursor = _db.query(DAConstants.TABLE_CANVAS,
-                new String[]{"CompanyId", "CanvasId", "Subject", "VisitBy", "TypeOfVisit",
+                new String[]{"CanvasId", "CompanyId", "Subject", "VisitBy", "TypeOfVisit",
                         "Date", "FollowUpDate", "FollowUpSalesman", "Sender", "ToInternal", "Region", "Country",
                         "TypeOfTransport", "ActivityType", "BusinessArea", "Office", "Text"}, null, null, null, null, null);
         if (cursor.moveToFirst()) {
@@ -187,4 +190,5 @@ public class DAOCanvas {
     public void deleteAllCanvas() {
         _db.execSQL("DELETE FROM " + DAConstants.TABLE_CANVAS + " WHERE CanvasId != " + 100000);
     }
+
 }
