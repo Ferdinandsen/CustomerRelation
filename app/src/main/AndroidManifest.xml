@@ -1,19 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="bws.customerrelation">
+    package="bws.customerrelation" >
 
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE"></uses-permission>
-    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"></uses-permission>
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
 
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
-        android:theme="@style/AppTheme">
+        android:theme="@style/AppTheme" >
         <activity
             android:name=".GUI.LoginActivity"
-            android:label="@string/app_name">
+            android:label="@string/app_name" >
 
             <!-- android:theme="@style/MyActionBar" > -->
             <intent-filter>
@@ -24,18 +24,21 @@
         </activity>
         <activity
             android:name=".GUI.MainActivity"
-            android:label="@string/title_activity_main"></activity>
+            android:label="@string/title_activity_main" />
         <activity
             android:name=".GUI.CompanyActivity"
-            android:label="@string/title_activity_client"></activity>
+            android:label="@string/title_activity_client" />
         <activity
             android:name=".GUI.CompanyDataActivity"
-            android:label="@string/title_activity_client_data">
-
+            android:label="@string/title_activity_client_data" >
         </activity>
         <activity
-            android:name=".GUI.CanvasActivity"
-            android:label="@string/title_activity_canvas"></activity>
+            android:name=".GUI.CreateCanvasActivity"
+            android:label="@string/title_activity_canvas" />
+        <activity
+            android:name=".GUI.ShowCanvasActivity"
+            android:label="@string/title_activity_show_canvas" >
+        </activity>
     </application>
 
 </manifest>

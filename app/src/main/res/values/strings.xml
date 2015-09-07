@@ -1,12 +1,15 @@
 <resources>
     <string name="app_name">CustomerRelation</string>
 
+    <!-- LOGIN ACTIVITY -->
+
     <string name="login">Welcome - Please log in</string>
     <string name="loginPassword">Password</string>
     <string name="loginUsername">Username - Email</string>
     <string name="loginBtn">Login</string>
     <string name="title_activity_main">MainActivity</string>
 
+    <!-- MAIN ACTIVITY -->
     <string name="userData">Jacob Ferdinandsen</string>
     <string name="btnDownLoadList">Download</string>
     <string name="loadedClients">Cache</string>
@@ -14,6 +17,7 @@
     <string name="action_settings">settings</string>
     <string name="title_activity_client">ClientActivity</string>
 
+    <!-- COMPANY ACTIVITY -->
     <string name="btnGet">Show Client</string>
     <string name="title_activity_client_data">ClientDataActivity</string>
 
@@ -25,7 +29,9 @@
     <string name="telephone">Telephone: </string>
     <string name="zipcode_city">Zip: </string>
 
+
     <string name="btnCreateCanvas">Create New Canvas</string>
+    <string name="btnShowCanvas">Show Canvas</string>
 
     <string name="title_activity_canvas">CanvasActivity</string>
     <string name="enterText">Enter text here</string>
@@ -36,6 +42,25 @@
     <string name="canvasAmount">CanvasAmount</string>
 
     <string name="txtSearchHint">search</string>
+    <string name="title_activity_show_canvas">ShowCanvasActivity</string>
 
+    <!-- CANVAS ACTIVITY -->
+    <string name="lblRegion">Region</string>
+    <string name="lblCountry">Country</string>
+    <string name="lblTypeOfTransport">Type of transport</string>
+    <string name="lblActivityType">Activity type</string>
+    <string name="lblBusinessArea">Business area</string>
+    <string name="lblOffice">Office</string>
 
+    <string name="lblFollowUpDate">Follow Up Date</string>
+    <string name="lblTypeOfVisit">TypeOfVisit</string>
+    <string name="lblVisitBy">VisitBy</string>
+    <string name="lblSubject">Subject</string>
+    <string name="lblDate">Date</string>
+    <string name="lblFrom">From</string>
+    <string name="lblToInternal">ToInternal</string>
+    <string name="FollowUpBy">Follow Up By</string>
+
+    <string name="lblComments">Comments</string>
+    <string name="hello_world">NULL</string>
 </resources>

@@ -29,6 +29,7 @@ public class CompanyDataActivity extends AppCompatActivity {
     LinearLayout _LinearLayout;
     static BECanvas SELECTEDCANVAS;
     Button btnCreateCanvas;
+    Button btnShowCanvas;
     InflateClientData _adapter;
     CanvasController _canvasController;
     ArrayList<BECanvas> companyCanvaslist;
@@ -37,7 +38,7 @@ public class CompanyDataActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_client_data);
+        setContentView(R.layout.activity_company_data);
         _canvasController = new CanvasController(this);
 
         _selectedCompany = CompanyActivity.SELECTEDCOMPANY != null ? CompanyActivity.SELECTEDCOMPANY : MainActivity._SELECTEDCLIENTS.get(0);
@@ -61,7 +62,7 @@ public class CompanyDataActivity extends AppCompatActivity {
         seNumber.setText("SE Number:         " + _selectedCompany.getM_seNo());
 
         companyCanvaslist = _canvasController.getAllCanvasByClientId(_selectedCompany);
-    String test = "";
+        String test = "";
     }
 
     private void findViews() {
@@ -74,6 +75,7 @@ public class CompanyDataActivity extends AppCompatActivity {
         group = (TextView) findViewById(R.id.group);
         btnCreateCanvas = (Button) findViewById(R.id.btnCreateCanvas);
         _LinearLayout = (LinearLayout) findViewById(R.id.linear_listview);
+        btnShowCanvas = (Button) findViewById(R.id.btnShowCanvas);
     }
 
     private void setListeners() {
@@ -83,16 +85,25 @@ public class CompanyDataActivity extends AppCompatActivity {
                 onclickBtnCreateCanvas();
             }
         });
+        btnShowCanvas.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openCanvas();
+            }
+        });
     }
 
-    private void onClickSelectedCanvas() {
-        //TODO
+    private void openCanvas() {
+        Intent showCanvasIntent = new Intent();
+        showCanvasIntent.setClass(this, ShowCanvasActivity.class);
+        startActivity(showCanvasIntent);
     }
 
     private void onclickBtnCreateCanvas() {
         Intent canvasIntent = new Intent();
-        canvasIntent.setClass(this, CanvasActivity.class);
+        canvasIntent.setClass(this, CreateCanvasActivity.class);
         canvasIntent.putExtra(SharedConstants.CLIENT, _selectedCompany);
         startActivity(canvasIntent);
     }
+
 }

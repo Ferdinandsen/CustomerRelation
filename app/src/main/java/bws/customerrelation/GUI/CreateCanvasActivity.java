@@ -2,17 +2,15 @@ package bws.customerrelation.GUI;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
 import bws.customerrelation.Controller.ClientController;
 import bws.customerrelation.Controller.SharedConstants;
-import bws.customerrelation.Model.BECanvas;
 import bws.customerrelation.Model.BECompany;
 import bws.customerrelation.R;
 
-public class CanvasActivity extends AppCompatActivity {
+public class CreateCanvasActivity extends AppCompatActivity {
     Button btnSave;
     EditText txtCanvas;
     ClientController _clientController;
@@ -21,7 +19,7 @@ public class CanvasActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_canvas);
+        setContentView(R.layout.activity_create_canvas);
         Bundle b = getIntent().getExtras();
         _clientController = new ClientController(this);
         findViews();

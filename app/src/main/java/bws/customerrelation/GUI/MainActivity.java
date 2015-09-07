@@ -1,6 +1,7 @@
 package bws.customerrelation.GUI;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.view.MenuItemCompat;
@@ -10,6 +11,8 @@ import android.text.TextWatcher;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -46,6 +49,7 @@ public class MainActivity extends AppCompatActivity {
 
     private static String TAG = "MainActivity";
     InflateClients _adapter;
+    InputMethodManager imm;
 
 
     @Override
@@ -57,6 +61,7 @@ public class MainActivity extends AppCompatActivity {
         _userController = new UserController(this);
         _clientController = new ClientController(this);
         _canvasController = new CanvasController(this);
+        imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
 
         findViews();
         setListeners();
@@ -120,36 +125,34 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_main, menu);
-        MenuItem searchItem = menu.findItem(R.id.action_search);
+        final MenuItem searchItem = menu.findItem(R.id.action_search);
 
         _searchView = (EditText) MenuItemCompat.getActionView(searchItem);
         _searchView.setSingleLine();
+        _searchView.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (v.getId() == R.id.action_search && !hasFocus) {
+                    imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
+                } else {
+                    imm.showSoftInput(_searchView, InputMethodManager.SHOW_IMPLICIT);
+                }
+            }
+        });
+
+
         return true;
     }
 
     @Override
-
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-
         int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
 
         if (id == R.id.action_search) {
             searchMethod(this);
-//            doSearchAnimation();
-
             return true;
         }
-        /*if (id == R.id.action_select_delete) {
-            Toast.makeText(this, "select delete ", Toast.LENGTH_SHORT).show();
-            return true;
-        }*/
         return super.onOptionsItemSelected(item);
     }
 
@@ -157,40 +160,21 @@ public class MainActivity extends AppCompatActivity {
         _searchView.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
             }
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-
             }
 
             @Override
             public void afterTextChanged(Editable s) {
-
                 _searchList = _clientController.getCompaniesByInput(_searchView.getText().toString().toLowerCase());
-
                 _linearlayoutListView.removeAllViews();
                 _adapter = new InflateClients(activity, _searchList, _linearlayoutListView);
                 _adapter.inflateView();
-
-
-// _linearlayoutListView.updateViewLayout(_adapter.test(_searchList),null);
-
             }
         });
-    }
-
-
-    private void doSearchAnimation() {
-//        if (_txtSearch.getVisibility() == View.GONE) {
-//            _txtSearch.startAnimation(AnimationUtils.loadAnimation(this, android.R.anim.slide_in_left));
-//            _txtSearch.setVisibility(View.VISIBLE);
-//        } else {
-//            _txtSearch.startAnimation(AnimationUtils.loadAnimation(this, android.R.anim.slide_out_right));
-//            _txtSearch.setText("");
-//            _txtSearch.setVisibility(View.GONE);
-//        }
+        _searchView.requestFocus();
     }
 }
 

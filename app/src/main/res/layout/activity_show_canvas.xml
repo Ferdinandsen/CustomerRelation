@@ -1,0 +1,336 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context="bws.customerrelation.GUI.ShowCanvasActivity">
+
+    <LinearLayout
+        android:id="@+id/activitiesLayout"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:id="@+id/activitiesInnerLayout1"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            >
+
+            <LinearLayout
+                android:id="@+id/RegionLayout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="10dp">
+
+                <TextView
+                    android:id="@+id/lblRegion"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@color/deepBlueSky2"
+                    android:text="@string/lblRegion" />
+
+                <TextView
+                    android:id="@+id/region"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/hello_world" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/countryLayout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="10dp">
+
+                <TextView
+                    android:id="@+id/lblCountry"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@color/deepBlueSky2"
+                    android:text="@string/lblCountry" />
+
+                <TextView
+                    android:id="@+id/country"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/hello_world" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/typeOfTransportLayout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="10dp">
+
+                <TextView
+                    android:id="@+id/lblTypeOfTransport"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@color/deepBlueSky2"
+                    android:text="@string/lblTypeOfTransport" />
+
+                <TextView
+                    android:id="@+id/typeOfTransport"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/hello_world" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/activitiesInnerLayout2"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+
+            <LinearLayout
+                android:id="@+id/activityTypeLayout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:paddingBottom="5dp"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:paddingTop="5dp">
+
+                <TextView
+                    android:id="@+id/lblActivityType"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@color/deepBlueSky2"
+                    android:text="@string/lblActivityType" />
+
+                <TextView
+                    android:id="@+id/activityType"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/hello_world" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/businessAreaLayout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="10dp">
+
+                <TextView
+                    android:id="@+id/lblBusinessArea"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@color/deepBlueSky2"
+                    android:text="@string/lblBusinessArea" />
+
+                <TextView
+                    android:id="@+id/businessArea"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/hello_world" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/officeLayout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+
+                android:orientation="vertical"
+                android:padding="10dp">
+
+                <TextView
+                    android:id="@+id/lblOffice"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@color/deepBlueSky2"
+                    android:text="@string/lblOffice" />
+
+                <TextView
+                    android:id="@+id/office"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/hello_world" />
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/othersLayout"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/activitiesLayout"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:id="@+id/TypeOfVisitLayout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="10dp">
+
+            <TextView
+                android:id="@+id/lblTypeOfVisit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@color/deepBlueSky2"
+                android:text="@string/lblTypeOfVisit" />
+
+            <TextView
+                android:id="@+id/TypeOfVisit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/hello_world" />
+
+            <TextView
+                android:id="@+id/lblVisitBy"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@color/deepBlueSky2"
+                android:text="@string/lblVisitBy" />
+
+            <TextView
+                android:id="@+id/visitBy"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/hello_world" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/followUpLayout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="10dp">
+
+            <TextView
+                android:id="@+id/lblToBeFollowedUpBy"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@color/deepBlueSky2"
+                android:text="@string/FollowUpBy" />
+
+            <TextView
+                android:id="@+id/toBeFollowedUpBy"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:id="@+id/lblFollowUpDate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@color/deepBlueSky2"
+                android:text="@string/lblFollowUpDate" />
+
+            <TextView
+                android:id="@+id/followUpDate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/hello_world" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/subject_date_from_internalInnerLayout"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/othersLayout"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:id="@+id/sub_dateLayout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="10dp">
+
+            <TextView
+                android:id="@+id/lblSubject"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@color/deepBlueSky2"
+                android:text="@string/lblSubject" />
+
+            <TextView
+                android:id="@+id/subject"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/hello_world" />
+
+            <TextView
+                android:id="@+id/lblDate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@color/deepBlueSky2"
+                android:text="@string/lblDate" />
+
+            <TextView
+                android:id="@+id/date"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/hello_world" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/sender_internalLayout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="10dp">
+
+            <TextView
+                android:id="@+id/lblFrom"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@color/deepBlueSky2"
+                android:text="@string/lblFrom" />
+
+            <TextView
+                android:id="@+id/from"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/hello_world" />
+
+            <TextView
+                android:id="@+id/lblToInternal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@color/deepBlueSky2"
+                android:text="@string/lblToInternal" />
+
+            <TextView
+                android:id="@+id/toInternal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/hello_world" />
+        </LinearLayout>
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:id="@+id/commentsLayout"
+        android:layout_width="fill_parent"
+        android:layout_height="150dp"
+        android:layout_below="@+id/subject_date_from_internalInnerLayout"
+        android:orientation="vertical"
+        android:padding="10dp">
+
+        <TextView
+            android:id="@+id/lblComments"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@color/deepBlueSky2"
+            android:text="@string/lblComments" />
+
+        <TextView
+            android:id="@+id/comments"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+</RelativeLayout>

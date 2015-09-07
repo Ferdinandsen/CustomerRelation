@@ -10,7 +10,11 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 import bws.customerrelation.DAL.Gateway.GetJSONFromAPI;
 import bws.customerrelation.Model.BECanvas;
@@ -89,11 +93,36 @@ public class DAOCanvas {
                 String res = "";
                 StringBuilder sb = new StringBuilder(res);
                 for (int i = 0; i < ara.length(); i++) {
-                    sb.append(ara.getJSONObject(i).getString("0"));
+                    sb.append(ara.getJSONObject(i).getString("0") + "\n");
                 }
                 array1.add(sb.toString());
             } else if (!array.getJSONObject(y).isNull("datetime")) {
-                array1.add(array.getJSONObject(y).getJSONObject("datetime").getString("0"));
+
+                //TODO simple date formatter
+//                String s = array.getJSONObject(y).getJSONObject("datetime").getString("0");
+//                SimpleDateFormat dateformat = new SimpleDateFormat("yyyyMMdd'T'HHmmss"); //yyyy-MM-dd'T'HH:mm:ss
+//                try {
+//                    Date date = dateformat.parse(s);
+//                    array1.add(date.toString());
+//                } catch (ParseException e) {
+//                    e.printStackTrace();
+//
+//                }
+
+                String date = array.getJSONObject(y).getJSONObject("datetime").getString("0");
+
+               String[] hans = date.split("T");
+               String da = hans[0];
+                java.util.Date nyDate = new Date();
+                SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
+                try {
+                    nyDate = sdf.parse(da);
+                } catch (ParseException e) {
+                    Log.e("hejsa", "fuck", e);
+                    e.printStackTrace();
+                }
+                array1.add(nyDate.toString());
+
             } else {
                 array1.add("");
             }
