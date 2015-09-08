@@ -16,7 +16,7 @@ import bws.customerrelation.R;
 /**
  * Created by Jaje on 20-Aug-15.
  */
-public class InflateClientData {
+public class InflateCompanyCanvasData {
 
     /**
      * Created by Jaje on 20-Aug-15.
@@ -27,34 +27,36 @@ public class InflateClientData {
     Context _context;
     View oldView;
 
-    public InflateClientData(Context context, ArrayList<BECanvas> list, LinearLayout layout) {
+    public InflateCompanyCanvasData(Context context, ArrayList<BECanvas> list, LinearLayout layout) {
         _allCanvas = list;
         _context = context;
         mLinearListLayout = layout;
     }
 
     public void inflateView() {
+        int pos = 0;
         for (final BECanvas c : _allCanvas) {
             /**
              * inflate items/ add items in linear layout instead of listview
              */
             LayoutInflater inflater = null;
             inflater = (LayoutInflater) _context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            final View mLinearView = inflater.inflate(R.layout.rowtest, null);
-
+            final View mLinearView = inflater.inflate(R.layout.cell_canvas_data, null);
+            mLinearView.setTag(pos);
             /**
              * getting id of row.xml
              */
 
             TextView desc = (TextView) mLinearView
                     .findViewById(R.id.companyName);
+            TextView date = (TextView) mLinearView.findViewById(R.id.date);
             final CheckBox mCheckBox = (CheckBox) mLinearView
                     .findViewById(R.id.checkbox);
             mCheckBox.setVisibility(View.INVISIBLE);
             /**
              * set item into row
              */
-
+            final String showDate = c.getM_date();
             final String typeVisit = c.getM_TypeOfVisit();
             final String subject = c.getM_Subject();
             if (subject == null || subject.equals("")) {
@@ -62,12 +64,13 @@ public class InflateClientData {
             } else {
                 desc.setText(subject);
             }
+            date.setText(showDate);
 
             /**
              * changes background to white
              */
 
-            mLinearListLayout.setBackgroundColor(Color.parseColor("#ffffff"));
+            setColorOnView(mLinearView);
 
             /**
              * add oldView in top linear
@@ -99,15 +102,15 @@ public class InflateClientData {
                     mCheckBox.setChecked(!isChecked);
 
                     if (_SELECTEDCANVAS != null && isChecked && _SELECTEDCANVAS.getM_canvasId().equals(c.getM_canvasId())) {
-                        v.setBackgroundColor(Color.parseColor("#ffffff"));
+                        setColorOnView(v);
                         _SELECTEDCANVAS = null;
                         oldView = null;
                     } else {
                         if (oldView != null) {
-                            v.setBackgroundColor(Color.parseColor("#00B2EE"));
+                            v.setBackgroundColor(Color.parseColor("#00B2EE")); // blååååå
                             ((CheckBox) oldView.findViewById(R.id.checkbox)).setChecked(false);
                             _SELECTEDCANVAS = c;
-                            oldView.setBackgroundColor(Color.parseColor("#ffffff")); // hvid
+                            setColorOnView(oldView);
                             oldView = v;
                         } else {
                             v.setBackgroundColor(Color.parseColor("#00B2EE")); // blååååå
@@ -118,6 +121,16 @@ public class InflateClientData {
                     CompanyDataActivity.SELECTEDCANVAS = _SELECTEDCANVAS;
                 }
             });
+            pos++;
+        }
+    }
+
+    private void setColorOnView(View mView) {
+        int localpos = (Integer) mView.getTag();
+        if (localpos % 2 == 0) {
+            mView.setBackgroundColor(Color.parseColor("#B2E5FF"));
+        } else {
+            mView.setBackgroundColor(Color.parseColor("#ffffff"));
         }
     }
 

@@ -16,28 +16,29 @@ import bws.customerrelation.R;
 /**
  * Created by Jaje on 20-Aug-15.
  */
-public class InflateClient {
+public class InflateCompany {
     LinearLayout mLinearListLayout;
     ArrayList<BECompany> _allClients;
     static BECompany _SELECTEDCOMPANY;
     Context _context;
     View oldView;
 
-    public InflateClient(Context context, ArrayList<BECompany> list, LinearLayout layout) {
+    public InflateCompany(Context context, ArrayList<BECompany> list, LinearLayout layout) {
         _allClients = list;
         _context = context;
         mLinearListLayout = layout;
     }
 
     public void inflateView() {
+        int pos = 0;
         for (final BECompany c : _allClients) {
             /**
              * inflate items/ add items in linear layout instead of listview
              */
             LayoutInflater inflater = null;
             inflater = (LayoutInflater) _context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            final View mLinearView = inflater.inflate(R.layout.rowtest, null);
-
+            final View mLinearView = inflater.inflate(R.layout.cell_inflate_company, null);
+            mLinearView.setTag(pos);
             /**
              * getting id of row.xml
              */
@@ -58,7 +59,7 @@ public class InflateClient {
              * changes background to white
              */
 
-            mLinearListLayout.setBackgroundColor(Color.parseColor("#ffffff"));
+            setColorOnView(mLinearView);
 
             /**
              * add oldView in top linear
@@ -90,15 +91,14 @@ public class InflateClient {
                     mCheckBox.setChecked(!isChecked);
 
                     if (_SELECTEDCOMPANY != null && isChecked && _SELECTEDCOMPANY.getM_companyId().equals(c.getM_companyId())) {
-                        v.setBackgroundColor(Color.parseColor("#ffffff"));
+                        setColorOnView(v);
                         _SELECTEDCOMPANY = null;
                         oldView = null;
                     } else {
                         if (oldView != null) {
-                            v.setBackgroundColor(Color.parseColor("#00B2EE"));
-//                            ((CheckBox) oldView.findViewById(R.id.checkbox)).setChecked(false);
+                            v.setBackgroundColor(Color.parseColor("#00B2EE")); // blååååå
                             _SELECTEDCOMPANY = c;
-                            oldView.setBackgroundColor(Color.parseColor("#ffffff")); // hvid
+                            setColorOnView(oldView);
                             oldView = v;
                         } else {
                             v.setBackgroundColor(Color.parseColor("#00B2EE")); // blååååå
@@ -109,6 +109,16 @@ public class InflateClient {
                     CompanyActivity.SELECTEDCOMPANY = _SELECTEDCOMPANY;
                 }
             });
+            pos++;
+        }
+    }
+
+    private void setColorOnView(View mView) {
+        int localpos = (Integer) mView.getTag();
+        if (localpos % 2 == 0) {
+            mView.setBackgroundColor(Color.parseColor("#B2E5FF"));
+        } else {
+            mView.setBackgroundColor(Color.parseColor("#ffffff"));
         }
     }
 

@@ -1,5 +1,7 @@
 package bws.customerrelation.Model;
 
+import java.util.Date;
+
 /**
  * Created by Jaje on 19-Aug-15.
  */
@@ -23,17 +25,11 @@ public class BECanvas {
     private String m_Office;
     private String m_text;
 
-
-    public BECanvas(int id, String ClientId, String text) {
-        m_id = id;
-        m_companyId = ClientId;
-        m_text = text;
-    }
-
     public BECanvas(String canvasId, String companyId, String TypeOfVisit, String VisitBy,
                     String Subject, String date, String FollowUpSalesman, String FollowUpDate,
                     String Sender, String ToInternal, String Region, String Country,
                     String TypeOfTransport, String ActivityType, String BusinessArea, String Office, String text) {
+
         m_canvasId = canvasId;
         m_companyId = companyId;
         m_TypeOfVisit = TypeOfVisit;
@@ -50,7 +46,6 @@ public class BECanvas {
         m_ActivityType = ActivityType;
         m_BusinessArea = BusinessArea;
         m_Office = Office;
-
         m_text = text;
     }
 
@@ -77,14 +72,6 @@ public class BECanvas {
 
     public void setM_canvasId(String m_canvasId) {
         this.m_canvasId = m_canvasId;
-    }
-
-    public String getText() {
-        return m_text;
-    }
-
-    public void setText(String text) {
-        m_text = text;
     }
 
     public String getM_TypeOfVisit() {

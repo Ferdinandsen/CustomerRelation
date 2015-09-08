@@ -18,17 +18,19 @@ import bws.customerrelation.R;
 /**
  * Created by Jaje on 20-Aug-15.
  */
-public class InflateClients {
+public class InflateCompanies {
     LinearLayout _mLinearListView;
     ArrayList<BECompany> _allClients;
     Activity _context;
     static ArrayList<BECompany> _INFLATECLIENTS;
     final static String TAG = "Inflate";
+    int size;
 
-    public InflateClients(Activity context, ArrayList<BECompany> list, LinearLayout layout) {
+    public InflateCompanies(Activity context, ArrayList<BECompany> list, LinearLayout layout) {
         _allClients = list;
         _context = context;
         _mLinearListView = layout;
+        size = _allClients.size();
         if (_INFLATECLIENTS == null) {
             _INFLATECLIENTS = new ArrayList<BECompany>();
 
@@ -36,14 +38,16 @@ public class InflateClients {
     }
 
     public void inflateView() {
+
+        int pos = 0;
         for (final BECompany c : _allClients) {
             /**
              * inflate items/ add items in linear layout instead of listview
              */
             LayoutInflater inflater = null;
             inflater = (LayoutInflater) _context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            final View mView = inflater.inflate(R.layout.rowtest, null);
-
+            final View mView = inflater.inflate(R.layout.cell_main_activity, null);
+            mView.setTag(pos);
             /**
              * getting id of row.xml
              */
@@ -63,10 +67,10 @@ public class InflateClients {
             mFirstName.setText(fName);
 
             /**
-             * changes background to white
+             * changes background of the view
              */
+            setColorOnView(mView);
 
-            _mLinearListView.setBackgroundColor(Color.parseColor("#ffffff"));
 
             /**
              * add oldView in top linear
@@ -107,7 +111,7 @@ public class InflateClients {
 //                        Toast.makeText(_context, "Unable to deselect downloaded companies", Toast.LENGTH_SHORT).show();
 //                    }
                     if (isChecked) {
-                        v.setBackgroundColor(Color.parseColor("#ffffff"));
+                        setColorOnView(v);
                         _INFLATECLIENTS.remove(c);
 
                     } else {
@@ -117,10 +121,20 @@ public class InflateClients {
                     MainActivity._SELECTEDCLIENTS = _INFLATECLIENTS;
                 }
             });
+            pos++;
         }
     }
 
     public ArrayList<BECompany> getSelectedClients() {
         return _INFLATECLIENTS;
+    }
+
+    private void setColorOnView(View mView) {
+        int localpos = (Integer) mView.getTag();
+        if (localpos % 2 == 0) {
+            mView.setBackgroundColor(Color.parseColor("#B2E5FF"));
+        } else {
+            mView.setBackgroundColor(Color.parseColor("#ffffff"));
+        }
     }
 }

@@ -1,5 +1,6 @@
 package bws.customerrelation.DAL;
 
+import android.app.Activity;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -15,8 +16,10 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.concurrent.ExecutionException;
 
 import bws.customerrelation.DAL.Gateway.GetJSONFromAPI;
+import bws.customerrelation.DAL.Gateway.GetRTFFromHTML;
 import bws.customerrelation.Model.BECanvas;
 import bws.customerrelation.Model.BECompany;
 
@@ -41,7 +44,7 @@ public class DAOCanvas {
         _db = openHelper.getWritableDatabase();
     }
 
-    public ArrayList<BECanvas> getAllCanvasFromAPI() {
+    public ArrayList<BECanvas> getAllCanvasFromAPI( ) {
         ArrayList<BECanvas> companyList = new ArrayList<>();
         String URL = "http://skynet.bws.dk/Applications/smsAndroid.nsf/(CanvasByCompany)?readviewentries&outputformat=json&start=1&count=1000&restrict=2C7EFD49ADD61732C1256C2C002FEF71#";
         JSONObject obj;
@@ -82,9 +85,9 @@ public class DAOCanvas {
                 TypeOfTransport, Activity, BusinessArea, Office, Text;
 
         ArrayList<String> array1 = new ArrayList<>();
+        java.util.Date nyDate = new Date();
         for (int y = 0; y < array.length(); y++) {
-
-
+            nyDate = new Date();
             if (!array.getJSONObject(y).isNull("text")) {
                 array1.add(array.getJSONObject(y).getJSONObject("text").getString("0"));
             } else if (!array.getJSONObject(y).isNull("textlist")) {
@@ -98,42 +101,38 @@ public class DAOCanvas {
                 array1.add(sb.toString());
             } else if (!array.getJSONObject(y).isNull("datetime")) {
 
-                //TODO simple date formatter
-//                String s = array.getJSONObject(y).getJSONObject("datetime").getString("0");
-//                SimpleDateFormat dateformat = new SimpleDateFormat("yyyyMMdd'T'HHmmss"); //yyyy-MM-dd'T'HH:mm:ss
-//                try {
-//                    Date date = dateformat.parse(s);
-//                    array1.add(date.toString());
-//                } catch (ParseException e) {
-//                    e.printStackTrace();
-//
-//                }
-
                 String date = array.getJSONObject(y).getJSONObject("datetime").getString("0");
+                String test;
+                SimpleDateFormat sdf;
+                String res = "NULL";
+                SimpleDateFormat fmtOut;
 
-               String[] hans = date.split("T");
-               String da = hans[0];
-                java.util.Date nyDate = new Date();
-                SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
+
+                String[] ss = date.split("T");
+                test = ss[0];
+                sdf = new SimpleDateFormat("yyyyMMdd");
+                fmtOut = new SimpleDateFormat("dd-MM-yyyy");
+
                 try {
-                    nyDate = sdf.parse(da);
+                    nyDate = sdf.parse(test);
+                    res = fmtOut.format(nyDate);
+
                 } catch (ParseException e) {
-                    Log.e("hejsa", "fuck", e);
+                    Log.e("DAOCanvas", "Parse date error", e);
                     e.printStackTrace();
                 }
-                array1.add(nyDate.toString());
+                array1.add(res);
 
             } else {
                 array1.add("");
             }
         }
-
-        canvasId = array1.get(0);
-        companyId = (String) array1.get(1);
-        Subject = (String) array1.get(2);
-        VisitBy = (String) array1.get(3);
-        TypeOfVisit = (String) array1.get(4);
-        Date = (String) array1.get(5);
+        Date = (String) array1.get(0);
+        canvasId = array1.get(1);
+        companyId = (String) array1.get(2);
+        Subject = (String) array1.get(3);
+        VisitBy = (String) array1.get(4);
+        TypeOfVisit = (String) array1.get(5);
         FollowUpDate = (String) array1.get(6);
         FollowUpBy = (String) array1.get(7);
         Sender = (String) array1.get(8);
@@ -144,13 +143,27 @@ public class DAOCanvas {
         Activity = (String) array1.get(13);
         BusinessArea = (String) array1.get(14);
         Office = (String) array1.get(15);
-        Text = (String) array1.get(16);
+        Text = getRichTextFromHtmlByCanvasId(canvasId);
 
         BECanvas canvas = new BECanvas(canvasId, companyId, Subject, VisitBy, TypeOfVisit, Date, FollowUpDate, FollowUpBy,
                 Sender, ToInternal, Region, Country,
-                TypeOfTransport, Activity, BusinessArea, Office,
-                Text);
+                TypeOfTransport, Activity, BusinessArea, Office, Text);
         return canvas;
+    }
+
+    public String getRichTextFromHtmlByCanvasId(String id) {
+        //Set comments field
+        GetRTFFromHTML RTF = new GetRTFFromHTML(_context);
+        RTF.execute(id);
+        try {
+            return RTF.get();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+            return "Error getrich interrupted";
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+            return "Error getrich execution";
+        }
     }
 
     public long insertCanvas(BECanvas canvas) {
@@ -188,7 +201,7 @@ public class DAOCanvas {
             do {
                 canvasList.add(new BECanvas(cursor.getString(0), cursor.getString(1), cursor.getString(2), cursor.getString(3), cursor.getString(4),
                         cursor.getString(5), cursor.getString(6), cursor.getString(7), cursor.getString(8), cursor.getString(9), cursor.getString(10),
-                        cursor.getString(11), cursor.getString(12), cursor.getString(13), cursor.getString(11), cursor.getString(12), cursor.getString(13)));
+                        cursor.getString(11), cursor.getString(12), cursor.getString(13), cursor.getString(14), cursor.getString(15), cursor.getString(16)));
             } while (cursor.moveToNext());
         }
         if (cursor != null && !cursor.isClosed()) {
@@ -207,7 +220,7 @@ public class DAOCanvas {
             do {
                 canvasList.add(new BECanvas(cursor.getString(0), cursor.getString(1), cursor.getString(2), cursor.getString(3), cursor.getString(4),
                         cursor.getString(5), cursor.getString(6), cursor.getString(7), cursor.getString(8), cursor.getString(9), cursor.getString(10),
-                        cursor.getString(11), cursor.getString(12), cursor.getString(13), cursor.getString(11), cursor.getString(12), cursor.getString(13)));
+                        cursor.getString(11), cursor.getString(12), cursor.getString(13), cursor.getString(14), cursor.getString(15), cursor.getString(16)));
             } while (cursor.moveToNext());
         }
         if (cursor != null && !cursor.isClosed()) {

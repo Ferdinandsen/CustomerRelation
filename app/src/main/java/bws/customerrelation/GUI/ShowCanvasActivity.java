@@ -51,7 +51,7 @@ public class ShowCanvasActivity extends AppCompatActivity {
         date.setText(c.getM_date());
         from.setText(c.getM_Sender());
         toInternal.setText(c.getM_ToInternal());
-        comments.setText("TODO");
+        comments.setText(c.getM_text());
     }
 
     private void findviews() {

@@ -11,7 +11,6 @@ import android.text.TextWatcher;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
@@ -48,7 +47,7 @@ public class MainActivity extends AppCompatActivity {
     CanvasController _canvasController;
 
     private static String TAG = "MainActivity";
-    InflateClients _adapter;
+    InflateCompanies _adapter;
     InputMethodManager imm;
 
 
@@ -68,7 +67,7 @@ public class MainActivity extends AppCompatActivity {
         setUserData();
         populateCompanyList();
 
-        _adapter = new InflateClients(this, _allClients, _linearlayoutListView);
+        _adapter = new InflateCompanies(this, _allClients, _linearlayoutListView);
         _adapter.inflateView();
 
         if (_adapter.getSelectedClients() != null) {
@@ -170,7 +169,7 @@ public class MainActivity extends AppCompatActivity {
             public void afterTextChanged(Editable s) {
                 _searchList = _clientController.getCompaniesByInput(_searchView.getText().toString().toLowerCase());
                 _linearlayoutListView.removeAllViews();
-                _adapter = new InflateClients(activity, _searchList, _linearlayoutListView);
+                _adapter = new InflateCompanies(activity, _searchList, _linearlayoutListView);
                 _adapter.inflateView();
             }
         });

@@ -63,7 +63,7 @@ public class CanvasController {
 
     }
 
-    public ArrayList<BECanvas> getAllCanvasFromAPI() {
+    public ArrayList<BECanvas> getAllCanvasFromAPI( ) {
         return _daoCanvas.getAllCanvasFromAPI();
     }
 

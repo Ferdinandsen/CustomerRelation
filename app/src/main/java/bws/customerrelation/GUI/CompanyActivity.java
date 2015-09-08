@@ -12,7 +12,6 @@ import android.widget.Toast;
 import java.util.ArrayList;
 
 import bws.customerrelation.Controller.ClientController;
-import bws.customerrelation.Controller.SharedConstants;
 import bws.customerrelation.Model.BECompany;
 import bws.customerrelation.R;
 
@@ -22,7 +21,7 @@ public class CompanyActivity extends AppCompatActivity {
     ArrayList<BECompany> _selectedClients;
     static BECompany SELECTEDCOMPANY;
     ClientController _clientController;
-    InflateClient _adapter;
+    InflateCompany _adapter;
     final static String TAG = "CompanyActivity";
 
     @Override
@@ -34,7 +33,7 @@ public class CompanyActivity extends AppCompatActivity {
         findViews();
         PopulateClients();
         setListeners();
-            _adapter = new InflateClient(this, _selectedClients, _linearLayout);
+            _adapter = new InflateCompany(this, _selectedClients, _linearLayout);
             _adapter.inflateView();
         if (_adapter.getSelectedClient() != null) {
             SELECTEDCOMPANY = _adapter.getSelectedClient();
@@ -55,7 +54,6 @@ public class CompanyActivity extends AppCompatActivity {
         Intent clientDataIntent = new Intent();
         clientDataIntent.setClass(this, CompanyDataActivity.class);
         if (SELECTEDCOMPANY != null) {
-//            clientDataIntent.putExtra(SharedConstants.CLIENT, SELECTEDCOMPANY);
             startActivity(clientDataIntent);
         } else {
             Toast.makeText(this, "Du skal vælge en kunde på listen", Toast.LENGTH_SHORT).show();

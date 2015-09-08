@@ -30,7 +30,7 @@ public class CompanyDataActivity extends AppCompatActivity {
     static BECanvas SELECTEDCANVAS;
     Button btnCreateCanvas;
     Button btnShowCanvas;
-    InflateClientData _adapter;
+    InflateCompanyCanvasData _adapter;
     CanvasController _canvasController;
     ArrayList<BECanvas> companyCanvaslist;
     BECompany _selectedCompany;
@@ -45,7 +45,7 @@ public class CompanyDataActivity extends AppCompatActivity {
         findViews();
         populateData();
         setListeners();
-        _adapter = new InflateClientData(this, companyCanvaslist, _LinearLayout);
+        _adapter = new InflateCompanyCanvasData(this, companyCanvaslist, _LinearLayout);
         _adapter.inflateView();
         if (_adapter.getSelectedCanvas() != null) {
             SELECTEDCANVAS = _adapter.getSelectedCanvas();

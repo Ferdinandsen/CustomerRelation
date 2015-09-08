@@ -1,11 +1,15 @@
 package bws.customerrelation.DAL.Gateway;
 
+import android.app.Activity;
+import android.app.ProgressDialog;
+import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
+import android.widget.Toast;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -19,14 +23,8 @@ import java.net.URL;
  */
 public class GetJSONFromAPI extends AsyncTask<String, Void, JSONObject> {
 
-    JSONArray jsonArray;
     JSONObject jsnobject;
     String result;
-
-    @Override
-    protected void onPreExecute() {
-        super.onPreExecute();
-    }
 
     @Override
     protected JSONObject doInBackground(String... params) {
@@ -43,7 +41,7 @@ public class GetJSONFromAPI extends AsyncTask<String, Void, JSONObject> {
             if (is == null) {
                 return null;
             }
-            br = new BufferedReader(new InputStreamReader(is, "iso-8859-1"));
+            br = new BufferedReader(new InputStreamReader(is));
             String line;
 
             while ((line = br.readLine()) != null) {
@@ -71,12 +69,10 @@ public class GetJSONFromAPI extends AsyncTask<String, Void, JSONObject> {
 
         try {
             jsnobject = new JSONObject(result);
-//            jsonArray = (JSONArray) jsnobject.get("viewentry");
         } catch (JSONException e) {
             Log.e("JSON", "Error creating JSON", e);
         }
-
         return jsnobject;
-
     }
+
 }

@@ -1,5 +1,6 @@
 package bws.customerrelation.DAL;
 
+import android.app.Activity;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -80,7 +81,9 @@ public class DAOCompany {
         ArrayList<String> array1 = new ArrayList<>();
         for (int y = 0; y < array.length(); y++) {
             if (!array.getJSONObject(y).isNull("text")) {
-                array1.add(array.getJSONObject(y).getJSONObject("text").getString("0"));
+                String local = array.getJSONObject(y).getJSONObject("text").getString("0");
+                local.replace("å", "oe");
+                array1.add(local);
             } else {
                 array1.add("NULL");
             }
@@ -124,7 +127,7 @@ public class DAOCompany {
                 boolean bol = Boolean.valueOf(cursor.getString(13));
 //                boolean isDl = true; // sætter at den er dl, og ikke skal kunne deselectes fra mainActivity listen
                 BECompany compa = new BECompany(
-                        cursor.getString(0), cursor.getString(1), cursor.getString(2),
+                        cursor.getString(0), cursor.getString(1).replace("Ã~","oe"), cursor.getString(2),
                         cursor.getString(3), cursor.getString(4), cursor.getString(5),
                         cursor.getString(6), cursor.getString(7), cursor.getString(8),
                         cursor.getString(9), cursor.getString(10), cursor.getString(11),
@@ -160,23 +163,6 @@ public class DAOCompany {
         _sql.bindString(14, "" + client.getM_closedCompany());
         _sql.bindString(15, "" + client.getM_homepage());
         return _sql.executeInsert();
-    }
-
-    public ArrayList<BECanvas> getAllCanvasByClientId(BECompany client) {
-        ArrayList<BECanvas> canvasList = new ArrayList<>();
-        Cursor cursor = _db.query(DAConstants.TABLE_CANVAS,
-                new String[]{"Id", "ClientId", "Canvas"},
-                "ClientId=?", new String[]{"" + client.getM_companyId()}, null, null,
-                "Id desc");
-        if (cursor.moveToFirst()) {
-            do {
-                canvasList.add(new BECanvas(cursor.getInt(0), cursor.getString(1), cursor.getString(2)));
-            } while (cursor.moveToNext());
-        }
-        if (cursor != null && !cursor.isClosed()) {
-            cursor.close();
-        }
-        return canvasList;
     }
 }
 
