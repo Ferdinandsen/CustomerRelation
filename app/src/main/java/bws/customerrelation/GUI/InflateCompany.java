@@ -22,6 +22,7 @@ public class InflateCompany {
     static BECompany _SELECTEDCOMPANY;
     Context _context;
     View oldView;
+    private static String TAG = "InflateCompany";
 
     public InflateCompany(Context context, ArrayList<BECompany> list, LinearLayout layout) {
         _allClients = list;

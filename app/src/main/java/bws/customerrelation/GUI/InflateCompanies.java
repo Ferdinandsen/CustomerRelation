@@ -23,14 +23,12 @@ public class InflateCompanies {
     ArrayList<BECompany> _allClients;
     Activity _context;
     static ArrayList<BECompany> _INFLATECLIENTS;
-    final static String TAG = "Inflate";
-    int size;
+    final static String TAG = "InflateCompanies";
 
     public InflateCompanies(Activity context, ArrayList<BECompany> list, LinearLayout layout) {
         _allClients = list;
         _context = context;
         _mLinearListView = layout;
-        size = _allClients.size();
         if (_INFLATECLIENTS == null) {
             _INFLATECLIENTS = new ArrayList<BECompany>();
 
@@ -42,7 +40,7 @@ public class InflateCompanies {
         int pos = 0;
         for (final BECompany c : _allClients) {
             /**
-             * inflate items/ add items in linear layout instead of listview
+             * inflate items/ add items in a linear layout instead of listview
              */
             LayoutInflater inflater = null;
             inflater = (LayoutInflater) _context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -63,7 +61,6 @@ public class InflateCompanies {
              */
 
             final String fName = c.getM_companyName();
-
             mFirstName.setText(fName);
 
             /**
@@ -103,13 +100,8 @@ public class InflateCompanies {
                 private void onMulitipleClickitemlist(View v) {
                     boolean isChecked = mCheckBox.isChecked();
 
-                    //boolean isdl = c.isDl();
-
                     mCheckBox.setChecked(!isChecked);
 
-//                    if (isdl) {
-//                        Toast.makeText(_context, "Unable to deselect downloaded companies", Toast.LENGTH_SHORT).show();
-//                    }
                     if (isChecked) {
                         setColorOnView(v);
                         _INFLATECLIENTS.remove(c);

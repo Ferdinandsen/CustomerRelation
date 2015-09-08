@@ -56,8 +56,8 @@ public class DAOCompany {
      */
 
     private ArrayList<BECompany> ConvertFromJsonToBE(JSONObject object) throws JSONException {
-        JSONObject obj = new JSONObject();
-        JSONArray obj1 = new JSONArray();
+        JSONObject obj;
+        JSONArray obj1;
 
         JSONArray jsonArray = (JSONArray) object.get("viewentry");
 

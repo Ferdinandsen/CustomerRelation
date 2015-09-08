@@ -26,6 +26,7 @@ public class InflateCompanyCanvasData {
     static BECanvas _SELECTEDCANVAS;
     Context _context;
     View oldView;
+    private static String TAG = "InflateCompanyCanvasData";
 
     public InflateCompanyCanvasData(Context context, ArrayList<BECanvas> list, LinearLayout layout) {
         _allCanvas = list;

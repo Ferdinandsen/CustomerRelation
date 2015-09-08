@@ -22,19 +22,18 @@ public class CompanyActivity extends AppCompatActivity {
     static BECompany SELECTEDCOMPANY;
     ClientController _clientController;
     InflateCompany _adapter;
-    final static String TAG = "CompanyActivity";
+    private static String TAG = "CompanyActivity";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-//        Bundle b = getIntent().getExtras();
         setContentView(R.layout.activity_client);
         _clientController = new ClientController(this);
         findViews();
         PopulateClients();
         setListeners();
-            _adapter = new InflateCompany(this, _selectedClients, _linearLayout);
-            _adapter.inflateView();
+        _adapter = new InflateCompany(this, _selectedClients, _linearLayout);
+        _adapter.inflateView();
         if (_adapter.getSelectedClient() != null) {
             SELECTEDCOMPANY = _adapter.getSelectedClient();
         }

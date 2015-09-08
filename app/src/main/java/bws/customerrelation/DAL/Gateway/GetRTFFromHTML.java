@@ -4,7 +4,6 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.AsyncTask;
 
-import org.json.JSONObject;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Node;
@@ -19,14 +18,27 @@ import java.util.List;
  */
 public class GetRTFFromHTML extends AsyncTask<String, Void, String> {
 
-    Document doc;
-    ProgressDialog progress;
-    Context _context;
-
-    public GetRTFFromHTML(Context context) {
-        _context = context;
-    }
-
+    Document _doc;
+//    Context _Context;
+//    private ProgressDialog _dialog;
+//
+//    public GetRTFFromHTML(Context context) {
+//        _Context = context;
+//    }
+//
+//    @Override
+//    protected void onPreExecute() {
+//        _dialog = new ProgressDialog(_Context);
+//        _dialog.setMessage("Doing something, please wait.");
+//        _dialog.show(); //Rammer 84 gange = alle canvas!
+//    }
+//
+//    @Override
+//    protected void onPostExecute(String result) {
+//        if (_dialog.isShowing()) {
+//            _dialog.dismiss();
+//        }
+//    }
 
     @Override
     protected String doInBackground(String... params) {
@@ -34,13 +46,13 @@ public class GetRTFFromHTML extends AsyncTask<String, Void, String> {
 
         String url = "http://skynet.bws.dk/Applications/smsAndroid.nsf/(CanvasByCompany)/" + params[0] + "?OpenDocument";
         try {
-            doc = Jsoup.connect(url).get();
+            _doc = Jsoup.connect(url).get();
         } catch (IOException e) {
             e.printStackTrace();
             return "NULL";
         }
 
-        Elements ps = doc.select("form");
+        Elements ps = _doc.select("form");
         List<Node> ele = ps.get(0).childNodes();
 
         StringBuilder sb = new StringBuilder();

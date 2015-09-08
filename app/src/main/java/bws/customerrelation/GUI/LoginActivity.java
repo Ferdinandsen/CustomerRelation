@@ -22,7 +22,7 @@ public class LoginActivity extends AppCompatActivity {
     EditText txtUsername;
     EditText txtPassword;
     Button btnLogin;
-    BEUser _user;
+    BEUser _user; //Todo make static?
     private static String TAG = "LoginActivity";
 
     UserController _userController;
@@ -39,15 +39,13 @@ public class LoginActivity extends AppCompatActivity {
         findViews();
         setListeners();
         testSetup();
-        // TIL TEST
-        clearDBClientList();
+
+        clearDBClientList(); // TIL TEST
     }
 
     private void clearDBClientList() {
         _clientController.deleteAllClients();
         _canvasController.deleteAllCanvas();
-
-
     }
 
     private void testSetup() {
@@ -81,7 +79,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void checkNetwork() {
-        //PAS!
+        //Todo Andre har måske noget
     }
 
     private void checkCredentials() {
@@ -90,7 +88,7 @@ public class LoginActivity extends AppCompatActivity {
         if (userLogin(email, password)) {
             Intent mainActivity = new Intent();
             mainActivity.setClass(this, MainActivity.class);
-            mainActivity.putExtra(SharedConstants.USER, _user);
+            mainActivity.putExtra(SharedConstants.USER, _user); //Todo remove?
             startActivity(mainActivity);
         }
     }

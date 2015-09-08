@@ -34,6 +34,7 @@ public class CompanyDataActivity extends AppCompatActivity {
     CanvasController _canvasController;
     ArrayList<BECanvas> companyCanvaslist;
     BECompany _selectedCompany;
+    private static String TAG = "CompanyDataActivity";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,7 +63,6 @@ public class CompanyDataActivity extends AppCompatActivity {
         seNumber.setText("SE Number:         " + _selectedCompany.getM_seNo());
 
         companyCanvaslist = _canvasController.getAllCanvasByClientId(_selectedCompany);
-        String test = "";
     }
 
     private void findViews() {
@@ -102,7 +102,7 @@ public class CompanyDataActivity extends AppCompatActivity {
     private void onclickBtnCreateCanvas() {
         Intent canvasIntent = new Intent();
         canvasIntent.setClass(this, CreateCanvasActivity.class);
-        canvasIntent.putExtra(SharedConstants.CLIENT, _selectedCompany);
+        canvasIntent.putExtra(SharedConstants.CLIENT, _selectedCompany); //TODO remove?
         startActivity(canvasIntent);
     }
 

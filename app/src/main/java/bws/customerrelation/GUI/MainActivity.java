@@ -55,7 +55,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Bundle b = getIntent().getExtras();
+        Bundle b = getIntent().getExtras(); //Todo remove?
         _user = (BEUser) b.getSerializable(SharedConstants.USER);
         _userController = new UserController(this);
         _clientController = new ClientController(this);
@@ -139,8 +139,6 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
-
-
         return true;
     }
 

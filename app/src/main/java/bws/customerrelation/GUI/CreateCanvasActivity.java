@@ -15,12 +15,13 @@ public class CreateCanvasActivity extends AppCompatActivity {
     EditText txtCanvas;
     ClientController _clientController;
     BECompany selectedClient;
+    private static String TAG = "CreateCanvasActivity";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_canvas);
-        Bundle b = getIntent().getExtras();
+        Bundle b = getIntent().getExtras(); //Todo remove?
         _clientController = new ClientController(this);
         findViews();
         setListeners();
@@ -28,6 +29,7 @@ public class CreateCanvasActivity extends AppCompatActivity {
     }
 
     private void populateData(Bundle b) {
+        //Todo Get from static instead
         selectedClient = (BECompany)b.getSerializable(SharedConstants.CLIENT);
     }
 

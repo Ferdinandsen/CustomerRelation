@@ -26,6 +26,7 @@ public class ShowCanvasActivity extends AppCompatActivity {
     TextView from;
     TextView toInternal;
     TextView comments;
+    private static String TAG = "ShowCanvasActivity";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

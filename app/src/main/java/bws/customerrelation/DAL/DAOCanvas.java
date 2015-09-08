@@ -44,9 +44,14 @@ public class DAOCanvas {
         _db = openHelper.getWritableDatabase();
     }
 
-    public ArrayList<BECanvas> getAllCanvasFromAPI( ) {
+    /**
+     * Henter alle Canvas fra URL
+     *
+     * @return ArrayList<BECanvas> med alle canvas i fra URL/Notes
+     */
+    public ArrayList<BECanvas> getAllCanvasFromAPI() {
         ArrayList<BECanvas> companyList = new ArrayList<>();
-        String URL = "http://skynet.bws.dk/Applications/smsAndroid.nsf/(CanvasByCompany)?readviewentries&outputformat=json&start=1&count=1000&restrict=2C7EFD49ADD61732C1256C2C002FEF71#";
+        final String URL = "http://skynet.bws.dk/Applications/smsAndroid.nsf/(CanvasByCompany)?readviewentries&outputformat=json&start=1&count=1000&restrict=2C7EFD49ADD61732C1256C2C002FEF71#";
         JSONObject obj;
         GetJSONFromAPI api = new GetJSONFromAPI();
         api.execute(URL);
@@ -60,10 +65,17 @@ public class DAOCanvas {
         return companyList;
     }
 
-    /**
-     * KONVERTER JSON OG ADD TIL ARRAYLIST
-     */
+//    /**
+//     * KONVERTER JSON OG ADD TIL ARRAYLIST
+//     */
 
+    /**
+     * Konverterer JSON til BE og adder til ArrayList<BECanvas>
+     *
+     * @param object Det objekt vi modtager fra getAllCanvasFromAPI
+     * @return ArrayList<BECanvas> en komplet liste af BECanvas
+     * @throws JSONException
+     */
     private ArrayList<BECanvas> ConvertFromJsonToBE(JSONObject object) throws JSONException {
         JSONObject obj;
         JSONArray obj1;
@@ -73,7 +85,7 @@ public class DAOCanvas {
         for (int i = 0; i < jsonArray.length(); i++) {
             obj = jsonArray.getJSONObject(i);
             obj1 = obj.getJSONArray("entrydata");
-            mList.add(setBECanvas(obj1));
+            mList.add(setBECanvas(obj1)); //Todo FOR løkke!
         }
         return mList;
     }
@@ -85,7 +97,7 @@ public class DAOCanvas {
                 TypeOfTransport, Activity, BusinessArea, Office, Text;
 
         ArrayList<String> array1 = new ArrayList<>();
-        java.util.Date nyDate = new Date();
+        java.util.Date nyDate;
         for (int y = 0; y < array.length(); y++) {
             nyDate = new Date();
             if (!array.getJSONObject(y).isNull("text")) {
@@ -103,28 +115,27 @@ public class DAOCanvas {
 
                 String date = array.getJSONObject(y).getJSONObject("datetime").getString("0");
                 String test;
-                SimpleDateFormat sdf;
+                SimpleDateFormat sdfIn;
                 String res = "NULL";
-                SimpleDateFormat fmtOut;
-
+                SimpleDateFormat sdfOut;
 
                 String[] ss = date.split("T");
                 test = ss[0];
-                sdf = new SimpleDateFormat("yyyyMMdd");
-                fmtOut = new SimpleDateFormat("dd-MM-yyyy");
+                sdfIn = new SimpleDateFormat("yyyyMMdd");
+                sdfOut = new SimpleDateFormat("dd-MM-yyyy");
 
                 try {
-                    nyDate = sdf.parse(test);
-                    res = fmtOut.format(nyDate);
+                    nyDate = sdfIn.parse(test);
+                    res = sdfOut.format(nyDate);
 
                 } catch (ParseException e) {
                     Log.e("DAOCanvas", "Parse date error", e);
                     e.printStackTrace();
                 }
                 array1.add(res);
-
             } else {
                 array1.add("");
+                Log.e("DAOCanvas", "Error in adding correct data to array");
             }
         }
         Date = (String) array1.get(0);
@@ -143,7 +154,8 @@ public class DAOCanvas {
         Activity = (String) array1.get(13);
         BusinessArea = (String) array1.get(14);
         Office = (String) array1.get(15);
-        Text = getRichTextFromHtmlByCanvasId(canvasId);
+//        Text = (String) array1.get(16);
+        Text = getRichTextFromHtmlByCanvasId(canvasId); //TODO FOR løkke fra ConvertFromJsonToBE!! farligt! flyt denne...!
 
         BECanvas canvas = new BECanvas(canvasId, companyId, Subject, VisitBy, TypeOfVisit, Date, FollowUpDate, FollowUpBy,
                 Sender, ToInternal, Region, Country,
@@ -151,9 +163,23 @@ public class DAOCanvas {
         return canvas;
     }
 
+    /**
+     * Brug denne her istedet?
+     *
+     * @param list ArrayList uden comments sat
+     * @param id   canvas id
+     */
+    public ArrayList<BECanvas> SetBECanvasComments(ArrayList<BECanvas> list, String id) {
+        ArrayList<BECanvas> local = list;
+        for (BECanvas b : local) {
+            b.setM_text(getRichTextFromHtmlByCanvasId(id));
+        }
+        return local;
+    }
+
     public String getRichTextFromHtmlByCanvasId(String id) {
         //Set comments field
-        GetRTFFromHTML RTF = new GetRTFFromHTML(_context);
+        GetRTFFromHTML RTF = new GetRTFFromHTML();
         RTF.execute(id);
         try {
             return RTF.get();
