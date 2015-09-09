@@ -11,7 +11,7 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 
-import bws.customerrelation.Controller.ClientController;
+import bws.customerrelation.Controller.CompanyController;
 import bws.customerrelation.Model.BECompany;
 import bws.customerrelation.R;
 
@@ -20,7 +20,7 @@ public class CompanyActivity extends AppCompatActivity {
     Button btnShowClient;
     ArrayList<BECompany> _selectedClients;
     static BECompany SELECTEDCOMPANY;
-    ClientController _clientController;
+    CompanyController _companyController;
     InflateCompany _adapter;
     private static String TAG = "CompanyActivity";
 
@@ -28,7 +28,7 @@ public class CompanyActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_client);
-        _clientController = new ClientController(this);
+        _companyController = CompanyController.getInstance(this);
         findViews();
         PopulateClients();
         setListeners();
@@ -60,7 +60,7 @@ public class CompanyActivity extends AppCompatActivity {
     }
 
     private void PopulateClients() {
-        _selectedClients = _clientController.getAllClientsFromDevice();
+        _selectedClients = _companyController.getAllClientsFromDevice();
     }
 
     private void findViews() {

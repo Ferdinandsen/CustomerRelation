@@ -155,6 +155,7 @@ public class DAOCanvas {
         BusinessArea = (String) array1.get(14);
         Office = (String) array1.get(15);
 //        Text = (String) array1.get(16);
+
         Text = getRichTextFromHtmlByCanvasId(canvasId); //TODO FOR løkke fra ConvertFromJsonToBE!! farligt! flyt denne...!
 
         BECanvas canvas = new BECanvas(canvasId, companyId, Subject, VisitBy, TypeOfVisit, Date, FollowUpDate, FollowUpBy,
@@ -171,8 +172,11 @@ public class DAOCanvas {
      */
     public ArrayList<BECanvas> SetBECanvasComments(ArrayList<BECanvas> list, String id) {
         ArrayList<BECanvas> local = list;
+
         for (BECanvas b : local) {
-            b.setM_text(getRichTextFromHtmlByCanvasId(id));
+            if (b.getM_canvasId().equals(id)) {
+                b.setM_text(getRichTextFromHtmlByCanvasId(id));
+            }
         }
         return local;
     }

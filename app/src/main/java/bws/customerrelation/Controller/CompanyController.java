@@ -8,28 +8,42 @@ import java.util.ArrayList;
 import bws.customerrelation.DAL.DAOCanvas;
 import bws.customerrelation.DAL.DAOCompany;
 import bws.customerrelation.Model.BECompany;
+import bws.customerrelation.Model.BECompanyActivities;
 
 /**
  * Created by Jacob Ferdinandsen on 13-08-2015.
  */
-public class ClientController {
+public class CompanyController {
     DAOCompany _daoCompany;
     DAOCanvas _daoCanvas;
     Activity _activity;
     ArrayList<BECompany> _cacheList;
+    private static CompanyController instance;
 
-    public ClientController(Activity context) {
+    private CompanyController(Activity context) {
         _activity = context;
         _daoCompany = new DAOCompany(_activity);
         _daoCanvas = new DAOCanvas(_activity);
         _cacheList = getCompanyFromApi();
+
     }
 
-    public ArrayList<BECompany> getCompanyFromApi() {
+    public static CompanyController getInstance(Activity context) {
+        if (instance == null) {
+            instance = new CompanyController(context);
+        }
+        return instance;
+    }
+
+    private ArrayList<BECompany> getCompanyFromApi() {
         return _daoCompany.getCompanyFromApi();
     }
 
-    public void deleteAllClients() {
+    public ArrayList<BECompany> getCompanies() {
+        return _cacheList;
+    }
+
+    public void deleteAllCompanies() {
         _daoCompany.deleteAllClients();
     }
 

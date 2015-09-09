@@ -5,7 +5,7 @@ import android.os.Bundle;
 import android.widget.Button;
 import android.widget.EditText;
 
-import bws.customerrelation.Controller.ClientController;
+import bws.customerrelation.Controller.CompanyController;
 import bws.customerrelation.Controller.SharedConstants;
 import bws.customerrelation.Model.BECompany;
 import bws.customerrelation.R;
@@ -13,7 +13,7 @@ import bws.customerrelation.R;
 public class CreateCanvasActivity extends AppCompatActivity {
     Button btnSave;
     EditText txtCanvas;
-    ClientController _clientController;
+    CompanyController _companyController;
     BECompany selectedClient;
     private static String TAG = "CreateCanvasActivity";
 
@@ -22,7 +22,7 @@ public class CreateCanvasActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_canvas);
         Bundle b = getIntent().getExtras(); //Todo remove?
-        _clientController = new ClientController(this);
+        _companyController = CompanyController.getInstance(this);
         findViews();
         setListeners();
         populateData(b);

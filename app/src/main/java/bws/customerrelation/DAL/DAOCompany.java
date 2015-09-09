@@ -81,9 +81,7 @@ public class DAOCompany {
         ArrayList<String> array1 = new ArrayList<>();
         for (int y = 0; y < array.length(); y++) {
             if (!array.getJSONObject(y).isNull("text")) {
-                String local = array.getJSONObject(y).getJSONObject("text").getString("0");
-                local.replace("å", "oe");
-                array1.add(local);
+                array1.add(array.getJSONObject(y).getJSONObject("text").getString("0"));
             } else {
                 array1.add("NULL");
             }
@@ -102,7 +100,6 @@ public class DAOCompany {
         salesArea = (String) array1.get(10);
         businessRelation = (String) array1.get(11);
         companyGroup = (String) array1.get(12);
-        Boolean bol;
         if (array1.get(13).equals("") || array1.get(13).toLowerCase().equals("false")) {
             companyClosed = false;
         } else {
@@ -111,7 +108,7 @@ public class DAOCompany {
         companyHomepage = (String) array1.get(14);
 
         BECompany company = new BECompany(id, companyName, address, city, zip, country, phone, fax, email, seNo, salesArea, businessRelation, companyGroup, companyClosed,
-                companyHomepage); //, false
+                companyHomepage);
         return company;
     }
 
@@ -125,9 +122,8 @@ public class DAOCompany {
         if (cursor.moveToFirst()) {
             do {
                 boolean bol = Boolean.valueOf(cursor.getString(13));
-//                boolean isDl = true; // sætter at den er dl, og ikke skal kunne deselectes fra mainActivity listen
                 BECompany compa = new BECompany(
-                        cursor.getString(0), cursor.getString(1).replace("Ã~","oe"), cursor.getString(2),
+                        cursor.getString(0), cursor.getString(1).replace("Ã~", "oe"), cursor.getString(2),
                         cursor.getString(3), cursor.getString(4), cursor.getString(5),
                         cursor.getString(6), cursor.getString(7), cursor.getString(8),
                         cursor.getString(9), cursor.getString(10), cursor.getString(11),

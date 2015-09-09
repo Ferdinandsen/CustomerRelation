@@ -1,17 +1,15 @@
 package bws.customerrelation.GUI;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
 import bws.customerrelation.Controller.CanvasController;
-import bws.customerrelation.Controller.ClientController;
+import bws.customerrelation.Controller.CompanyController;
 import bws.customerrelation.Controller.SharedConstants;
 import bws.customerrelation.Controller.UserController;
 import bws.customerrelation.Model.BEUser;
@@ -26,7 +24,7 @@ public class LoginActivity extends AppCompatActivity {
     private static String TAG = "LoginActivity";
 
     UserController _userController;
-    ClientController _clientController;
+    CompanyController _companyController;
     CanvasController _canvasController;
 
     @Override
@@ -34,7 +32,7 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         _userController = new UserController(this);
-        _clientController = new ClientController(this);
+        _companyController = CompanyController.getInstance(this);
         _canvasController = new CanvasController(this);
         findViews();
         setListeners();
@@ -44,7 +42,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void clearDBClientList() {
-        _clientController.deleteAllClients();
+        _companyController.deleteAllCompanies();
         _canvasController.deleteAllCanvas();
     }
 

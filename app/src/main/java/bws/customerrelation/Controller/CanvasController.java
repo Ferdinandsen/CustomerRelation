@@ -13,19 +13,19 @@ import bws.customerrelation.Model.BECompany;
  */
 public class CanvasController {
     Activity _activity;
-    ClientController _clientController;
+    CompanyController _companyController;
     DAOCanvas _daoCanvas;
 
     public CanvasController(Activity context) {
         _activity = context;
         _daoCanvas = new DAOCanvas(_activity);
-        _clientController = new ClientController(_activity);
+        _companyController = CompanyController.getInstance(context);
     }
 
 
     public void createCanvasList() {
 
-        ArrayList<BECompany> dlCompanies = _clientController.getAllClientsFromDevice();
+        ArrayList<BECompany> dlCompanies = _companyController.getAllClientsFromDevice();
         ArrayList<BECanvas> APIcanvas = getAllCanvasFromAPI();
         ArrayList<BECanvas> dlCanvas = _daoCanvas.getAllCanvasFromDevice();
         ArrayList<BECompany> test = new ArrayList<>();
