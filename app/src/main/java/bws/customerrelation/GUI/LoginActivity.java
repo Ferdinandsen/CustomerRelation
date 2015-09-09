@@ -20,30 +20,21 @@ public class LoginActivity extends AppCompatActivity {
     EditText txtUsername;
     EditText txtPassword;
     Button btnLogin;
-    BEUser _user; //Todo make static?
+    static BEUser USER;
     private static String TAG = "LoginActivity";
-
-    UserController _userController;
     CompanyController _companyController;
     CanvasController _canvasController;
+    UserController _userController;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         _userController = new UserController(this);
-        _companyController = CompanyController.getInstance(this);
-        _canvasController = new CanvasController(this);
         findViews();
         setListeners();
         testSetup();
-
-        clearDBClientList(); // TIL TEST
-    }
-
-    private void clearDBClientList() {
-        _companyController.deleteAllCompanies();
-        _canvasController.deleteAllCanvas();
     }
 
     private void testSetup() {
@@ -73,7 +64,6 @@ public class LoginActivity extends AppCompatActivity {
 //        checkNetwork();
         //  - i databasen
         checkCredentials();
-
     }
 
     private void checkNetwork() {
@@ -84,16 +74,28 @@ public class LoginActivity extends AppCompatActivity {
         String email = txtUsername.getText().toString().trim();
         String password = txtPassword.getText().toString();
         if (userLogin(email, password)) {
+            getInstances();
+            clearDBClientList(); //TODO KUN TIL TEST!
             Intent mainActivity = new Intent();
             mainActivity.setClass(this, MainActivity.class);
-            mainActivity.putExtra(SharedConstants.USER, _user); //Todo remove?
+            mainActivity.putExtra(SharedConstants.USER, USER); //Todo remove?
             startActivity(mainActivity);
         }
     }
 
+    private void clearDBClientList() {
+        _companyController.deleteAllCompanies();
+        _canvasController.deleteAllCanvas();
+    }
+
+    private void getInstances() {
+        _companyController = CompanyController.getInstance(this);
+        _canvasController = CanvasController.getInstance(this);
+    }
+
     private boolean userLogin(String email, String password) {
-        _user = _userController.getUserByCredentials(email, password);
-        if (_user != null) {
+        USER = _userController.getUserByCredentials(email, password);
+        if (USER != null) {
             return true;
         }
         Toast.makeText(this, "Login failed! Please try again...", Toast.LENGTH_LONG).show();

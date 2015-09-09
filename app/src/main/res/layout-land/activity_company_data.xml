@@ -9,6 +9,7 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="bws.customerrelation.GUI.CompanyDataActivity">
 
+
     <LinearLayout
         android:id="@+id/scrollview"
         android:layout_width="fill_parent"
@@ -122,6 +123,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/btnCreateCanvas" />
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/btnShowCanvas"
+            android:text="@string/btnShowCanvas"/>
 
     </LinearLayout>
 

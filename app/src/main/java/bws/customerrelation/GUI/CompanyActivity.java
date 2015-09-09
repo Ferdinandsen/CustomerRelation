@@ -32,12 +32,16 @@ public class CompanyActivity extends AppCompatActivity {
         findViews();
         PopulateClients();
         setListeners();
-        _adapter = new InflateCompany(this, _selectedClients, _linearLayout);
-        _adapter.inflateView();
+        inflateviews();
         if (_adapter.getSelectedClient() != null) {
             SELECTEDCOMPANY = _adapter.getSelectedClient();
         }
 
+    }
+
+    private void inflateviews() {
+        _adapter = new InflateCompany(this, _selectedClients, _linearLayout);
+        _adapter.inflateView();
     }
 
     private void setListeners() {

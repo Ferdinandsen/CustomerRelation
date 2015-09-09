@@ -1,7 +1,6 @@
 package bws.customerrelation.DAL;
 
 import android.app.Activity;
-import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteStatement;
@@ -28,7 +27,7 @@ import bws.customerrelation.Model.BECompany;
  */
 public class DAOCanvas {
 
-    Context _context;
+    Activity _activity;
     SQLiteDatabase _db;
     SQLiteStatement _sql;
 
@@ -38,9 +37,9 @@ public class DAOCanvas {
             "Sender, ToInternal, Region, Country, TypeOfTransport, " +
             "ActivityType, BusinessArea, Office, Text) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 
-    public DAOCanvas(Context context) {
-        _context = context;
-        OpenHelper openHelper = new OpenHelper(_context);
+    public DAOCanvas(Activity activity) {
+        _activity = activity;
+        OpenHelper openHelper = new OpenHelper(_activity);
         _db = openHelper.getWritableDatabase();
     }
 
@@ -53,7 +52,7 @@ public class DAOCanvas {
         ArrayList<BECanvas> companyList = new ArrayList<>();
         final String URL = "http://skynet.bws.dk/Applications/smsAndroid.nsf/(CanvasByCompany)?readviewentries&outputformat=json&start=1&count=1000&restrict=2C7EFD49ADD61732C1256C2C002FEF71#";
         JSONObject obj;
-        GetJSONFromAPI api = new GetJSONFromAPI();
+        GetJSONFromAPI api = new GetJSONFromAPI(_activity);
         api.execute(URL);
 
         try {
@@ -154,9 +153,9 @@ public class DAOCanvas {
         Activity = (String) array1.get(13);
         BusinessArea = (String) array1.get(14);
         Office = (String) array1.get(15);
-//        Text = (String) array1.get(16);
+        Text = "pre entry";
 
-        Text = getRichTextFromHtmlByCanvasId(canvasId); //TODO FOR løkke fra ConvertFromJsonToBE!! farligt! flyt denne...!
+//        Text = getRichTextFromHtmlByCanvasId(canvasId); //TODO FOR løkke fra ConvertFromJsonToBE!!
 
         BECanvas canvas = new BECanvas(canvasId, companyId, Subject, VisitBy, TypeOfVisit, Date, FollowUpDate, FollowUpBy,
                 Sender, ToInternal, Region, Country,
@@ -164,22 +163,19 @@ public class DAOCanvas {
         return canvas;
     }
 
-    /**
-     * Brug denne her istedet?
-     *
-     * @param list ArrayList uden comments sat
-     * @param id   canvas id
-     */
-    public ArrayList<BECanvas> SetBECanvasComments(ArrayList<BECanvas> list, String id) {
-        ArrayList<BECanvas> local = list;
-
-        for (BECanvas b : local) {
-            if (b.getM_canvasId().equals(id)) {
-                b.setM_text(getRichTextFromHtmlByCanvasId(id));
-            }
-        }
-        return local;
-    }
+//    public ArrayList<BECanvas> SetBECanvasComments(ArrayList<BECompany> dlComp, ArrayList<BECanvas> dlCanvas, String id) {
+//        ArrayList<BECanvas> _list = new ArrayList<>();
+//
+//        for (BECompany com : dlComp) {
+//            for (BECanvas can : dlCanvas) {
+//                if (can.getM_companyId().equals(com.getM_companyId())) {
+//                    can.setM_text(getRichTextFromHtmlByCanvasId(can.getM_canvasId()));
+//                    _list.add(can);
+//                }
+//            }
+//        }
+//        return _list;
+//    }
 
     public String getRichTextFromHtmlByCanvasId(String id) {
         //Set comments field
@@ -194,6 +190,24 @@ public class DAOCanvas {
             e.printStackTrace();
             return "Error getrich execution";
         }
+    }
+
+    /**
+     * TIL TEST!
+     *
+     * @param canvas
+     * @return
+     */
+    public long insertNewCanvas(BECanvas canvas) {
+        _sql = _db.compileStatement(_INSERTCANVAS);
+        _sql.bindString(1, canvas.getM_canvasId());
+        _sql.bindString(2, canvas.getM_companyId());
+        _sql.bindString(3, canvas.getM_Subject());
+        _sql.bindString(4, canvas.getM_VisitBy());
+        _sql.bindString(6, canvas.getM_date());
+        _sql.bindString(17, canvas.getM_text());
+
+        return _sql.executeInsert();
     }
 
     public long insertCanvas(BECanvas canvas) {
@@ -260,7 +274,8 @@ public class DAOCanvas {
     }
 
     public void deleteAllCanvas() {
-        _db.execSQL("DELETE FROM " + DAConstants.TABLE_CANVAS + " WHERE CanvasId != " + 100000);
+//        _db.execSQL("DELETE FROM " + DAConstants.TABLE_CANVAS + " WHERE Id != " + 105600);
+        _db.delete(DAConstants.TABLE_CANVAS, null, null);
     }
 
 }

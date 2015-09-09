@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -40,18 +41,28 @@ public class CompanyDataActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_company_data);
-        _canvasController = new CanvasController(this);
-
-        _selectedCompany = CompanyActivity.SELECTEDCOMPANY != null ? CompanyActivity.SELECTEDCOMPANY : MainActivity._SELECTEDCLIENTS.get(0);
+        _canvasController = CanvasController.getInstance(this);
+        _selectedCompany = CompanyActivity.SELECTEDCOMPANY != null ? CompanyActivity.SELECTEDCOMPANY : MainActivity.SELECTEDCOMPANIES.get(0);
         findViews();
         populateData();
         setListeners();
+        inflateViews();
+        SELECTEDCANVAS = _adapter.getSelectedCanvas() != null ? _adapter.getSelectedCanvas() : null;
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        companyCanvaslist = _canvasController.getAllCanvasByClientId(_selectedCompany);
+        _LinearLayout.removeAllViews();
+        inflateViews();
+    }
+
+    private void inflateViews() {
         _adapter = new InflateCompanyCanvasData(this, companyCanvaslist, _LinearLayout);
         _adapter.inflateView();
-        if (_adapter.getSelectedCanvas() != null) {
-            SELECTEDCANVAS = _adapter.getSelectedCanvas();
-        }
     }
+
 
     private void populateData() {
         companyName.setText("Company name:      " + _selectedCompany.getM_companyName());
@@ -94,15 +105,19 @@ public class CompanyDataActivity extends AppCompatActivity {
     }
 
     private void openCanvas() {
-        Intent showCanvasIntent = new Intent();
-        showCanvasIntent.setClass(this, ShowCanvasActivity.class);
-        startActivity(showCanvasIntent);
+        if (SELECTEDCANVAS == null) {
+            Toast.makeText(this, "Du har ikke valgt et canvas", Toast.LENGTH_LONG).show();
+        } else {
+            Intent showCanvasIntent = new Intent();
+            showCanvasIntent.setClass(this, ShowCanvasActivity.class);
+            startActivity(showCanvasIntent);
+        }
     }
 
     private void onclickBtnCreateCanvas() {
         Intent canvasIntent = new Intent();
         canvasIntent.setClass(this, CreateCanvasActivity.class);
-        canvasIntent.putExtra(SharedConstants.CLIENT, _selectedCompany); //TODO remove?
+        canvasIntent.putExtra(SharedConstants.CLIENT, _selectedCompany);//TODO remove?
         startActivity(canvasIntent);
     }
 

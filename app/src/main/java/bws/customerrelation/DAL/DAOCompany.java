@@ -14,7 +14,6 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 
 import bws.customerrelation.DAL.Gateway.GetJSONFromAPI;
-import bws.customerrelation.Model.BECanvas;
 import bws.customerrelation.Model.BECompany;
 
 /**
@@ -22,16 +21,16 @@ import bws.customerrelation.Model.BECompany;
  */
 public class DAOCompany {
 
-    Context _context;
+    Activity _activity;
     SQLiteDatabase _db;
     SQLiteStatement _sql;
 
     String _INSERTCOMPANY = "INSERT INTO " + DAConstants.TABLE_COMPANY + "(CompanyId, CompanyName, Address, City, Zip, Country, Phone, Fax, Email, SeNo, " +
             "SalesArea, BusinessRelation, CompanyGroup, CompanyClosed, CompanyHomepage) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 
-    public DAOCompany(Context context) {
-        _context = context;
-        OpenHelper openHelper = new OpenHelper(_context);
+    public DAOCompany(Activity activity) {
+        _activity = activity;
+        OpenHelper openHelper = new OpenHelper(_activity);
         _db = openHelper.getWritableDatabase();
     }
 
@@ -39,7 +38,7 @@ public class DAOCompany {
         ArrayList<BECompany> companyList = new ArrayList<>();
         String URL = "http://skynet.bws.dk/Applications/smsAndroid.nsf/LookupCompanyNameAndUNID?readviewentries&outputformat=json&start=1&count=100&restrict=2C7EFD49ADD61732C1256C2C002FEF71#";
         JSONObject obj;
-        GetJSONFromAPI api = new GetJSONFromAPI();
+        GetJSONFromAPI api = new GetJSONFromAPI(_activity);
         api.execute(URL);
 
         try {
@@ -138,7 +137,8 @@ public class DAOCompany {
     }
 
     public void deleteAllClients() {
-        _db.execSQL("DELETE FROM " + DAConstants.TABLE_COMPANY + " WHERE CompanyId != " + 100000);
+//        _db.execSQL("DELETE FROM " + DAConstants.TABLE_COMPANY + " WHERE CompanyId != " + 107800);
+        _db.delete(DAConstants.TABLE_COMPANY,null,null);
     }
 
     public long insertCompanyOnDevice(BECompany client) {

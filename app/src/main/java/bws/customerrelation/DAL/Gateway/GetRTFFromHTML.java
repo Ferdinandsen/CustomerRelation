@@ -19,26 +19,6 @@ import java.util.List;
 public class GetRTFFromHTML extends AsyncTask<String, Void, String> {
 
     Document _doc;
-//    Context _Context;
-//    private ProgressDialog _dialog;
-//
-//    public GetRTFFromHTML(Context context) {
-//        _Context = context;
-//    }
-//
-//    @Override
-//    protected void onPreExecute() {
-//        _dialog = new ProgressDialog(_Context);
-//        _dialog.setMessage("Doing something, please wait.");
-//        _dialog.show(); //Rammer 84 gange = alle canvas!
-//    }
-//
-//    @Override
-//    protected void onPostExecute(String result) {
-//        if (_dialog.isShowing()) {
-//            _dialog.dismiss();
-//        }
-//    }
 
     @Override
     protected String doInBackground(String... params) {
@@ -68,5 +48,4 @@ public class GetRTFFromHTML extends AsyncTask<String, Void, String> {
         String res = resultat;
         return res;
     }
-
 }

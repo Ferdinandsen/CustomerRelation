@@ -8,7 +8,6 @@ import android.view.View;
 import android.widget.CheckBox;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -110,7 +109,7 @@ public class InflateCompanies {
                         v.setBackgroundColor(Color.parseColor("#00B2EE"));
                         _INFLATECLIENTS.add(c);
                     }
-                    MainActivity._SELECTEDCLIENTS = _INFLATECLIENTS;
+                    MainActivity.SELECTEDCOMPANIES = _INFLATECLIENTS;
                 }
             });
             pos++;

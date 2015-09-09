@@ -18,7 +18,7 @@ public class CompanyController {
     DAOCanvas _daoCanvas;
     Activity _activity;
     ArrayList<BECompany> _cacheList;
-    private static CompanyController instance;
+    private static CompanyController instance = null;
 
     private CompanyController(Activity context) {
         _activity = context;

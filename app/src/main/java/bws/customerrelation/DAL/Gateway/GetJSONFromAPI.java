@@ -2,10 +2,8 @@ package bws.customerrelation.DAL.Gateway;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
-import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
-import android.widget.Toast;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -18,8 +16,6 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
-import bws.customerrelation.GUI.LoginActivity;
-
 /**
  * Created by Jacob Ferdinandsen on 25-08-2015.
  */
@@ -27,26 +23,26 @@ public class GetJSONFromAPI extends AsyncTask<String, Void, JSONObject> {
 
     JSONObject jsnobject;
     String result;
-//    Context _Context;
-//    private ProgressDialog _dialog;
-//
-//    public GetJSONFromAPI(Context context) {
-//        _Context = context;
-//    }
-//
-//    @Override
-//    protected void onPreExecute() {
-//        _dialog = new ProgressDialog(_Context); // Main - burde være Login?!
-//        _dialog.setMessage("Doing something, please wait.");
-//        _dialog.show(); // Rammer 3 gange?
-//    }
-//
-//    @Override
-//    protected void onPostExecute(JSONObject result) {
-//        if (_dialog.isShowing()) {
-//            _dialog.dismiss();
-//        }
-//    }
+    Activity _activity;
+    private ProgressDialog _dialog;
+
+    public GetJSONFromAPI(Activity activity) {
+        _activity = activity;
+    }
+
+    @Override
+    protected void onPreExecute() {
+        _dialog = new ProgressDialog(_activity); // Main - burde være Login?!
+        _dialog.setMessage("Doing something, please wait.");
+        _dialog.show(); // Rammer 3 gange?
+    }
+
+    @Override
+    protected void onPostExecute(JSONObject result) {
+        if (_dialog.isShowing()) {
+            _dialog.dismiss();
+        }
+    }
 
     @Override
     protected JSONObject doInBackground(String... params) {
@@ -94,7 +90,7 @@ public class GetJSONFromAPI extends AsyncTask<String, Void, JSONObject> {
         } catch (JSONException e) {
             Log.e("JSON", "Error creating JSON", e);
         }
-        return jsnobject; //Rammer 6 gange ?
+        return jsnobject; //Rammer 4 gange ?
     }
 
 }

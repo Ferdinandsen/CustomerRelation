@@ -6,7 +6,6 @@ import java.util.Date;
  * Created by Jaje on 19-Aug-15.
  */
 public class BECanvas {
-    private int m_id;
     private String m_canvasId;
     private String m_companyId;
     private String m_TypeOfVisit;
@@ -49,13 +48,13 @@ public class BECanvas {
         m_text = text;
     }
 
-
-    public int getId() {
-        return m_id;
-    }
-
-    public void setId(int id) {
-        m_id = id;
+    public BECanvas(String canvasId, String companyId, String VisitBy, String Subject, String Date, String text) {
+        m_canvasId = canvasId;
+        m_companyId = companyId;
+        m_VisitBy = VisitBy;
+        m_Subject = Subject;
+        m_date = Date;
+        m_text = text;
     }
 
     public String getM_companyId() {

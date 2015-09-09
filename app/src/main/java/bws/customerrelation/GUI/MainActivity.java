@@ -26,11 +26,15 @@ import bws.customerrelation.Controller.CanvasController;
 import bws.customerrelation.Controller.CompanyController;
 import bws.customerrelation.Controller.SharedConstants;
 import bws.customerrelation.Controller.UserController;
+import bws.customerrelation.Model.BECanvas;
 import bws.customerrelation.Model.BECompany;
 import bws.customerrelation.Model.BEUser;
 import bws.customerrelation.R;
 
 public class MainActivity extends AppCompatActivity {
+    CompanyController _companyController;
+    CanvasController _canvasController;
+
     TextView _txtUserData;
     ImageView _bwsNet;
     Button _btnDownloadList;
@@ -38,13 +42,9 @@ public class MainActivity extends AppCompatActivity {
     EditText _searchView;
     BEUser _user;
 
-    ArrayList<BECompany> _allClients;
+    ArrayList<BECompany> _allCompanies;
     ArrayList<BECompany> _searchList;
-    static ArrayList<BECompany> _SELECTEDCLIENTS = new ArrayList<BECompany>();
-
-    CompanyController _companyController;
-    UserController _userController;
-    CanvasController _canvasController;
+    static ArrayList<BECompany> SELECTEDCOMPANIES = new ArrayList<BECompany>();
 
     private static String TAG = "MainActivity";
     InflateCompanies _adapter;
@@ -57,29 +57,23 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         Bundle b = getIntent().getExtras(); //Todo remove?
         _user = (BEUser) b.getSerializable(SharedConstants.USER);
-        _userController = new UserController(this);
         _companyController = CompanyController.getInstance(this);
-        _canvasController = new CanvasController(this);
+        _canvasController = CanvasController.getInstance(this);
         imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
 
         findViews();
         setListeners();
         setUserData();
         populateCompanyList();
-
-        _adapter = new InflateCompanies(this, _allClients, _linearlayoutListView);
-        _adapter.inflateView();
-
-        if (_adapter.getSelectedClients() != null) {
-            _SELECTEDCLIENTS = _adapter.getSelectedClients();
-        }
+        inflateViews();
+        SELECTEDCOMPANIES = _adapter.getSelectedClients() != null ? _adapter.getSelectedClients() : null;
     }
-@Override
-protected void onResume(){
-    super.onResume();
-    _adapter = new InflateCompanies(this, _allClients, _linearlayoutListView);
-    _adapter.inflateView();
-}
+
+    private void inflateViews() {
+        _adapter = new InflateCompanies(this, _allCompanies, _linearlayoutListView);
+        _adapter.inflateView();
+    }
+
     private void findViews() {
         _txtUserData = (TextView) findViewById(R.id.userData);
         _bwsNet = (ImageView) findViewById(R.id.bwsNet);
@@ -89,7 +83,7 @@ protected void onResume(){
     }
 
     private void populateCompanyList() {
-        _allClients = _companyController.getCompanies();
+        _allCompanies = _companyController.getCompanies();
     }
 
     private void setUserData() {
@@ -106,23 +100,23 @@ protected void onResume(){
 
     }
 
-    //DOWNLOAD THE SELECTED ITEMS TO DB
+    //DOWNLOAD THE SELECTED ITEMS TO DB + start appropriate activity
     private void onClickDownloadList() {
-        if (_SELECTEDCLIENTS.isEmpty()) {
+        if (SELECTEDCOMPANIES.isEmpty()) {
             Toast.makeText(this, "Du har ikke valgt kunder", Toast.LENGTH_SHORT).show();
         } else {
-            if (_SELECTEDCLIENTS.size() == 1) {
-                Intent showClientIntent = new Intent();
-                showClientIntent.setClass(this, CompanyDataActivity.class);
-                _companyController.createCompanyList(_SELECTEDCLIENTS);
+            if (SELECTEDCOMPANIES.size() == 1) {
+                Intent showCompanyIntent = new Intent();
+                showCompanyIntent.setClass(this, CompanyDataActivity.class);
+                _companyController.createCompanyList(SELECTEDCOMPANIES);
                 _canvasController.createCanvasList();
-                startActivity(showClientIntent);
+                startActivity(showCompanyIntent);
             } else {
-                Intent clientIntent = new Intent();
-                clientIntent.setClass(this, CompanyActivity.class);
-                _companyController.createCompanyList(_SELECTEDCLIENTS);
+                Intent companyIntent = new Intent();
+                companyIntent.setClass(this, CompanyActivity.class);
+                _companyController.createCompanyList(SELECTEDCOMPANIES);
                 _canvasController.createCanvasList();
-                startActivity(clientIntent);
+                startActivity(companyIntent);
             }
         }
     }
