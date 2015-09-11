@@ -6,6 +6,11 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteStatement;
 import android.util.Log;
 
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -17,8 +22,10 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.concurrent.ExecutionException;
 
+import bws.customerrelation.Controller.CanvasController;
 import bws.customerrelation.DAL.Gateway.GetJSONFromAPI;
 import bws.customerrelation.DAL.Gateway.GetRTFFromHTML;
+import bws.customerrelation.DAL.Gateway.VolleySingleton;
 import bws.customerrelation.Model.BECanvas;
 import bws.customerrelation.Model.BECompany;
 
@@ -30,6 +37,8 @@ public class DAOCanvas {
     Activity _activity;
     SQLiteDatabase _db;
     SQLiteStatement _sql;
+    ArrayList<BECanvas> aList;
+    JSONObject obj;
 
     //DL
     String _INSERTCANVAS = "INSERT INTO " + DAConstants.TABLE_CANVAS + "(CanvasId, CompanyId, Subject, VisitBy, " +
@@ -63,6 +72,37 @@ public class DAOCanvas {
         }
         return companyList;
     }
+
+    public void getJSON() {
+        String url = "http://skynet.bws.dk/Applications/smsAndroid.nsf/(CanvasByCompany)?readviewentries&outputformat=json&start=1&count=1000&restrict=2C7EFD49ADD61732C1256C2C002FEF71#";
+        obj = new JSONObject();
+        aList = new ArrayList<>();
+        JsonObjectRequest jsObjRequest = new JsonObjectRequest
+                (Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
+
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        obj = response;
+                        try {
+                            aList = ConvertFromJsonToBE(obj);
+                            CanvasController.setCachedList(aList);
+                        } catch (JSONException e) {
+                            Log.e("DAOCanvas", "Error in GetJSON", e);
+                        }
+                    }
+                }, new Response.ErrorListener() {
+
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        // TODO Auto-generated method stub
+                        Log.e("DAOCANVAS", "Error in volley part", error);
+                    }
+                });
+
+// Access the RequestQueue through your singleton class.
+        VolleySingleton.getInstance(_activity).addToRequestQueue(jsObjRequest);
+    }
+
 
 //    /**
 //     * KONVERTER JSON OG ADD TIL ARRAYLIST

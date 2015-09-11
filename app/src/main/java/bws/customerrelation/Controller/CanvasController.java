@@ -1,10 +1,12 @@
 package bws.customerrelation.Controller;
 
 import android.app.Activity;
+import android.util.Log;
 
 import java.util.ArrayList;
 
 import bws.customerrelation.DAL.DAOCanvas;
+import bws.customerrelation.DAL.Gateway.SoapHelper;
 import bws.customerrelation.Model.BECanvas;
 import bws.customerrelation.Model.BECompany;
 
@@ -15,14 +17,16 @@ public class CanvasController {
     Activity _activity;
     CompanyController _companyController;
     DAOCanvas _daoCanvas;
-    ArrayList<BECanvas> _cacheList;
+    private static ArrayList<BECanvas> _cacheList;
+
     private static CanvasController instance = null;
 
     private CanvasController(Activity activity) {
         _activity = activity;
         _daoCanvas = new DAOCanvas(_activity);
         _companyController = CompanyController.getInstance(_activity);
-        _cacheList = getAllCanvasFromAPI();
+        getAllCanvasFromAPI();
+        Log.v("Hej", "hej");
     }
 
     public static CanvasController getInstance(Activity activity) {
@@ -72,8 +76,10 @@ public class CanvasController {
         }
     }
 
-    private ArrayList<BECanvas> getAllCanvasFromAPI() {
-        return _daoCanvas.getAllCanvasFromAPI();
+    private void getAllCanvasFromAPI() {
+//        return _daoCanvas.getAllCanvasFromAPI();
+        _daoCanvas.getJSON();
+
     }
 
     public ArrayList<BECanvas> getAllCanvasByClientId(BECompany company) {
@@ -91,10 +97,17 @@ public class CanvasController {
 
     /**
      * TIL TEST!!
+     *
      * @param canvas
      * @return
      */
     public long saveNewCanvas(BECanvas canvas) {
+        SoapHelper sh = new SoapHelper(canvas);
+        sh.execute();
         return _daoCanvas.insertNewCanvas(canvas);
+    }
+
+    public static void setCachedList(ArrayList<BECanvas> list) {
+        _cacheList = list;
     }
 }

@@ -17,15 +17,15 @@ public class CompanyController {
     DAOCompany _daoCompany;
     DAOCanvas _daoCanvas;
     Activity _activity;
-    ArrayList<BECompany> _cacheList;
+    private static ArrayList<BECompany> _cacheList;
     private static CompanyController instance = null;
+
 
     private CompanyController(Activity context) {
         _activity = context;
         _daoCompany = new DAOCompany(_activity);
         _daoCanvas = new DAOCanvas(_activity);
-        _cacheList = getCompanyFromApi();
-
+        getCompanyFromApi();
     }
 
     public static CompanyController getInstance(Activity context) {
@@ -35,8 +35,12 @@ public class CompanyController {
         return instance;
     }
 
-    private ArrayList<BECompany> getCompanyFromApi() {
-        return _daoCompany.getCompanyFromApi();
+    public static void setCachedList(ArrayList<BECompany> cachedList) {
+        _cacheList = cachedList;
+    }
+
+    private void getCompanyFromApi() {
+        _daoCompany.getJSON();
     }
 
     public ArrayList<BECompany> getCompanies() {

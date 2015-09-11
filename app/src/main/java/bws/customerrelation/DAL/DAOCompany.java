@@ -7,13 +7,21 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteStatement;
 import android.util.Log;
 
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
 
+import bws.customerrelation.Controller.CanvasController;
+import bws.customerrelation.Controller.CompanyController;
 import bws.customerrelation.DAL.Gateway.GetJSONFromAPI;
+import bws.customerrelation.DAL.Gateway.VolleySingleton;
 import bws.customerrelation.Model.BECompany;
 
 /**
@@ -24,7 +32,8 @@ public class DAOCompany {
     Activity _activity;
     SQLiteDatabase _db;
     SQLiteStatement _sql;
-
+    JSONObject obj;
+    ArrayList<BECompany> aList;
     String _INSERTCOMPANY = "INSERT INTO " + DAConstants.TABLE_COMPANY + "(CompanyId, CompanyName, Address, City, Zip, Country, Phone, Fax, Email, SeNo, " +
             "SalesArea, BusinessRelation, CompanyGroup, CompanyClosed, CompanyHomepage) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 
@@ -32,6 +41,36 @@ public class DAOCompany {
         _activity = activity;
         OpenHelper openHelper = new OpenHelper(_activity);
         _db = openHelper.getWritableDatabase();
+    }
+
+    public void getJSON() {
+        String url = "http://skynet.bws.dk/Applications/smsAndroid.nsf/LookupCompanyNameAndUNID?readviewentries&outputformat=json&start=1&count=100&restrict=2C7EFD49ADD61732C1256C2C002FEF71#";
+        obj = new JSONObject();
+        aList = new ArrayList<>();
+        JsonObjectRequest jsObjRequest = new JsonObjectRequest
+                (Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
+
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        obj = response;
+                        try {
+                            aList = ConvertFromJsonToBE(obj);
+                            CompanyController.setCachedList(aList);
+                        } catch (JSONException e) {
+                            Log.e("DAOCanvas", "Error in GetJSON", e);
+                        }
+                    }
+                }, new Response.ErrorListener() {
+
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        // TODO Auto-generated method stub
+                        Log.e("DAOCANVAS", "Error in volley part", error);
+                    }
+                });
+
+// Access the RequestQueue through your singleton class.
+        VolleySingleton.getInstance(_activity).addToRequestQueue(jsObjRequest);
     }
 
     public ArrayList<BECompany> getCompanyFromApi() {
@@ -138,7 +177,7 @@ public class DAOCompany {
 
     public void deleteAllClients() {
 //        _db.execSQL("DELETE FROM " + DAConstants.TABLE_COMPANY + " WHERE CompanyId != " + 107800);
-        _db.delete(DAConstants.TABLE_COMPANY,null,null);
+        _db.delete(DAConstants.TABLE_COMPANY, null, null);
     }
 
     public long insertCompanyOnDevice(BECompany client) {

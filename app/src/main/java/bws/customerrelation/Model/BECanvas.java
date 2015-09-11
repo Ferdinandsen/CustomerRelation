@@ -48,7 +48,7 @@ public class BECanvas {
         m_text = text;
     }
 
-    public BECanvas(String canvasId, String companyId, String VisitBy, String Subject, String Date, String text) {
+    public BECanvas(String canvasId, String companyId, String Subject, String VisitBy, String Date, String text) {
         m_canvasId = canvasId;
         m_companyId = companyId;
         m_VisitBy = VisitBy;

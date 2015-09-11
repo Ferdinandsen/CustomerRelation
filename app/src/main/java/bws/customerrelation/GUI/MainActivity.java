@@ -60,7 +60,6 @@ public class MainActivity extends AppCompatActivity {
         _companyController = CompanyController.getInstance(this);
         _canvasController = CanvasController.getInstance(this);
         imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-
         findViews();
         setListeners();
         setUserData();
@@ -85,6 +84,7 @@ public class MainActivity extends AppCompatActivity {
     private void populateCompanyList() {
         _allCompanies = _companyController.getCompanies();
     }
+
 
     private void setUserData() {
         _txtUserData.setText("Logged in as: " + _user.getFirstname() + " " + _user.getLastname());

@@ -55,14 +55,14 @@ public class CreateCanvasActivity extends AppCompatActivity {
     }
 
     private void onClickBtnSave(BECompany comp) {
-        String canvasId = "" + (Math.random()*1000 + Math.random()*1000);
+        String canvasId = "" + (Math.random() * 1000 + Math.random() * 1000);
 
         Date date = new Date();
         String res;
         SimpleDateFormat sdfOut = new SimpleDateFormat("dd-MM-yyyy");
         res = sdfOut.format(date);
 
-        BECanvas canvas = new BECanvas(canvasId, comp.getM_companyId(), _selectedUser.getFirstname() + " " + _selectedUser.getLastname(), txtSubject.getText().toString(), res, txtCanvas.getText().toString());
+        BECanvas canvas = new BECanvas(canvasId, comp.getM_companyId(), txtSubject.getText().toString(), _selectedUser.getFirstname() + " " + _selectedUser.getLastname(), res, txtCanvas.getText().toString());
         if (_canvasController.saveNewCanvas(canvas) != -1) {
             finish();
         }

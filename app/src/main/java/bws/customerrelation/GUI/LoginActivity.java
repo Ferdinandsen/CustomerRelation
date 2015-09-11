@@ -35,6 +35,7 @@ public class LoginActivity extends AppCompatActivity {
         findViews();
         setListeners();
         testSetup();
+        getInstances();
     }
 
     private void testSetup() {
@@ -74,7 +75,7 @@ public class LoginActivity extends AppCompatActivity {
         String email = txtUsername.getText().toString().trim();
         String password = txtPassword.getText().toString();
         if (userLogin(email, password)) {
-            getInstances();
+
             clearDBClientList(); //TODO KUN TIL TEST!
             Intent mainActivity = new Intent();
             mainActivity.setClass(this, MainActivity.class);
