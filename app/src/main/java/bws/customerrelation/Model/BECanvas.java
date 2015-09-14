@@ -1,28 +1,48 @@
 package bws.customerrelation.Model;
 
+import com.google.gson.annotations.SerializedName;
+
 import java.util.Date;
 
 /**
  * Created by Jaje on 19-Aug-15.
  */
 public class BECanvas {
+//    @SerializedName("DocUNID")
     private String m_canvasId;
+    @SerializedName("MainDocUNID")
     private String m_companyId;
+    @SerializedName("TypeVisit")
     private String m_TypeOfVisit;
+    @SerializedName("VisitBy")
     private String m_VisitBy;
+    @SerializedName("Subject")
     private String m_Subject;
+    @SerializedName("CreatedDate")
     private String m_date;
+    @SerializedName("FollowUpSalesman")
     private String m_FollowUpSalesman;
+    @SerializedName("FollowUpDate")
     private String m_FollowUpDate;
+    @SerializedName("Sender")
     private String m_Sender;
+    @SerializedName("ToInternal")
     private String m_ToInternal;
+    @SerializedName("Region")
     private String m_Region;
+    @SerializedName("Country")
     private String m_Country;
+    @SerializedName("TypeOfTransport")
     private String m_TypeOfTransport;
+    @SerializedName("ActivityType")
     private String m_ActivityType;
+    @SerializedName("BusinessArea")
     private String m_BusinessArea;
+    @SerializedName("Office")
     private String m_Office;
+    @SerializedName("Comments")
     private String m_text;
+
 
     public BECanvas(String canvasId, String companyId, String TypeOfVisit, String VisitBy,
                     String Subject, String date, String FollowUpSalesman, String FollowUpDate,

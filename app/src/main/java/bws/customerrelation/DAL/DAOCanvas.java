@@ -7,15 +7,22 @@ import android.database.sqlite.SQLiteStatement;
 import android.util.Log;
 
 import com.android.volley.Request;
+import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
+import com.google.gson.Gson;
 
+import org.apache.http.HttpRequest;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -38,7 +45,8 @@ public class DAOCanvas {
     SQLiteDatabase _db;
     SQLiteStatement _sql;
     ArrayList<BECanvas> aList;
-    JSONObject obj;
+    JSONObject obj1;
+    Gson gson;
 
     //DL
     String _INSERTCANVAS = "INSERT INTO " + DAConstants.TABLE_CANVAS + "(CanvasId, CompanyId, Subject, VisitBy, " +
@@ -50,6 +58,7 @@ public class DAOCanvas {
         _activity = activity;
         OpenHelper openHelper = new OpenHelper(_activity);
         _db = openHelper.getWritableDatabase();
+        gson = new Gson();
     }
 
     /**
@@ -75,16 +84,16 @@ public class DAOCanvas {
 
     public void getJSON() {
         String url = "http://skynet.bws.dk/Applications/smsAndroid.nsf/(CanvasByCompany)?readviewentries&outputformat=json&start=1&count=1000&restrict=2C7EFD49ADD61732C1256C2C002FEF71#";
-        obj = new JSONObject();
+        obj1 = new JSONObject();
         aList = new ArrayList<>();
         JsonObjectRequest jsObjRequest = new JsonObjectRequest
                 (Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
 
                     @Override
                     public void onResponse(JSONObject response) {
-                        obj = response;
+                        obj1 = response;
                         try {
-                            aList = ConvertFromJsonToBE(obj);
+                            aList = ConvertFromJsonToBE(obj1);
                             CanvasController.setCachedList(aList);
                         } catch (JSONException e) {
                             Log.e("DAOCanvas", "Error in GetJSON", e);
@@ -318,4 +327,44 @@ public class DAOCanvas {
         _db.delete(DAConstants.TABLE_CANVAS, null, null);
     }
 
+    public void postCanvasJson(BECanvas canvas) {
+
+        try {
+            obj1 = new JSONObject(gson.toJson(canvas));
+            obj1.remove("m_canvasId");
+            Log.v("tostring",obj1.toString());
+            Integer a = 1;
+        } catch (JSONException e) {
+            Log.e("PostCanvasJson", "Error");
+        }
+
+
+        RequestQueue queue = Volley.newRequestQueue(_activity);
+        String urlEncoded = null;
+        try {
+            urlEncoded = URLEncoder.encode(obj1.toString(), "ISO-8859-1");
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+        Log.v("ASDA","URLENCODED ER " + urlEncoded);
+        String url ="http://skynet.bws.dk/Applications/smsAndroid.nsf/CreateJson?OpenAgent&DATA=" +urlEncoded;
+
+// Request a string response from the provided URL.
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        // Display the first 500 characters of the response string.
+                        Log.v("ASDA","Response is: " + response);
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.v("ASDA","That didn't work!");
+            }
+        });
+// Add the request to the RequestQueue.
+        queue.add(stringRequest);
+
+    }
 }

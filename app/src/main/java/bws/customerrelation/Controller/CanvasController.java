@@ -102,9 +102,10 @@ public class CanvasController {
      * @return
      */
     public long saveNewCanvas(BECanvas canvas) {
-        SoapHelper sh = new SoapHelper(canvas);
-        sh.execute();
-        return _daoCanvas.insertNewCanvas(canvas);
+//        SoapHelper sh = new SoapHelper(canvas);
+//        sh.execute();
+        _daoCanvas.postCanvasJson(canvas);
+        return 1;
     }
 
     public static void setCachedList(ArrayList<BECanvas> list) {

@@ -22,22 +22,6 @@ public class VolleySingleton {
     private VolleySingleton(Context context) {
         mCtx = context;
         mRequestQueue = getRequestQueue();
-
-        mImageLoader = new ImageLoader(mRequestQueue,
-                new ImageLoader.ImageCache() {
-                    private final LruCache<String, Bitmap>
-                            cache = new LruCache<String, Bitmap>(20);
-
-                    @Override
-                    public Bitmap getBitmap(String url) {
-                        return cache.get(url);
-                    }
-
-                    @Override
-                    public void putBitmap(String url, Bitmap bitmap) {
-                        cache.put(url, bitmap);
-                    }
-                });
     }
 
     public static synchronized VolleySingleton getInstance(Context context) {
@@ -58,10 +42,6 @@ public class VolleySingleton {
 
     public <T> void addToRequestQueue(Request<T> req) {
         getRequestQueue().add(req);
-    }
-
-    public ImageLoader getImageLoader() {
-        return mImageLoader;
     }
 }
 

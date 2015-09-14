@@ -63,9 +63,10 @@ public class CreateCanvasActivity extends AppCompatActivity {
         res = sdfOut.format(date);
 
         BECanvas canvas = new BECanvas(canvasId, comp.getM_companyId(), txtSubject.getText().toString(), _selectedUser.getFirstname() + " " + _selectedUser.getLastname(), res, txtCanvas.getText().toString());
-        if (_canvasController.saveNewCanvas(canvas) != -1) {
+        _canvasController.saveNewCanvas(canvas);
+//        if (_canvasController.saveNewCanvas(canvas) != -1) {
             finish();
-        }
+//        }
 
     }
 
