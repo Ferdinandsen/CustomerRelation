@@ -43,23 +43,17 @@
         android:id="@+id/linearLayoutData"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
+        android:orientation="vertical"
         android:weightSum="1"
         android:layout_alignParentEnd="true"
         android:baselineAligned="false">
 
-
-        <LinearLayout
-            android:id="@+id/linearLayout4"
-            android:layout_width="wrap_content"
-            android:layout_height="fill_parent"
-            android:orientation="vertical"
-            android:layout_weight="0.5">
-
             <TextView
+                android:layout_gravity="center"
                 android:id="@+id/companyName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:textSize="20dp"
                 android:text="@string/companyName" />
 
             <TextView
@@ -80,35 +74,15 @@
                 android:layout_height="wrap_content"
                 android:text="@string/businessRelation" />
 
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/linearLayout5"
-            android:layout_width="wrap_content"
-            android:layout_height="fill_parent"
-            android:orientation="vertical"
-            android:layout_weight="0.5">
-
-            <TextView
-                android:id="@+id/group"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/group" />
-
             <TextView
                 android:id="@+id/telephone"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/telephone" />
 
-            <TextView
-                android:id="@+id/seNumber"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/seNumber" />
 
         </LinearLayout>
-    </LinearLayout>
+
 
     <LinearLayout
         android:id="@+id/LinearButtonLayout"

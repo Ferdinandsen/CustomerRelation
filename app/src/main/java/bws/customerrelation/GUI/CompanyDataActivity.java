@@ -65,13 +65,11 @@ public class CompanyDataActivity extends AppCompatActivity {
 
 
     private void populateData() {
-        companyName.setText("Company name:      " + _selectedCompany.getM_companyName());
-        address.setText("Address:           " + _selectedCompany.getM_address());
-        zipcode_city.setText("Zip code & city:   " + _selectedCompany.getM_zipCode() + " " + _selectedCompany.getM_city());
-        businessRelation.setText("business relation: " + _selectedCompany.getM_businessRelation());
-        group.setText("Group:             " + _selectedCompany.getM_group());
-        telephone.setText("Phone Number:      " + _selectedCompany.getM_telephone());
-        seNumber.setText("SE Number:         " + _selectedCompany.getM_seNo());
+        companyName.setText(_selectedCompany.getM_companyName());
+        address.setText(_selectedCompany.getM_address());
+        zipcode_city.setText(_selectedCompany.getM_zipCode() + " " + _selectedCompany.getM_city());
+        businessRelation.setText("Business relation: " + _selectedCompany.getM_businessRelation());
+        telephone.setText("Phone Number: " + _selectedCompany.getM_telephone());
 
         companyCanvaslist = _canvasController.getAllCanvasByClientId(_selectedCompany);
     }
@@ -81,9 +79,7 @@ public class CompanyDataActivity extends AppCompatActivity {
         address = (TextView) findViewById(R.id.address);
         telephone = (TextView) findViewById(R.id.telephone);
         businessRelation = (TextView) findViewById(R.id.businessRelation);
-        seNumber = (TextView) findViewById(R.id.seNumber);
         zipcode_city = (TextView) findViewById(R.id.zipcode_city);
-        group = (TextView) findViewById(R.id.group);
         btnCreateCanvas = (Button) findViewById(R.id.btnCreateCanvas);
         _LinearLayout = (LinearLayout) findViewById(R.id.linear_listview);
         btnShowCanvas = (Button) findViewById(R.id.btnShowCanvas);

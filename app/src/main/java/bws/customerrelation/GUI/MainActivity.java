@@ -1,7 +1,9 @@
 package bws.customerrelation.GUI;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.view.MenuItemCompat;
@@ -148,6 +150,22 @@ public class MainActivity extends AppCompatActivity {
         if (id == R.id.action_search) {
             searchMethod(this);
             return true;
+        }
+        if (id == R.id.menu_save) {
+            new AlertDialog.Builder(this)
+                    .setTitle("Save entries")
+                    .setMessage("Are you sure you want to save all entries?")
+                    .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                            _canvasController.PostCanvasToNotes();
+                        }
+                    })
+                    .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                        }
+                    })
+                    .setIcon(android.R.drawable.ic_dialog_alert)
+                    .show();
         }
         return super.onOptionsItemSelected(item);
     }

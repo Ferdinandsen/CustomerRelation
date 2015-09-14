@@ -24,7 +24,10 @@ public class OpenHelper extends SQLiteOpenHelper {
                 "ToInternal TEXT, Region TEXT, Country TEXT, TypeOfTransport TEXT, ActivityType TEXT, " +
                 "BusinessArea TEXT, Office TEXT, Text TEXT)");
 
-//        db.execSQL("CREATE TABLE " + DAConstants.TABLE_MESSAGE + "(Id INTEGER PRIMARY KEY, UserFrom INTEGER, UserTo INTEGER, Message TEXT, Date_Created DATETIME)");
+        db.execSQL("CREATE TABLE " + DAConstants.TABLE_UPLOAD + "(CompanyId TEXT, CanvasId TEXT PRIMARY KEY, Subject TEXT, " +
+                "VisitBy TEXT, TypeOfVisit TEXT, Date TEXT, FollowUpDate TEXT, FollowUpSalesman TEXT, Sender TEXT, " +
+                "ToInternal TEXT, Region TEXT, Country TEXT, TypeOfTransport TEXT, ActivityType TEXT, " +
+                "BusinessArea TEXT, Office TEXT, Text TEXT)");
 //        db.execSQL("CREATE TABLE " + DAConstants.TABLE_REQUEST + "(Id INTEGER PRIMARY KEY, UserFrom INTEGER, UserTo INTEGER, RequestMessage TEXT, Date_Created DATETIME)");
 //        db.execSQL("CREATE TABLE " + DAConstants.TABLE_COMMENT + "(Id INTEGER PRIMARY KEY, PostId INTEGER, UserId INTEGER, Message TEXT, Date_Created DATETIME)");
 //        db.execSQL("CREATE TABLE " + DAConstants.TABLE_POST_LIKE + "(PostId INTEGER, UserId INTEGER, PRIMARY KEY (PostId, UserId))");
@@ -36,7 +39,7 @@ public class OpenHelper extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE IF EXISTS " + DAConstants.TABLE_COMPANY);
         db.execSQL("DROP TABLE IF EXISTS " + DAConstants.TABLE_COMPANY);
         db.execSQL("DROP TABLE IF EXISTS " + DAConstants.TABLE_CANVAS);
-//        db.execSQL("DROP TABLE IF EXISTS " + DAConstants.TABLE_MESSAGE);
+        db.execSQL("DROP TABLE IF EXISTS " + DAConstants.TABLE_UPLOAD);
 //        db.execSQL("DROP TABLE IF EXISTS " + DAConstants.TABLE_REQUEST);
 //        db.execSQL("DROP TABLE IF EXISTS " + DAConstants.TABLE_COMMENT);
 //        db.execSQL("DROP TABLE IF EXISTS " + DAConstants.TABLE_POST_LIKE);

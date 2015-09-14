@@ -15,7 +15,6 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.google.gson.Gson;
 
-import org.apache.http.HttpRequest;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -50,6 +49,11 @@ public class DAOCanvas {
 
     //DL
     String _INSERTCANVAS = "INSERT INTO " + DAConstants.TABLE_CANVAS + "(CanvasId, CompanyId, Subject, VisitBy, " +
+            "TypeOfVisit, Date, FollowUpDate, FollowUpSalesman, " +
+            "Sender, ToInternal, Region, Country, TypeOfTransport, " +
+            "ActivityType, BusinessArea, Office, Text) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+
+    String _INSERTUPLOAD = "INSERT INTO " + DAConstants.TABLE_UPLOAD + "(CanvasId, CompanyId, Subject, VisitBy, " +
             "TypeOfVisit, Date, FollowUpDate, FollowUpSalesman, " +
             "Sender, ToInternal, Region, Country, TypeOfTransport, " +
             "ActivityType, BusinessArea, Office, Text) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
@@ -204,27 +208,12 @@ public class DAOCanvas {
         Office = (String) array1.get(15);
         Text = "pre entry";
 
-//        Text = getRichTextFromHtmlByCanvasId(canvasId); //TODO FOR løkke fra ConvertFromJsonToBE!!
-
         BECanvas canvas = new BECanvas(canvasId, companyId, Subject, VisitBy, TypeOfVisit, Date, FollowUpDate, FollowUpBy,
                 Sender, ToInternal, Region, Country,
                 TypeOfTransport, Activity, BusinessArea, Office, Text);
         return canvas;
     }
 
-//    public ArrayList<BECanvas> SetBECanvasComments(ArrayList<BECompany> dlComp, ArrayList<BECanvas> dlCanvas, String id) {
-//        ArrayList<BECanvas> _list = new ArrayList<>();
-//
-//        for (BECompany com : dlComp) {
-//            for (BECanvas can : dlCanvas) {
-//                if (can.getM_companyId().equals(com.getM_companyId())) {
-//                    can.setM_text(getRichTextFromHtmlByCanvasId(can.getM_canvasId()));
-//                    _list.add(can);
-//                }
-//            }
-//        }
-//        return _list;
-//    }
 
     public String getRichTextFromHtmlByCanvasId(String id) {
         //Set comments field
@@ -241,20 +230,38 @@ public class DAOCanvas {
         }
     }
 
-    /**
-     * TIL TEST!
-     *
-     * @param canvas
-     * @return
-     */
-    public long insertNewCanvas(BECanvas canvas) {
-        _sql = _db.compileStatement(_INSERTCANVAS);
-        _sql.bindString(1, canvas.getM_canvasId());
-        _sql.bindString(2, canvas.getM_companyId());
-        _sql.bindString(3, canvas.getM_Subject());
-        _sql.bindString(4, canvas.getM_VisitBy());
-        _sql.bindString(6, canvas.getM_date());
-        _sql.bindString(17, canvas.getM_text());
+    public long insertUploadCanvasShort(BECanvas canvas) {
+        _sql = _db.compileStatement(_INSERTUPLOAD);
+        _sql.bindString(1, canvas.getM_canvasId() );
+        _sql.bindString(2, canvas.getM_companyId() != null ? canvas.getM_companyId() : "null");
+        _sql.bindString(3, canvas.getM_Subject() != null ? canvas.getM_Subject() : "null");
+        _sql.bindString(4, canvas.getM_VisitBy() != null ? canvas.getM_VisitBy() : "null");
+        _sql.bindString(6, canvas.getM_date() != null ? canvas.getM_date() : "null");
+        _sql.bindString(17, canvas.getM_text() != null ? canvas.getM_text() : "null");
+
+        return _sql.executeInsert();
+    }
+
+
+    public long insertUploadCanvas(BECanvas canvas) {
+        _sql = _db.compileStatement(_INSERTUPLOAD);
+        _sql.bindString(1, canvas.getM_canvasId() );
+        _sql.bindString(2, canvas.getM_companyId() != null ? canvas.getM_companyId() : "null");
+        _sql.bindString(3, canvas.getM_Subject() != null ? canvas.getM_Subject() : "null");
+        _sql.bindString(4, canvas.getM_VisitBy() != null ? canvas.getM_VisitBy() : "null");
+        _sql.bindString(5, canvas.getM_TypeOfVisit() != null ? canvas.getM_TypeOfVisit() : "null");
+        _sql.bindString(6, canvas.getM_date() != null ? canvas.getM_date() : "null");
+        _sql.bindString(7, canvas.getM_FollowUpDate() != null ? canvas.getM_FollowUpDate() : "null");
+        _sql.bindString(8, canvas.getM_FollowUpSalesman() != null ? canvas.getM_FollowUpSalesman() : "null");
+        _sql.bindString(9, canvas.getM_Sender() != null ? canvas.getM_Sender() : "null");
+        _sql.bindString(10, canvas.getM_ToInternal() != null ? canvas.getM_ToInternal() : "null");
+        _sql.bindString(11, canvas.getM_Region() != null ? canvas.getM_Region() : "null");
+        _sql.bindString(12, canvas.getM_Country() != null ? canvas.getM_Country() : "null");
+        _sql.bindString(13, canvas.getM_TypeOfTransport() != null ? canvas.getM_TypeOfTransport() : "null");
+        _sql.bindString(14, canvas.getM_ActivityType() != null ? canvas.getM_ActivityType() : "null");
+        _sql.bindString(15, canvas.getM_BusinessArea() != null ? canvas.getM_BusinessArea() : "null");
+        _sql.bindString(16, canvas.getM_Office() != null ? canvas.getM_Office() : "null");
+        _sql.bindString(17, canvas.getM_text() != null ? canvas.getM_text() : "null");
 
         return _sql.executeInsert();
     }
@@ -300,7 +307,49 @@ public class DAOCanvas {
         if (cursor != null && !cursor.isClosed()) {
             cursor.close();
         }
+        canvasList.addAll(getCanvasFromUploadTableByCompanyId(company));
         return canvasList;
+    }
+
+    private ArrayList<BECanvas> getCanvasFromUploadTableByCompanyId(BECompany company) {
+        ArrayList<BECanvas> local = new ArrayList<>();
+        Cursor cursor = _db.query(DAConstants.TABLE_UPLOAD,
+                new String[]{"CanvasId", "CompanyId", "Subject", "VisitBy", "TypeOfVisit",
+                        "Date", "FollowUpDate", "FollowUpSalesman", "Sender", "ToInternal", "Region", "Country",
+                        "TypeOfTransport", "ActivityType", "BusinessArea", "Office", "Text"},
+                "CompanyId=?", new String[]{"" + company.getM_companyId()}, null, null,
+                null);
+        if (cursor.moveToFirst()) {
+            do {
+                local.add(new BECanvas(cursor.getString(0), cursor.getString(1), cursor.getString(2), cursor.getString(3), cursor.getString(4),
+                        cursor.getString(5), cursor.getString(6), cursor.getString(7), cursor.getString(8), cursor.getString(9), cursor.getString(10),
+                        cursor.getString(11), cursor.getString(12), cursor.getString(13), cursor.getString(14), cursor.getString(15), cursor.getString(16)));
+            } while (cursor.moveToNext());
+        }
+        if (cursor != null && !cursor.isClosed()) {
+            cursor.close();
+        }
+        return local;
+    }
+
+    public ArrayList<BECanvas> getAllCanvasFromUploadTable() {
+        ArrayList<BECanvas> local = new ArrayList<>();
+        Cursor cursor = _db.query(DAConstants.TABLE_UPLOAD,
+                new String[]{"CanvasId", "CompanyId", "Subject", "VisitBy", "TypeOfVisit",
+                        "Date", "FollowUpDate", "FollowUpSalesman", "Sender", "ToInternal", "Region", "Country",
+                        "TypeOfTransport", "ActivityType", "BusinessArea", "Office", "Text"},
+                null, null, null, null, null);
+        if (cursor.moveToFirst()) {
+            do {
+                local.add(new BECanvas(cursor.getString(0), cursor.getString(1), cursor.getString(2), cursor.getString(3), cursor.getString(4),
+                        cursor.getString(5), cursor.getString(6), cursor.getString(7), cursor.getString(8), cursor.getString(9), cursor.getString(10),
+                        cursor.getString(11), cursor.getString(12), cursor.getString(13), cursor.getString(14), cursor.getString(15), cursor.getString(16)));
+            } while (cursor.moveToNext());
+        }
+        if (cursor != null && !cursor.isClosed()) {
+            cursor.close();
+        }
+        return local;
     }
 
     public ArrayList<BECanvas> getAllCanvasFromDevice() {
@@ -322,49 +371,51 @@ public class DAOCanvas {
         return canvasList;
     }
 
-    public void deleteAllCanvas() {
-//        _db.execSQL("DELETE FROM " + DAConstants.TABLE_CANVAS + " WHERE Id != " + 105600);
-        _db.delete(DAConstants.TABLE_CANVAS, null, null);
-    }
-
     public void postCanvasJson(BECanvas canvas) {
 
         try {
             obj1 = new JSONObject(gson.toJson(canvas));
-            obj1.remove("m_canvasId");
-            Log.v("tostring",obj1.toString());
-            Integer a = 1;
+            obj1.remove("m_canvasId");  // fix da den sender noget med der ikke skal bruges
+            Log.v("tostring", obj1.toString());
+
         } catch (JSONException e) {
             Log.e("PostCanvasJson", "Error");
         }
 
-
         RequestQueue queue = Volley.newRequestQueue(_activity);
         String urlEncoded = null;
         try {
-            urlEncoded = URLEncoder.encode(obj1.toString(), "ISO-8859-1");
+            urlEncoded = URLEncoder.encode(obj1.toString(), "UTF-8");
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         }
-        Log.v("ASDA","URLENCODED ER " + urlEncoded);
-        String url ="http://skynet.bws.dk/Applications/smsAndroid.nsf/CreateJson?OpenAgent&DATA=" +urlEncoded;
+        String url = "http://skynet.bws.dk/Applications/smsAndroid.nsf/CreateJson?OpenAgent&DATA=" + urlEncoded;
 
 // Request a string response from the provided URL.
         StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                        // Display the first 500 characters of the response string.
-                        Log.v("ASDA","Response is: " + response);
+                        Log.v("ASDA", "Response is: " + response);
+                        int iee = 1;
                     }
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Log.v("ASDA","That didn't work!");
+                Log.v("ASDA", "That didn't work!");
             }
         });
 // Add the request to the RequestQueue.
         queue.add(stringRequest);
 
+    }
+
+    public void deleteAllCanvas() {
+//        _db.execSQL("DELETE FROM " + DAConstants.TABLE_CANVAS + " WHERE Id != " + 105600);
+        _db.delete(DAConstants.TABLE_CANVAS, null, null);
+    }
+
+    public void deleteAllCanvasFromUpload() {
+        _db.delete(DAConstants.TABLE_UPLOAD, null, null);
     }
 }

@@ -8,6 +8,11 @@
         android:orderInCategory="300"
         android:title="action_search"
         app:actionViewClass="android.widget.EditText"
-        app:showAsAction="ifRoom|collapseActionView"
-        ></item>
+        app:showAsAction="ifRoom|collapseActionView"></item>
+    <item
+        android:id="@+id/menu_save"
+        android:icon="@android:drawable/ic_menu_save"
+        android:title="Save canvas entries"
+        app:actionViewClass="android.widget.alertDialog"
+        app:showAsAction="ifRoom|collapseActionView" />
 </menu>

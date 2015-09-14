@@ -77,38 +77,33 @@ public class CanvasController {
     }
 
     private void getAllCanvasFromAPI() {
-//        return _daoCanvas.getAllCanvasFromAPI();
         _daoCanvas.getJSON();
-
     }
 
     public ArrayList<BECanvas> getAllCanvasByClientId(BECompany company) {
         return _daoCanvas.getAllCanvasByClientId(company);
     }
 
-
     public long saveCanvas(BECanvas canvas) {
-        return _daoCanvas.insertCanvas(canvas);
+        return _daoCanvas.insertUploadCanvasShort(canvas);
     }
 
     public void deleteAllCanvas() {
         _daoCanvas.deleteAllCanvas();
     }
 
-    /**
-     * TIL TEST!!
-     *
-     * @param canvas
-     * @return
-     */
-    public long saveNewCanvas(BECanvas canvas) {
-//        SoapHelper sh = new SoapHelper(canvas);
-//        sh.execute();
-        _daoCanvas.postCanvasJson(canvas);
-        return 1;
+    public void PostCanvasToNotes() {
+        ArrayList<BECanvas> local = _daoCanvas.getAllCanvasFromUploadTable();
+        for (BECanvas x : local) {
+            _daoCanvas.postCanvasJson(x);
+        }
     }
 
     public static void setCachedList(ArrayList<BECanvas> list) {
         _cacheList = list;
+    }
+
+    public void deleteAllCanvasFromUpload() {
+        _daoCanvas.deleteAllCanvasFromUpload();
     }
 }

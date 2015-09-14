@@ -4,8 +4,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Spinner;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -26,6 +28,13 @@ public class CreateCanvasActivity extends AppCompatActivity {
     CanvasController _canvasController;
     BECompany _selectedCompany;
     BEUser _selectedUser;
+    Spinner spinToTRP;
+    Spinner spinToVisit;
+    Spinner spinToActivity;
+    Spinner spinBusinessArea;
+    Spinner spinCountry;
+    Spinner spinFollowUpDate;
+
     private static String TAG = "CreateCanvasActivity";
 
     @Override
@@ -43,6 +52,10 @@ public class CreateCanvasActivity extends AppCompatActivity {
         //Todo Get from static instead
         _selectedCompany = (BECompany) b.getSerializable(SharedConstants.CLIENT);
         _selectedUser = LoginActivity.USER;
+        String[] stringaraa = new String[]{"#", "hejsa", "DU TYYYYYYYYYK"};
+//        ArrayAdapter<String> typeOfTransport = new ArrayAdapter<String>(this,R.layout.simple_list_item_1,stringaraa);
+        //TODO
+//        spinToTRP.setAdapter(typeOfTransport);
     }
 
     private void setListeners() {
@@ -63,10 +76,9 @@ public class CreateCanvasActivity extends AppCompatActivity {
         res = sdfOut.format(date);
 
         BECanvas canvas = new BECanvas(canvasId, comp.getM_companyId(), txtSubject.getText().toString(), _selectedUser.getFirstname() + " " + _selectedUser.getLastname(), res, txtCanvas.getText().toString());
-        _canvasController.saveNewCanvas(canvas);
-//        if (_canvasController.saveNewCanvas(canvas) != -1) {
+        if (_canvasController.saveCanvas(canvas) != -1) {
             finish();
-//        }
+        }
 
     }
 
@@ -74,6 +86,12 @@ public class CreateCanvasActivity extends AppCompatActivity {
         btnSave = (Button) findViewById(R.id.btnSave);
         txtCanvas = (EditText) findViewById(R.id.newCanvas);
         txtSubject = (EditText) findViewById(R.id.txtSubject);
+        spinToTRP = (Spinner) findViewById(R.id.typeOfTransportSpinner);
+        spinCountry = (Spinner) findViewById(R.id.countrySpinner);
+        spinBusinessArea = (Spinner) findViewById(R.id.businessAreaSpinner);
+        spinToActivity = (Spinner) findViewById(R.id.activitySpinner);
+        spinFollowUpDate = (Spinner) findViewById(R.id.followUpSpinner);
+        spinToVisit = (Spinner) findViewById(R.id.TypeOfVisitSpinner);
     }
 
 }

@@ -87,6 +87,7 @@ public class LoginActivity extends AppCompatActivity {
     private void clearDBClientList() {
         _companyController.deleteAllCompanies();
         _canvasController.deleteAllCanvas();
+        _canvasController.deleteAllCanvasFromUpload();
     }
 
     private void getInstances() {
