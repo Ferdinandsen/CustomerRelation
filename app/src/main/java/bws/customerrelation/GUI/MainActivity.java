@@ -18,6 +18,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.SearchView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -127,9 +128,16 @@ public class MainActivity extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_main, menu);
         final MenuItem searchItem = menu.findItem(R.id.action_search);
-
         _searchView = (EditText) MenuItemCompat.getActionView(searchItem);
         _searchView.setSingleLine();
+        _searchView.setWidth(300);
+
+        _searchView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                imm.showSoftInput(_searchView, InputMethodManager.SHOW_IMPLICIT);
+            }
+        });
         _searchView.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
@@ -140,6 +148,7 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
+
         return true;
     }
 
@@ -167,10 +176,13 @@ public class MainActivity extends AppCompatActivity {
                     .setIcon(android.R.drawable.ic_dialog_alert)
                     .show();
         }
+
         return super.onOptionsItemSelected(item);
     }
 
     private void searchMethod(final Activity activity) {
+
+
         _searchView.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
