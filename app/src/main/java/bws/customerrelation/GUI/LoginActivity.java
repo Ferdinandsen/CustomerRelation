@@ -1,8 +1,11 @@
 package bws.customerrelation.GUI;
 
+import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -25,6 +28,7 @@ public class LoginActivity extends AppCompatActivity {
     CompanyController _companyController;
     CanvasController _canvasController;
     UserController _userController;
+    ProgressDialog dialog;
 
 
     @Override
@@ -91,9 +95,58 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void getInstances() {
-        _companyController = CompanyController.getInstance(this);
-        _canvasController = CanvasController.getInstance(this);
+
+        final ProgressDialog ringProgressDialog = ProgressDialog.show(this, "Please wait ...", "Fetching data", true);
+//        ringProgressDialog.setCancelable(true);
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    // Here you should write your time consuming task...
+                    _companyController = CompanyController.getInstance(LoginActivity.this);
+                    _canvasController = CanvasController.getInstance(LoginActivity.this);
+                    // Let the progress ring for 10 seconds...
+                    Thread.sleep(10000);
+                } catch (Exception e) {
+                    Log.e("Login", e.toString());
+                }
+                ringProgressDialog.dismiss();
+            }
+        }).start();
     }
+
+//    private progressBar(){
+//        barProgressDialog = new ProgressDialog(MainActivity.this);
+//        barProgressDialog.setTitle("Downloading Image ...");
+//                barProgressDialog.setMessage("Download in progress ...");
+//        barProgressDialog.setProgressStyle(barProgressDialog.STYLE_HORIZONTAL);
+//        barProgressDialog.setProgress(0);
+//        barProgressDialog.setMax(20);
+//        barProgressDialog.show();
+//
+//        new Thread(new Runnable() {
+//            @Override
+//            public void run() {
+//                try {
+//
+//                    // Here you should write your time consuming task...
+//                    while (barProgressDialog.getProgress() <= barProgressDialog.getMax())
+//
+//                        Thread.sleep(2000);
+//                        updateBarHandler.post(new Runnable() {
+//                            public void run() {
+//                                barProgressDialog.incrementProgressBy(2);
+//                            }
+//                        });
+//                        if (barProgressDialog.getProgress() == barProgressDialog.getMax()) {
+//                            barProgressDialog.dismiss();
+//                        }
+//                    }
+//                } catch (Exception e) {
+//                }
+//        }).start();
+//    }
+
 
     private boolean userLogin(String email, String password) {
         USER = _userController.getUserByCredentials(email, password);

@@ -128,29 +128,23 @@ public class MainActivity extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_main, menu);
         final MenuItem searchItem = menu.findItem(R.id.action_search);
+
         _searchView = (EditText) MenuItemCompat.getActionView(searchItem);
         _searchView.setSingleLine();
         _searchView.setWidth(300);
-
-        _searchView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                imm.showSoftInput(_searchView, InputMethodManager.SHOW_IMPLICIT);
-            }
-        });
         _searchView.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
                 if (v.getId() == R.id.action_search && !hasFocus) {
                     imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
                 } else {
-                    imm.showSoftInput(_searchView, InputMethodManager.SHOW_IMPLICIT);
+                    imm.toggleSoftInput(InputMethodManager.SHOW_IMPLICIT,0);
                 }
             }
         });
-
         return true;
     }
+
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -181,7 +175,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void searchMethod(final Activity activity) {
-
+//        imm.showSoftInput(_searchView, InputMethodManager.SHOW_FORCED);
 
         _searchView.addTextChangedListener(new TextWatcher() {
             @Override

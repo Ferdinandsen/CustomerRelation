@@ -16,7 +16,6 @@
     <string name="picture">picture</string>
     <string name="action_settings">settings</string>
     <string name="title_activity_client">ClientActivity</string>
-    <string name="search_hint">Search</string>
 
     <!-- COMPANY ACTIVITY -->
     <string name="btnGet">Show Client</string>
