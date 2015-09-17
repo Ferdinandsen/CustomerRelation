@@ -7,7 +7,7 @@
     <string name="loginPassword">Password</string>
     <string name="loginUsername">Username - Email</string>
     <string name="loginBtn">Login</string>
-    <string name="title_activity_main">MainActivity</string>
+    <string name="title_activity_main">Customer relation</string>
 
     <!-- MAIN ACTIVITY -->
     <string name="userData">Jacob Ferdinandsen</string>
@@ -15,11 +15,11 @@
     <string name="loadedClients">Cache</string>
     <string name="picture">picture</string>
     <string name="action_settings">settings</string>
-    <string name="title_activity_client">ClientActivity</string>
+    <string name="title_activity_client">Companies</string>
 
     <!-- COMPANY ACTIVITY -->
     <string name="btnGet">Show Client</string>
-    <string name="title_activity_client_data">ClientDataActivity</string>
+    <string name="title_activity_client_data">Company data</string>
 
     <string name="group">Group: </string>
     <string name="businessRelation">Business relation: </string>
@@ -29,22 +29,21 @@
     <string name="telephone">Telephone: </string>
     <string name="zipcode_city">Zip: </string>
 
-
-    <string name="btnCreateCanvas">Create New Canvas</string>
-    <string name="btnShowCanvas">Show Canvas</string>
-
-    <string name="title_activity_canvas">CanvasActivity</string>
-    <string name="enterText">Enter text here</string>
-
-    <string name="btnSave">Save</string>
-
     <string name="companyName">Company</string>
     <string name="canvasAmount">CanvasAmount</string>
 
     <string name="txtSearchHint">search</string>
-    <string name="title_activity_show_canvas">ShowCanvasActivity</string>
+
 
     <!-- CANVAS ACTIVITY -->
+    <string name="btnCreateCanvas">Create New Canvas</string>
+    <string name="btnShowCanvas">Show Canvas</string>
+
+    <string name="title_activity_canvas">Create new canvas</string>
+    <string name="enterText">Enter text here</string>
+
+    <string name="btnSave">Save</string>
+
     <string name="lblRegion">Region</string>
     <string name="lblCountry">Country</string>
     <string name="lblTypeOfTransport">Type of transport</string>
@@ -65,5 +64,6 @@
     <string name="hello_world">NULL</string>
     <string name="date"> Date</string>
 
-
+    <!--ShowCanvas-->
+    <string name="title_activity_show_canvas">Canvas</string>
 </resources>

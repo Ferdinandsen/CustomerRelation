@@ -15,6 +15,12 @@
         android:id="@+id/menu_save"
         android:icon="@android:drawable/ic_menu_save"
         android:title="Save canvas entries"
-        app:actionViewClass="android.widget.alertDialog"
-        app:showAsAction="ifRoom|collapseActionView" />
+        app:showAsAction="ifRoom" />
+    <item
+        android:id="@+id/menu_delete_all_companies"
+        android:icon="@android:drawable/ic_delete"
+        android:title="Delete all companies"
+        app:showAsAction="ifRoom">
+
+    </item>
 </menu>

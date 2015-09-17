@@ -27,19 +27,26 @@ public class CompanyActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_client);
+        setContentView(R.layout.activity_company);
         _companyController = CompanyController.getInstance(this);
         findViews();
         PopulateClients();
         setListeners();
-        inflateviews();
+        inflateViews();
         if (_adapter.getSelectedClient() != null) {
             SELECTEDCOMPANY = _adapter.getSelectedClient();
         }
-
     }
 
-    private void inflateviews() {
+    @Override
+    protected void onResume() {
+        super.onResume();
+        _selectedClients = _companyController.getAllCompaniesFromDevice();
+        _linearLayout.removeAllViews();
+        inflateViews();
+    }
+
+    private void inflateViews() {
         _adapter = new InflateCompany(this, _selectedClients, _linearLayout);
         _adapter.inflateView();
     }
@@ -64,7 +71,7 @@ public class CompanyActivity extends AppCompatActivity {
     }
 
     private void PopulateClients() {
-        _selectedClients = _companyController.getAllClientsFromDevice();
+        _selectedClients = _companyController.getAllCompaniesFromDevice();
     }
 
     private void findViews() {

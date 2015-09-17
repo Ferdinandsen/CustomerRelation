@@ -1,14 +1,12 @@
 package bws.customerrelation.Controller;
 
 import android.app.Activity;
-import android.content.Context;
 
 import java.util.ArrayList;
 
 import bws.customerrelation.DAL.DAOCanvas;
 import bws.customerrelation.DAL.DAOCompany;
 import bws.customerrelation.Model.BECompany;
-import bws.customerrelation.Model.BECompanyActivities;
 
 /**
  * Created by Jacob Ferdinandsen on 13-08-2015.
@@ -48,7 +46,7 @@ public class CompanyController {
     }
 
     public void deleteAllCompanies() {
-        _daoCompany.deleteAllClients();
+        _daoCompany.deleteAllCompanies();
     }
 
     public void createCompanyList(ArrayList<BECompany> clients) {
@@ -56,7 +54,7 @@ public class CompanyController {
         for (BECompany clie : clients) {
             localCompanies.add(clie);
         }
-        ArrayList<BECompany> deviceCompanies = getAllClientsFromDevice();
+        ArrayList<BECompany> deviceCompanies = getAllCompaniesFromDevice();
         ArrayList<BECompany> test1 = new ArrayList<>();
 
         if (deviceCompanies.isEmpty()) {
@@ -80,8 +78,8 @@ public class CompanyController {
         }
     }
 
-    public ArrayList<BECompany> getAllClientsFromDevice() {
-        return _daoCompany.getAllClientsFromDevice();
+    public ArrayList<BECompany> getAllCompaniesFromDevice() {
+        return _daoCompany.getAllCompaniesFromDevice();
     }
 
     public ArrayList<BECompany> getCompaniesByInput(String s) {
@@ -94,4 +92,9 @@ public class CompanyController {
         }
         return matchedCompanies;
     }
+
+    public void deleteCompanyById(String id) {
+        _daoCompany.deleteById(id);
+    }
+
 }

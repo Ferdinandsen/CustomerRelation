@@ -28,14 +28,14 @@
 
     </LinearLayout>
 
-    <ImageView
-        android:id="@+id/bwsNet"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentTop="true"
-        android:contentDescription="@string/picture"
-        android:src="@drawable/abc_btn_check_to_on_mtrl_015" />
+    <!--<ImageView-->
+        <!--android:id="@+id/bwsNet"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_alignParentEnd="true"-->
+        <!--android:layout_alignParentTop="true"-->
+        <!--android:contentDescription="@string/picture"-->
+        <!--android:src="@drawable/abc_btn_check_to_on_mtrl_015" />-->
 
     <LinearLayout
         android:id="@+id/linearLayout3"

@@ -150,7 +150,7 @@ public class DAOCompany {
         return company;
     }
 
-    public ArrayList<BECompany> getAllClientsFromDevice() {
+    public ArrayList<BECompany> getAllCompaniesFromDevice() {
         ArrayList<BECompany> clients = new ArrayList<BECompany>();
         Cursor cursor = _db.query(DAConstants.TABLE_COMPANY,
                 new String[]{"CompanyId", "CompanyName", "Address", "City", "Zip", "Country", "Phone",
@@ -175,11 +175,6 @@ public class DAOCompany {
         return clients;
     }
 
-    public void deleteAllClients() {
-//        _db.execSQL("DELETE FROM " + DAConstants.TABLE_COMPANY + " WHERE CompanyId != " + 107800);
-        _db.delete(DAConstants.TABLE_COMPANY, null, null);
-    }
-
     public long insertCompanyOnDevice(BECompany client) {
         _sql = _db.compileStatement(_INSERTCOMPANY);
         _sql.bindString(1, "" + client.getM_companyId());
@@ -198,6 +193,15 @@ public class DAOCompany {
         _sql.bindString(14, "" + client.getM_closedCompany());
         _sql.bindString(15, "" + client.getM_homepage());
         return _sql.executeInsert();
+    }
+
+    public void deleteAllCompanies() {
+//        _db.execSQL("DELETE FROM " + DAConstants.TABLE_COMPANY + " WHERE CompanyId != " + 107800);
+        _db.delete(DAConstants.TABLE_COMPANY, null, null);
+    }
+
+    public void deleteById(String id) {
+        _db.delete(DAConstants.TABLE_COMPANY, "CompanyId=?" ,new String[]{id});
     }
 }
 

@@ -1,6 +1,5 @@
 package bws.customerrelation.GUI;
 
-import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
@@ -28,7 +27,7 @@ public class LoginActivity extends AppCompatActivity {
     CompanyController _companyController;
     CanvasController _canvasController;
     UserController _userController;
-    ProgressDialog dialog;
+    ProgressDialog _dialog;
 
 
     @Override
@@ -95,9 +94,8 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void getInstances() {
-
-        final ProgressDialog ringProgressDialog = ProgressDialog.show(this, "Please wait ...", "Fetching data", true);
-//        ringProgressDialog.setCancelable(true);
+        _dialog = ProgressDialog.show(this, "Please wait ...", "Fetching data", true);
+//        _dialog.setCancelable(true);
         new Thread(new Runnable() {
             @Override
             public void run() {
@@ -106,11 +104,11 @@ public class LoginActivity extends AppCompatActivity {
                     _companyController = CompanyController.getInstance(LoginActivity.this);
                     _canvasController = CanvasController.getInstance(LoginActivity.this);
                     // Let the progress ring for 10 seconds...
-                    Thread.sleep(10000);
+                    Thread.sleep(5000);
                 } catch (Exception e) {
                     Log.e("Login", e.toString());
                 }
-                ringProgressDialog.dismiss();
+                _dialog.dismiss();
             }
         }).start();
     }
@@ -151,6 +149,7 @@ public class LoginActivity extends AppCompatActivity {
     private boolean userLogin(String email, String password) {
         USER = _userController.getUserByCredentials(email, password);
         if (USER != null) {
+
             return true;
         }
         Toast.makeText(this, "Login failed! Please try again...", Toast.LENGTH_LONG).show();

@@ -1,8 +1,13 @@
 package bws.customerrelation.GUI;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
@@ -12,6 +17,7 @@ import android.widget.Toast;
 import java.util.ArrayList;
 
 import bws.customerrelation.Controller.CanvasController;
+import bws.customerrelation.Controller.CompanyController;
 import bws.customerrelation.Controller.SharedConstants;
 import bws.customerrelation.Model.BECanvas;
 import bws.customerrelation.Model.BECompany;
@@ -23,9 +29,7 @@ public class CompanyDataActivity extends AppCompatActivity {
     TextView address;
     TextView zipcode_city;
     TextView businessRelation;
-    TextView group;
     TextView telephone;
-    TextView seNumber;
 
     LinearLayout _LinearLayout;
     static BECanvas SELECTEDCANVAS;
@@ -33,6 +37,7 @@ public class CompanyDataActivity extends AppCompatActivity {
     Button btnShowCanvas;
     InflateCompanyCanvasData _adapter;
     CanvasController _canvasController;
+    CompanyController _companyController;
     ArrayList<BECanvas> companyCanvaslist;
     BECompany _selectedCompany;
     private static String TAG = "CompanyDataActivity";
@@ -42,6 +47,7 @@ public class CompanyDataActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_company_data);
         _canvasController = CanvasController.getInstance(this);
+        _companyController = CompanyController.getInstance(this);
         _selectedCompany = CompanyActivity.SELECTEDCOMPANY != null ? CompanyActivity.SELECTEDCOMPANY : MainActivity.SELECTEDCOMPANIES.get(0);
         findViews();
         populateData();
@@ -62,7 +68,6 @@ public class CompanyDataActivity extends AppCompatActivity {
         _adapter = new InflateCompanyCanvasData(this, companyCanvaslist, _LinearLayout);
         _adapter.inflateView();
     }
-
 
     private void populateData() {
         companyName.setText(_selectedCompany.getM_companyName());
@@ -117,4 +122,37 @@ public class CompanyDataActivity extends AppCompatActivity {
         startActivity(canvasIntent);
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_client_data, menu);
+        return true;
+    }
+
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+
+
+        if (id == R.id.menu_delete_by_id) {
+            new AlertDialog.Builder(this)
+                    .setTitle("Really delete " + "..." + "?")
+                    .setMessage("Are you sure you want to delete this company?")
+                    .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                            final String cId = _selectedCompany.getM_companyId();
+                            _companyController.deleteCompanyById(cId);
+                            finish();
+                        }
+                    })
+                    .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                        }
+                    })
+                    .setIcon(android.R.drawable.ic_dialog_alert)
+                    .show();
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
 }

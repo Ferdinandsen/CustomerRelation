@@ -6,7 +6,6 @@ import android.util.Log;
 import java.util.ArrayList;
 
 import bws.customerrelation.DAL.DAOCanvas;
-import bws.customerrelation.DAL.Gateway.SoapHelper;
 import bws.customerrelation.Model.BECanvas;
 import bws.customerrelation.Model.BECompany;
 
@@ -38,7 +37,7 @@ public class CanvasController {
 
     public void createCanvasList() {
 
-        ArrayList<BECompany> dlCompanies = _companyController.getAllClientsFromDevice();
+        ArrayList<BECompany> dlCompanies = _companyController.getAllCompaniesFromDevice();
         ArrayList<BECanvas> APIcanvas = _cacheList;
         ArrayList<BECanvas> dlCanvas = _daoCanvas.getAllCanvasFromDevice();
         ArrayList<BECompany> test = new ArrayList<>();

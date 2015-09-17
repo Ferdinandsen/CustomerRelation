@@ -9,7 +9,7 @@
     tools:context="bws.customerrelation.GUI.CreateCanvasActivity">
 
     <LinearLayout
-        android:id="@+id/datalinearlayout"
+        android:id="@+id/datalinearlayout1"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
@@ -39,6 +39,7 @@
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/datalinearlayout2"
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
             android:orientation="horizontal">
@@ -63,6 +64,7 @@
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/datalinearlayout3"
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
             android:orientation="horizontal">
@@ -95,13 +97,12 @@
     </LinearLayout>
 
 
-
     <ScrollView
         android:id="@+id/scrollView"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:layout_above="@+id/btnSave"
-        android:layout_below="@+id/datalinearlayout">
+        android:layout_below="@+id/datalinearlayout1">
 
         <EditText
             android:id="@+id/newCanvas"
