@@ -26,9 +26,11 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Set;
 import java.util.concurrent.ExecutionException;
 
 import bws.customerrelation.Controller.CanvasController;
+import bws.customerrelation.Controller.SettingsController;
 import bws.customerrelation.DAL.Gateway.GetJSONFromAPI;
 import bws.customerrelation.DAL.Gateway.GetRTFFromHTML;
 import bws.customerrelation.DAL.Gateway.VolleySingleton;
@@ -44,7 +46,7 @@ public class DAOCanvas {
     SQLiteDatabase _db;
     SQLiteStatement _sql;
     ArrayList<BECanvas> aList;
-    JSONObject obj1;
+    JSONObject obj;
     Gson gson;
 
     //DL
@@ -70,34 +72,37 @@ public class DAOCanvas {
      *
      * @return ArrayList<BECanvas> med alle canvas i fra URL/Notes
      */
-    public ArrayList<BECanvas> getAllCanvasFromAPI() {
-        ArrayList<BECanvas> companyList = new ArrayList<>();
-        final String URL = "http://skynet.bws.dk/Applications/smsAndroid.nsf/(CanvasByCompany)?readviewentries&outputformat=json&start=1&count=1000&restrict=2C7EFD49ADD61732C1256C2C002FEF71#";
-        JSONObject obj;
-        GetJSONFromAPI api = new GetJSONFromAPI(_activity);
-        api.execute(URL);
+//    public ArrayList<BECanvas> getAllCanvasFromAPI() {
+//        ArrayList<BECanvas> companyList = new ArrayList<>();
+//        final String URL = "http://skynet.bws.dk/Applications/smsAndroid.nsf/(CanvasByCompany)?readviewentries&outputformat=json&start=1&count=1000&restrict=2C7EFD49ADD61732C1256C2C002FEF71#";
+//        JSONObject obj;
+//        GetJSONFromAPI api = new GetJSONFromAPI(_activity);
+//        api.execute(URL);
+//
+//        try {
+//            obj = api.get();
+//            companyList = convertFromJsonToBE(obj);
+//        } catch (Exception e) {
+//            Log.e("Api get", "Error when trying to connect to api", e);
+//        }
+//        return companyList;
+//    }
 
-        try {
-            obj = api.get();
-            companyList = ConvertFromJsonToBE(obj);
-        } catch (Exception e) {
-            Log.e("Api get", "Error when trying to connect to api", e);
-        }
-        return companyList;
-    }
-
+    /**
+     * KONVERTER JSON OG ADD TIL ARRAYLIST
+     */
     public void getJSON() {
         String url = "http://skynet.bws.dk/Applications/smsAndroid.nsf/(CanvasByCompany)?readviewentries&outputformat=json&start=1&count=1000&restrict=2C7EFD49ADD61732C1256C2C002FEF71#";
-        obj1 = new JSONObject();
+        obj = new JSONObject();
         aList = new ArrayList<>();
         JsonObjectRequest jsObjRequest = new JsonObjectRequest
                 (Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
 
                     @Override
                     public void onResponse(JSONObject response) {
-                        obj1 = response;
+                        obj = response;
                         try {
-                            aList = ConvertFromJsonToBE(obj1);
+                            aList = convertFromJsonToBE(obj);
                             CanvasController.setCachedList(aList);
                         } catch (JSONException e) {
                             Log.e("DAOCanvas", "Error in GetJSON", e);
@@ -117,10 +122,6 @@ public class DAOCanvas {
     }
 
 
-//    /**
-//     * KONVERTER JSON OG ADD TIL ARRAYLIST
-//     */
-
     /**
      * Konverterer JSON til BE og adder til ArrayList<BECanvas>
      *
@@ -128,7 +129,8 @@ public class DAOCanvas {
      * @return ArrayList<BECanvas> en komplet liste af BECanvas
      * @throws JSONException
      */
-    private ArrayList<BECanvas> ConvertFromJsonToBE(JSONObject object) throws JSONException {
+
+    private ArrayList<BECanvas> convertFromJsonToBE(JSONObject object) throws JSONException {
         JSONObject obj;
         JSONArray obj1;
         JSONArray jsonArray = (JSONArray) object.get("viewentry");
@@ -232,7 +234,7 @@ public class DAOCanvas {
 
     public long insertUploadCanvasShort(BECanvas canvas) {
         _sql = _db.compileStatement(_INSERTUPLOAD);
-        _sql.bindString(1, canvas.getM_canvasId() );
+        _sql.bindString(1, canvas.getM_canvasId());
         _sql.bindString(2, canvas.getM_companyId() != null ? canvas.getM_companyId() : "null");
         _sql.bindString(3, canvas.getM_Subject() != null ? canvas.getM_Subject() : "null");
         _sql.bindString(4, canvas.getM_VisitBy() != null ? canvas.getM_VisitBy() : "null");
@@ -245,7 +247,7 @@ public class DAOCanvas {
 
     public long insertUploadCanvas(BECanvas canvas) {
         _sql = _db.compileStatement(_INSERTUPLOAD);
-        _sql.bindString(1, canvas.getM_canvasId() );
+        _sql.bindString(1, canvas.getM_canvasId());
         _sql.bindString(2, canvas.getM_companyId() != null ? canvas.getM_companyId() : "null");
         _sql.bindString(3, canvas.getM_Subject() != null ? canvas.getM_Subject() : "null");
         _sql.bindString(4, canvas.getM_VisitBy() != null ? canvas.getM_VisitBy() : "null");
@@ -374,9 +376,9 @@ public class DAOCanvas {
     public void postCanvasJson(BECanvas canvas) {
 
         try {
-            obj1 = new JSONObject(gson.toJson(canvas));
-            obj1.remove("m_canvasId");  // fix da den sender noget med der ikke skal bruges
-            Log.v("tostring", obj1.toString());
+            obj = new JSONObject(gson.toJson(canvas));
+            obj.remove("m_canvasId");  // fix da den sender noget med der ikke skal bruges
+            Log.v("tostring", obj.toString());
 
         } catch (JSONException e) {
             Log.e("PostCanvasJson", "Error");
@@ -385,7 +387,7 @@ public class DAOCanvas {
         RequestQueue queue = Volley.newRequestQueue(_activity);
         String urlEncoded = null;
         try {
-            urlEncoded = URLEncoder.encode(obj1.toString(), "UTF-8");
+            urlEncoded = URLEncoder.encode(obj.toString(), "UTF-8");
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         }

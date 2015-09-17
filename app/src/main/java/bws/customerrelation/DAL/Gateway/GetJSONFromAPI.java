@@ -31,20 +31,6 @@ public class GetJSONFromAPI extends AsyncTask<String, Void, JSONObject> {
     }
 
     @Override
-    protected void onPreExecute() {
-        _dialog = new ProgressDialog(_activity); // Main - burde være Login?!
-        _dialog.setMessage("Doing something, please wait.");
-        _dialog.show(); // Rammer 3 gange?
-    }
-
-    @Override
-    protected void onPostExecute(JSONObject result) {
-        if (_dialog.isShowing()) {
-            _dialog.dismiss();
-        }
-    }
-
-    @Override
     protected JSONObject doInBackground(String... params) {
 
         HttpURLConnection connection = null;
@@ -71,7 +57,7 @@ public class GetJSONFromAPI extends AsyncTask<String, Void, JSONObject> {
             is.close();
             result = sb.toString();
         } catch (IOException e) {
-            Log.e("Get Clients", "Error ", e);
+            Log.e("Get JSON From API IO", "Error ", e);
             return null;
         }
         if (connection != null) {
@@ -81,16 +67,14 @@ public class GetJSONFromAPI extends AsyncTask<String, Void, JSONObject> {
             try {
                 br.close();
             } catch (final IOException e) {
-                Log.e("GET Clients", "Error closing stream", e);
+                Log.e("Get JSON From API IO", "Error closing stream", e);
             }
         }
-
         try {
             jsnobject = new JSONObject(result);
         } catch (JSONException e) {
-            Log.e("JSON", "Error creating JSON", e);
+            Log.e("Get JSON From API JSON", "Error creating JSON", e);
         }
         return jsnobject; //Rammer 4 gange ?
     }
-
 }

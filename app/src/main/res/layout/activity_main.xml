@@ -56,7 +56,7 @@
         android:layout_alignParentTop="true"
         android:layout_toStartOf="@+id/linearLayout1"
         android:text="@string/userData"
-        android:textSize="20sp" />
+        android:textSize="15sp" />
 
     <Button
         android:id="@+id/btnDownloadList"

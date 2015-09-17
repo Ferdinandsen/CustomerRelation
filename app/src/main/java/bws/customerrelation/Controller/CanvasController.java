@@ -2,6 +2,7 @@ package bws.customerrelation.Controller;
 
 import android.app.Activity;
 import android.util.Log;
+import android.widget.ArrayAdapter;
 
 import java.util.ArrayList;
 
@@ -25,7 +26,6 @@ public class CanvasController {
         _daoCanvas = new DAOCanvas(_activity);
         _companyController = CompanyController.getInstance(_activity);
         getAllCanvasFromAPI();
-        Log.v("Hej", "hej");
     }
 
     public static CanvasController getInstance(Activity activity) {
@@ -105,4 +105,5 @@ public class CanvasController {
     public void deleteAllCanvasFromUpload() {
         _daoCanvas.deleteAllCanvasFromUpload();
     }
+
 }

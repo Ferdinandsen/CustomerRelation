@@ -12,6 +12,7 @@ import android.widget.Toast;
 
 import bws.customerrelation.Controller.CanvasController;
 import bws.customerrelation.Controller.CompanyController;
+import bws.customerrelation.Controller.SettingsController;
 import bws.customerrelation.Controller.SharedConstants;
 import bws.customerrelation.Controller.UserController;
 import bws.customerrelation.Model.BEUser;
@@ -27,6 +28,7 @@ public class LoginActivity extends AppCompatActivity {
     CompanyController _companyController;
     CanvasController _canvasController;
     UserController _userController;
+    SettingsController _settingsController;
     ProgressDialog _dialog;
 
 
@@ -103,6 +105,7 @@ public class LoginActivity extends AppCompatActivity {
                     // Here you should write your time consuming task...
                     _companyController = CompanyController.getInstance(LoginActivity.this);
                     _canvasController = CanvasController.getInstance(LoginActivity.this);
+                    _settingsController = SettingsController.getInstance(LoginActivity.this);
                     // Let the progress ring for 10 seconds...
                     Thread.sleep(5000);
                 } catch (Exception e) {
