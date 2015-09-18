@@ -41,6 +41,37 @@ public class DAOSettings {
         list = new ArrayList<>();
     }
 
+    public void getJSONCountryList() {
+        String url = "http://skynet.bws.dk/Applications/MailCode.nsf/LookupCountry?readviewentries&outputformat=json&start=1&count=100&restrict=2C7EFD49ADD61732C1256C2C002FEF71#";
+        obj = new JSONObject();
+        stringList = new ArrayList<>();
+        JsonObjectRequest jsObjRequest = new JsonObjectRequest
+                (Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
+
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        obj = response;
+                        try {
+                            stringList = convertFromJSONtoStrings(obj);
+                           //TODO hvor skal den gemmes hen ?
+//                            SettingsController.setSettingsList(stringList);
+                        } catch (JSONException e) {
+                            Log.e("DAOSettings", "Error in GetJSON", e);
+                        }
+                    }
+                }, new Response.ErrorListener() {
+
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        // TODO Auto-generated method stub
+                        Log.e("DAOSettings", "Error in volley part", error);
+                    }
+                });
+
+        // Access the RequestQueue through your singleton class.
+        VolleySingleton.getInstance(_activity).addToRequestQueue(jsObjRequest);
+    }
+
     public void getJSONListOfActivity() {
         String url = "http://skynet.bws.dk/Applications/smsAndroid.nsf/LookupKeywordActivityType?readviewentries&outputformat=json&start=1&count=1000&restrict=2C7EFD49ADD61732C1256C2C002FEF71#";
         obj = new JSONObject();
@@ -55,7 +86,7 @@ public class DAOSettings {
                             stringList = convertFromJSONtoStrings(obj);
                             SettingsController.setSettingsList(stringList);
                         } catch (JSONException e) {
-                            Log.e("DAOCanvas", "Error in GetJSON", e);
+                            Log.e("DAOSettings", "Error in GetJSON", e);
                         }
                     }
                 }, new Response.ErrorListener() {
@@ -63,7 +94,7 @@ public class DAOSettings {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         // TODO Auto-generated method stub
-                        Log.e("DAOCANVAS", "Error in volley part", error);
+                        Log.e("DAOSettings", "Error in volley part", error);
                     }
                 });
 
@@ -97,6 +128,7 @@ public class DAOSettings {
                 String res = "";
                 StringBuilder sb = new StringBuilder(res);
                 for (int i = 0; i < ara.length(); i++) {
+//                    list.add(ara.getJSONObject(i).getString("0"));
                     sb.append(ara.getJSONObject(i).getString("0") + "\n");
                 }
                 res = sb.toString();
