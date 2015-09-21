@@ -3,9 +3,11 @@ package bws.customerrelation.GUI;
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.Color;
+import android.support.v4.view.MenuItemCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.CheckBox;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -98,7 +100,6 @@ public class InflateCompanies {
 
                 private void onMulitipleClickitemlist(View v) {
                     boolean isChecked = mCheckBox.isChecked();
-
                     mCheckBox.setChecked(!isChecked);
 
                     if (isChecked) {

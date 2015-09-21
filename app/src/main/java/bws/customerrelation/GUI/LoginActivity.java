@@ -80,7 +80,6 @@ public class LoginActivity extends AppCompatActivity {
         String email = txtUsername.getText().toString().trim();
         String password = txtPassword.getText().toString();
         if (userLogin(email, password)) {
-
             clearDBClientList(); //TODO KUN TIL TEST!
             Intent mainActivity = new Intent();
             mainActivity.setClass(this, MainActivity.class);
@@ -97,7 +96,6 @@ public class LoginActivity extends AppCompatActivity {
 
     private void getInstances() {
         _dialog = ProgressDialog.show(this, "Please wait ...", "Fetching data", true);
-//        _dialog.setCancelable(true);
         new Thread(new Runnable() {
             @Override
             public void run() {
@@ -116,48 +114,13 @@ public class LoginActivity extends AppCompatActivity {
         }).start();
     }
 
-//    private progressBar(){
-//        barProgressDialog = new ProgressDialog(MainActivity.this);
-//        barProgressDialog.setTitle("Downloading Image ...");
-//                barProgressDialog.setMessage("Download in progress ...");
-//        barProgressDialog.setProgressStyle(barProgressDialog.STYLE_HORIZONTAL);
-//        barProgressDialog.setProgress(0);
-//        barProgressDialog.setMax(20);
-//        barProgressDialog.show();
-//
-//        new Thread(new Runnable() {
-//            @Override
-//            public void run() {
-//                try {
-//
-//                    // Here you should write your time consuming task...
-//                    while (barProgressDialog.getProgress() <= barProgressDialog.getMax())
-//
-//                        Thread.sleep(2000);
-//                        updateBarHandler.post(new Runnable() {
-//                            public void run() {
-//                                barProgressDialog.incrementProgressBy(2);
-//                            }
-//                        });
-//                        if (barProgressDialog.getProgress() == barProgressDialog.getMax()) {
-//                            barProgressDialog.dismiss();
-//                        }
-//                    }
-//                } catch (Exception e) {
-//                }
-//        }).start();
-//    }
-
-
     private boolean userLogin(String email, String password) {
         USER = _userController.getUserByCredentials(email, password);
         if (USER != null) {
-
             return true;
         }
         Toast.makeText(this, "Login failed! Please try again...", Toast.LENGTH_LONG).show();
         txtPassword.setText("");
         return false;
     }
-
 }

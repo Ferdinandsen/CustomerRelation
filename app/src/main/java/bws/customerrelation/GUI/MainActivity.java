@@ -152,27 +152,21 @@ public class MainActivity extends AppCompatActivity {
         _searchView = (EditText) MenuItemCompat.getActionView(searchItem);
         _searchView.setSingleLine();
         _searchView.setWidth(300);
-
-//          TODO DET VIRKER IKKE!
-//        _searchView.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-//            @Override
-//            public void onFocusChange(View v, boolean hasFocus) {
-//                if (v.getId() == R.id.action_search && !hasFocus) {
-//                    _imm.hideSoftInputFromInputMethod(v.getWindowToken(), InputMethodManager.HIDE_IMPLICIT_ONLY);
-//                    //  _imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
-//                } else {
-//                    _imm.showSoftInput(v, InputMethodManager.SHOW_IMPLICIT);
-//                }
-//            }
-//        });
-
+        _searchView.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (v.getId() == R.id.action_search && !hasFocus) {
+                    _imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
+                } else {
+                    _imm.showSoftInput(_searchView, InputMethodManager.SHOW_IMPLICIT);
+                }
+            }
+        });
     }
-
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
-
         switch (id) {
             case R.id.action_search:
                 searchMethod(this);
@@ -183,7 +177,6 @@ public class MainActivity extends AppCompatActivity {
             case R.id.menu_delete_all_companies:
                 deleteAllCompaniesMenu();
                 return true;
-
         }
         return super.onOptionsItemSelected(item);
     }
@@ -207,8 +200,8 @@ public class MainActivity extends AppCompatActivity {
 
     private void saveDialog() {
         new AlertDialog.Builder(this)
-                .setTitle("Save entries")
-                .setMessage("Are you sure you want to save all entries?")
+                .setTitle("Upload canvas entries")
+                .setMessage("Are you sure you want to upload all canvas entries?")
                 .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
                         _canvasController.PostCanvasToNotes();

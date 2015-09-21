@@ -15,6 +15,7 @@ import java.util.Date;
 import java.util.Random;
 
 import bws.customerrelation.Controller.CanvasController;
+import bws.customerrelation.Controller.SettingsController;
 import bws.customerrelation.Controller.SharedConstants;
 import bws.customerrelation.Model.BECanvas;
 import bws.customerrelation.Model.BECompany;
@@ -34,6 +35,7 @@ public class CreateCanvasActivity extends AppCompatActivity {
     Spinner spinBusinessArea;
     Spinner spinCountry;
     Spinner spinFollowUpDate;
+    SettingsController _settingController;
 
     private static String TAG = "CreateCanvasActivity";
 
@@ -43,21 +45,31 @@ public class CreateCanvasActivity extends AppCompatActivity {
         setContentView(R.layout.activity_create_canvas);
         Bundle b = getIntent().getExtras(); //Todo remove?
         _canvasController = CanvasController.getInstance(this);
+        _settingController = SettingsController.getInstance(this);
         findViews();
         setListeners();
+        createAndSetAdapters();
         populateData(b);
+    }
+
+    private void createAndSetAdapters() {
+//        spinCountry.setAdapter(createAdapter(SharedConstants.COUNTRY));
+        spinToActivity.setAdapter(createAdapter(SharedConstants.ACTIVITY));
+        spinToTRP.setAdapter(createAdapter(SharedConstants.TRANSPORTTYPE));
+        spinToVisit.setAdapter(createAdapter(SharedConstants.VISITTYPE));
+        spinBusinessArea.setAdapter(createAdapter(SharedConstants.BUSINESSAREA));
     }
 
     private void populateData(Bundle b) {
         //Todo Get from static instead
         _selectedCompany = (BECompany) b.getSerializable(SharedConstants.CLIENT);
         _selectedUser = LoginActivity.USER;
-        String[] stringaraa = new String[]{"#", "hejsa", "DU TYYYYYYYYYK"};
-//        ArrayAdapter<String> typeOfTransport = new ArrayAdapter<String>(this,R.layout.simple_list_item_1,stringaraa);
-        //TODO
-//        spinToTRP.setAdapter(typeOfTransport);
-    }
 
+
+    }
+    private ArrayAdapter createAdapter(String s){
+        return new ArrayAdapter<>(this,R.layout.support_simple_spinner_dropdown_item,_settingController.populateSettingsLists(s));
+    }
     private void setListeners() {
         btnSave.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -79,7 +91,6 @@ public class CreateCanvasActivity extends AppCompatActivity {
         if (_canvasController.saveCanvas(canvas) != -1) {
             finish();
         }
-
     }
 
     private void findViews() {
@@ -93,5 +104,4 @@ public class CreateCanvasActivity extends AppCompatActivity {
         spinFollowUpDate = (Spinner) findViewById(R.id.followUpSpinner);
         spinToVisit = (Spinner) findViewById(R.id.TypeOfVisitSpinner);
     }
-
 }
