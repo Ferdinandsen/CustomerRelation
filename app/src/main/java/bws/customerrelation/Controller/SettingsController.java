@@ -25,14 +25,14 @@ public class SettingsController {
     private SettingsController(Activity activity) {
         _activity = activity;
         _daoSettings = new DAOSettings(_activity);
-        getAllSettingsFromAPI();
+        if (_daoSettings.getAllSettingsFromDevice().isEmpty()) {
+            getAllSettingsFromAPI();
+        }
     }
 
-    private void getAllSettingsFromAPI() {
-        if (_daoSettings.getAllSettingsFromDevice().isEmpty()) {
-            _daoSettings.getJSONListOfActivity();
-            _daoSettings.getJSONCountryList();
-        }
+    public void getAllSettingsFromAPI() {
+        _daoSettings.getJSONListOfActivity();
+        _daoSettings.getJSONCountryList();
     }
 
     public static SettingsController getInstance(Activity context) {
@@ -62,6 +62,10 @@ public class SettingsController {
             default:
                 return null;
         }
+    }
+
+    public void deleteDB() {
+        _daoSettings.deleteDB();
     }
 }
 

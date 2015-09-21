@@ -331,6 +331,16 @@ public class DAOSettings {
         return list;
     }
 
+    public void deleteDB() {
+        _db.delete(DAConstants.TABLE_ACTIVE, null, null);
+        _db.delete(DAConstants.TABLE_ACTIVITYTYPE, null, null);
+        _db.delete(DAConstants.TABLE_BUSINESSAREA, null, null);
+        _db.delete(DAConstants.TABLE_BUSINESSRELATION, null, null);
+        _db.delete(DAConstants.TABLE_OFFICE, null, null);
+        _db.delete(DAConstants.TABLE_TYPEOFTRANSPORT, null, null);
+        _db.delete(DAConstants.TABLE_TYPEOFVISIT, null, null);
+        _db.delete(DAConstants.TABLE_COUNTRY, null, null);
+    }
 }
 
 

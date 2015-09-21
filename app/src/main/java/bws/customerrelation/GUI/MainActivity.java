@@ -28,6 +28,7 @@ import java.util.ArrayList;
 
 import bws.customerrelation.Controller.CanvasController;
 import bws.customerrelation.Controller.CompanyController;
+import bws.customerrelation.Controller.SettingsController;
 import bws.customerrelation.Controller.SharedConstants;
 import bws.customerrelation.Model.BECompany;
 import bws.customerrelation.Model.BEUser;
@@ -36,6 +37,7 @@ import bws.customerrelation.R;
 public class MainActivity extends AppCompatActivity {
     CompanyController _companyController;
     CanvasController _canvasController;
+    SettingsController _settingsController;
 
     TextView _txtUserData;
     ImageView _bwsNet;
@@ -62,6 +64,7 @@ public class MainActivity extends AppCompatActivity {
         _user = (BEUser) b.getSerializable(SharedConstants.USER);//TODO remove?
         _companyController = CompanyController.getInstance(this);
         _canvasController = CanvasController.getInstance(this);
+        _settingsController = SettingsController.getInstance(this);
         _imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
         findViews();
         setListeners();
@@ -177,8 +180,17 @@ public class MainActivity extends AppCompatActivity {
             case R.id.menu_delete_all_companies:
                 deleteAllCompaniesMenu();
                 return true;
+            case R.id.menu_updateSettingLists:
+                updateSettingsList();
+                return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    private void updateSettingsList() {
+
+        _settingsController.deleteDB();
+        _settingsController.getAllSettingsFromAPI();
     }
 
     private void deleteAllCompaniesMenu() {

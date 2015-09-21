@@ -8,19 +8,19 @@
         android:orderInCategory="300"
         android:title="action_search"
         app:actionViewClass="android.widget.EditText"
-        app:showAsAction="always|collapseActionView">
-
-    </item>
+        app:showAsAction="always|collapseActionView"></item>
     <item
         android:id="@+id/menu_save"
         android:icon="@android:drawable/ic_menu_save"
         android:title="Upload canvas entries"
-        app:showAsAction="ifRoom" />
+        app:showAsAction="ifRoom"></item>
     <item
         android:id="@+id/menu_delete_all_companies"
         android:icon="@android:drawable/ic_delete"
         android:title="Delete all companies"
-        app:showAsAction="ifRoom">
-
-    </item>
+        app:showAsAction="ifRoom"></item>
+    <item
+        android:id="@+id/menu_updateSettingLists"
+        android:title="Update Setting Lists"
+        app:showAsAction="ifRoom"></item>
 </menu>
