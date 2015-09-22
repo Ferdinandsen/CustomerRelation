@@ -7,6 +7,7 @@ import java.util.Collection;
 import java.util.HashMap;
 
 import bws.customerrelation.DAL.DAOSettings;
+import bws.customerrelation.GUI.LoginActivity;
 import bws.customerrelation.Model.BECountry;
 
 /**
@@ -20,18 +21,28 @@ public class SettingsController {
 
     HashMap<String, ArrayList<String>> stringList;
 
-    public static ArrayList<BECountry> countryList;
+    ArrayList<BECountry> countryList;
 
     private SettingsController(Activity activity) {
         _activity = activity;
         _daoSettings = new DAOSettings(_activity);
         if (_daoSettings.getAllSettingsFromDevice().isEmpty()) {
             getAllSettingsFromAPI();
+        } else {
+            LoginActivity.loadingSettingsDone = true;
+        }
+        if (_daoSettings.getCountryFromDevice().isEmpty()) {
+            getAllCountriesFromAPI();
+        } else {
+            LoginActivity.loadingCountriesDone = true;
         }
     }
 
     public void getAllSettingsFromAPI() {
         _daoSettings.getJSONListOfActivity();
+    }
+
+    public void getAllCountriesFromAPI() {
         _daoSettings.getJSONCountryList();
     }
 
@@ -40,6 +51,11 @@ public class SettingsController {
             instance = new SettingsController(context);
         }
         return instance;
+    }
+
+    public ArrayList<BECountry> populateCountryList() {
+        countryList = _daoSettings.getCountryFromDevice();
+        return countryList;
     }
 
     public ArrayList<String> populateSettingsLists(String s) {

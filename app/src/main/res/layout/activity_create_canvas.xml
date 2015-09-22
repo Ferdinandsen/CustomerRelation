@@ -70,13 +70,19 @@
             android:orientation="horizontal">
 
 
-            <Spinner
+            <!--<Spinner-->
+                <!--android:id="@+id/followUpSpinner"-->
+                <!--android:layout_width="180dp"-->
+                <!--android:layout_height="35dp"-->
+                <!--android:background="@android:drawable/btn_dropdown"-->
+                <!--android:dropDownWidth="180dp"-->
+                <!--android:spinnerMode="dropdown"></Spinner>-->
+            <Button
                 android:id="@+id/followUpSpinner"
                 android:layout_width="180dp"
                 android:layout_height="35dp"
                 android:background="@android:drawable/btn_dropdown"
-                android:dropDownWidth="180dp"
-                android:spinnerMode="dropdown"></Spinner>
+                android:dropDownWidth="180dp"/>
 
             <Spinner
                 android:id="@+id/typeOfTransportSpinner"

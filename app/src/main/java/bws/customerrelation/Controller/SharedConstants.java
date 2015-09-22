@@ -20,6 +20,7 @@ public class SharedConstants {
     public static final String OFFICE = "BWS Office";
     public static final String TRANSPORTTYPE = "Type of transport";
     public static final String VISITTYPE = "Type of Visit";
+    public static final String COUNTRY = "Country";
 
 
 

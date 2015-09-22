@@ -28,6 +28,7 @@ public class OpenHelper extends SQLiteOpenHelper {
                 "VisitBy TEXT, TypeOfVisit TEXT, Date TEXT, FollowUpDate TEXT, FollowUpSalesman TEXT, Sender TEXT, " +
                 "ToInternal TEXT, Region TEXT, Country TEXT, TypeOfTransport TEXT, ActivityType TEXT, " +
                 "BusinessArea TEXT, Office TEXT, Text TEXT)");
+
         db.execSQL("CREATE TABLE " + DAConstants.TABLE_COUNTRY + "(Name TEXT PRIMARY KEY, Region TEXT, CountryCode TEXT, PhonePrefix TEXT)");
         db.execSQL("CREATE TABLE " + DAConstants.TABLE_ACTIVE + "(Name TEXT PRIMARY KEY)");
         db.execSQL("CREATE TABLE " + DAConstants.TABLE_ACTIVITYTYPE + "(Name TEXT PRIMARY KEY)");
@@ -36,7 +37,6 @@ public class OpenHelper extends SQLiteOpenHelper {
         db.execSQL("CREATE TABLE " + DAConstants.TABLE_OFFICE + "(Name TEXT PRIMARY KEY)");
         db.execSQL("CREATE TABLE " + DAConstants.TABLE_TYPEOFTRANSPORT + "(Name TEXT PRIMARY KEY)");
         db.execSQL("CREATE TABLE " + DAConstants.TABLE_TYPEOFVISIT + "(Name TEXT PRIMARY KEY)");
-
     }
 
     @Override

@@ -4,14 +4,14 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 public class DAConstants {
-    public static String DATABASE_NAME = "sqlite.db";
-    public static int DATABASE_VERSION = 36;
+    public static String DATABASE_NAME = "sqlite1.db";
+    public static int DATABASE_VERSION = 10;
 
     public static String TABLE_USER = "tb_user";
     public static String TABLE_COMPANY = "tb_company";
     public static String TABLE_CANVAS = "tb_canvas";
     public static String TABLE_UPLOAD = "tb_upload";
-    public static String TABLE_COUNTRY = "tb_country";
+    public static final String TABLE_COUNTRY = "tb_country";
     public static final String TABLE_ACTIVE = "tb_active";
     public static final String TABLE_ACTIVITYTYPE = "tb_Activity_type";
     public static final String TABLE_BUSINESSAREA = "tb_business_area";

@@ -15,6 +15,8 @@ import bws.customerrelation.Controller.CompanyController;
 import bws.customerrelation.Controller.SettingsController;
 import bws.customerrelation.Controller.SharedConstants;
 import bws.customerrelation.Controller.UserController;
+import bws.customerrelation.DAL.DAOCompany;
+import bws.customerrelation.DAL.DAOSettings;
 import bws.customerrelation.Model.BEUser;
 import bws.customerrelation.R;
 
@@ -29,7 +31,10 @@ public class LoginActivity extends AppCompatActivity {
     CanvasController _canvasController;
     UserController _userController;
     SettingsController _settingsController;
-    ProgressDialog _dialog;
+    public static ProgressDialog _dialog;
+    public static boolean loadingSettingsDone = false;
+    public static boolean loadingCountriesDone = false;
+    public static boolean loadingCompanies = false;
 
 
     @Override
@@ -99,19 +104,30 @@ public class LoginActivity extends AppCompatActivity {
         new Thread(new Runnable() {
             @Override
             public void run() {
-                try {
-                    // Here you should write your time consuming task...
-                    _companyController = CompanyController.getInstance(LoginActivity.this);
-                    _canvasController = CanvasController.getInstance(LoginActivity.this);
-                    _settingsController = SettingsController.getInstance(LoginActivity.this);
-                    // Let the progress ring for 10 seconds...
-                    Thread.sleep(5000);
-                } catch (Exception e) {
-                    Log.e("Login", e.toString());
+                while (!loadingCompanies && !loadingCountriesDone && !loadingSettingsDone) {
+                    try {
+                        // Here you should write your time consuming task...
+                        _companyController = CompanyController.getInstance(LoginActivity.this);
+                        _canvasController = CanvasController.getInstance(LoginActivity.this);
+                        _settingsController = SettingsController.getInstance(LoginActivity.this);
+                        // Let the progress ring for 5 seconds...
+//                    Thread.sleep(5000);
+                    } catch (Exception e) {
+                        Log.e("Login", e.toString());
+                        Toast.makeText(LoginActivity.this, "An error occured", Toast.LENGTH_LONG).show();
+                        _dialog.dismiss();
+
+                    }
                 }
+
                 _dialog.dismiss();
             }
-        }).start();
+        }
+
+        ).
+
+                start();
+
     }
 
     private boolean userLogin(String email, String password) {

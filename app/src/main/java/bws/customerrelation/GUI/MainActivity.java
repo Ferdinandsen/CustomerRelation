@@ -188,9 +188,9 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void updateSettingsList() {
-
         _settingsController.deleteDB();
         _settingsController.getAllSettingsFromAPI();
+//        _settingsController.getAllCountriesFromAPI();
     }
 
     private void deleteAllCompaniesMenu() {

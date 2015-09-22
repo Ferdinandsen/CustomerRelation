@@ -8,7 +8,7 @@ import java.util.Date;
  * Created by Jaje on 19-Aug-15.
  */
 public class BECanvas {
-//    @SerializedName("DocUNID")
+    //    @SerializedName("DocUNID")
     private String m_canvasId;
     @SerializedName("MainDocUNID")
     private String m_companyId;
@@ -43,11 +43,10 @@ public class BECanvas {
     @SerializedName("Comments")
     private String m_text;
 
-
-    public BECanvas(String canvasId, String companyId, String TypeOfVisit, String VisitBy,
-                    String Subject, String date, String FollowUpSalesman, String FollowUpDate,
-                    String Sender, String ToInternal, String Region, String Country,
-                    String TypeOfTransport, String ActivityType, String BusinessArea, String Office, String text) {
+    public BECanvas(String canvasId, String companyId, String Subject, String VisitBy, String TypeOfVisit,
+                    String date, String FollowUpDate, String FollowUpSalesman, String Sender, String ToInternal,
+                    String Region, String Country, String TypeOfTransport, String ActivityType,
+                    String BusinessArea, String Office, String text) {
 
         m_canvasId = canvasId;
         m_companyId = companyId;
@@ -65,15 +64,6 @@ public class BECanvas {
         m_ActivityType = ActivityType;
         m_BusinessArea = BusinessArea;
         m_Office = Office;
-        m_text = text;
-    }
-
-    public BECanvas(String canvasId, String companyId, String Subject, String VisitBy, String Date, String text) {
-        m_canvasId = canvasId;
-        m_companyId = companyId;
-        m_VisitBy = VisitBy;
-        m_Subject = Subject;
-        m_date = Date;
         m_text = text;
     }
 

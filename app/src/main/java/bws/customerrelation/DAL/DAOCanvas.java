@@ -68,27 +68,6 @@ public class DAOCanvas {
     }
 
     /**
-     * Henter alle Canvas fra URL
-     *
-     * @return ArrayList<BECanvas> med alle canvas i fra URL/Notes
-     */
-//    public ArrayList<BECanvas> getAllCanvasFromAPI() {
-//        ArrayList<BECanvas> companyList = new ArrayList<>();
-//        final String URL = "http://skynet.bws.dk/Applications/smsAndroid.nsf/(CanvasByCompany)?readviewentries&outputformat=json&start=1&count=1000&restrict=2C7EFD49ADD61732C1256C2C002FEF71#";
-//        JSONObject obj;
-//        GetJSONFromAPI api = new GetJSONFromAPI(_activity);
-//        api.execute(URL);
-//
-//        try {
-//            obj = api.get();
-//            companyList = convertFromJsonToBE(obj);
-//        } catch (Exception e) {
-//            Log.e("Api get", "Error when trying to connect to api", e);
-//        }
-//        return companyList;
-//    }
-
-    /**
      * KONVERTER JSON OG ADD TIL ARRAYLIST
      */
     public void getJSON() {
@@ -129,7 +108,7 @@ public class DAOCanvas {
      * @return ArrayList<BECanvas> en komplet liste af BECanvas
      * @throws JSONException
      */
-
+//TODO extract to class
     private ArrayList<BECanvas> convertFromJsonToBE(JSONObject object) throws JSONException {
         JSONObject obj;
         JSONArray obj1;
@@ -139,7 +118,7 @@ public class DAOCanvas {
         for (int i = 0; i < jsonArray.length(); i++) {
             obj = jsonArray.getJSONObject(i);
             obj1 = obj.getJSONArray("entrydata");
-            mList.add(setBECanvas(obj1)); //Todo FOR løkke!
+            mList.add(setBECanvas(obj1));
         }
         return mList;
     }
@@ -192,22 +171,22 @@ public class DAOCanvas {
                 Log.e("DAOCanvas", "Error in adding correct data to array");
             }
         }
-        Date = (String) array1.get(0);
+        Date = array1.get(0);
         canvasId = array1.get(1);
-        companyId = (String) array1.get(2);
-        Subject = (String) array1.get(3);
-        VisitBy = (String) array1.get(4);
-        TypeOfVisit = (String) array1.get(5);
-        FollowUpDate = (String) array1.get(6);
-        FollowUpBy = (String) array1.get(7);
-        Sender = (String) array1.get(8);
-        ToInternal = (String) array1.get(9);
-        Region = (String) array1.get(10);
-        Country = (String) array1.get(11);
-        TypeOfTransport = (String) array1.get(12);
-        Activity = (String) array1.get(13);
-        BusinessArea = (String) array1.get(14);
-        Office = (String) array1.get(15);
+        companyId = array1.get(2);
+        Subject = array1.get(3);
+        VisitBy = array1.get(4);
+        TypeOfVisit = array1.get(5);
+        FollowUpDate = array1.get(6);
+        FollowUpBy = array1.get(7);
+        Sender = array1.get(8);
+        ToInternal = array1.get(9);
+        Region = array1.get(10);
+        Country = array1.get(11);
+        TypeOfTransport = array1.get(12);
+        Activity = array1.get(13);
+        BusinessArea = array1.get(14);
+        Office = array1.get(15);
         Text = "pre entry";
 
         BECanvas canvas = new BECanvas(canvasId, companyId, Subject, VisitBy, TypeOfVisit, Date, FollowUpDate, FollowUpBy,
@@ -225,25 +204,12 @@ public class DAOCanvas {
             return RTF.get();
         } catch (InterruptedException e) {
             e.printStackTrace();
-            return "Error getrich interrupted";
+            return "Error get rich interrupted";
         } catch (ExecutionException e) {
             e.printStackTrace();
-            return "Error getrich execution";
+            return "Error get rich execution";
         }
     }
-
-    public long insertUploadCanvasShort(BECanvas canvas) {
-        _sql = _db.compileStatement(_INSERTUPLOAD);
-        _sql.bindString(1, canvas.getM_canvasId());
-        _sql.bindString(2, canvas.getM_companyId() != null ? canvas.getM_companyId() : "null");
-        _sql.bindString(3, canvas.getM_Subject() != null ? canvas.getM_Subject() : "null");
-        _sql.bindString(4, canvas.getM_VisitBy() != null ? canvas.getM_VisitBy() : "null");
-        _sql.bindString(6, canvas.getM_date() != null ? canvas.getM_date() : "null");
-        _sql.bindString(17, canvas.getM_text() != null ? canvas.getM_text() : "null");
-
-        return _sql.executeInsert();
-    }
-
 
     public long insertUploadCanvas(BECanvas canvas) {
         _sql = _db.compileStatement(_INSERTUPLOAD);

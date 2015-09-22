@@ -23,6 +23,7 @@ import java.util.HashMap;
 import bws.customerrelation.Controller.SettingsController;
 import bws.customerrelation.Controller.SharedConstants;
 import bws.customerrelation.DAL.Gateway.VolleySingleton;
+import bws.customerrelation.GUI.LoginActivity;
 import bws.customerrelation.Model.BECompany;
 import bws.customerrelation.Model.BECountry;
 
@@ -38,7 +39,9 @@ public class DAOSettings {
     HashMap<String, ArrayList<String>> stringList;
     ArrayList<String> list;
     ArrayList<BECountry> countryList;
-    String _INSERTCOUNTRY = "INSERT INTO " + DAConstants.TABLE_COUNTRY + "(Name, Region,CountryCode,PhonePrefix) VALUES (?,?,?,?)";
+
+
+    String _INSERTCOUNTRY = "INSERT INTO " + DAConstants.TABLE_COUNTRY + "(Name, Region, CountryCode, PhonePrefix) VALUES (?,?,?,?)";
     String _INSERTACTIVE = "INSERT INTO " + DAConstants.TABLE_ACTIVE + "(Name) VALUES(?)";
     String _INSERTACTIVITY = "INSERT INTO " + DAConstants.TABLE_ACTIVITYTYPE + "(Name) VALUES(?)";
     String _INSERTBUSINESSAREA = "INSERT INTO " + DAConstants.TABLE_BUSINESSAREA + "(Name) VALUES(?)";
@@ -55,7 +58,7 @@ public class DAOSettings {
     }
 
     public void getJSONCountryList() {
-        String url = "http://skynet.bws.dk/Applications/MailCode.nsf/LookupCountry?readviewentries&outputformat=json&start=1&count=100&restrict=2C7EFD49ADD61732C1256C2C002FEF71#";
+        String url = "http://skynet.bws.dk/Applications/MailCode.nsf/LookupCountry?readviewentries&outputformat=json&start=1&count=500&restrict=2C7EFD49ADD61732C1256C2C002FEF71#";
         obj = new JSONObject();
         countryList = new ArrayList<BECountry>();
         JsonObjectRequest jsObjRequest = new JsonObjectRequest
@@ -67,7 +70,7 @@ public class DAOSettings {
                         try {
                             countryList = ConvertFromJsonToBE(obj);
                             addCountryToDB(countryList);
-                            SettingsController.countryList = countryList;
+                          LoginActivity.loadingCountriesDone = true;
                         } catch (JSONException e) {
                             Log.e("DAOSettings", "Error in GetJSON", e);
                         }
@@ -86,8 +89,13 @@ public class DAOSettings {
     }
 
     private void addCountryToDB(ArrayList<BECountry> countryList) {
+
         for (BECountry c : countryList) {
-            insertCountriesOnDevice(c);
+            if (c.get_name().equals("Worldwide") && c.get_region().equals("")) {
+
+            } else {
+                insertCountriesOnDevice(c);
+            }
         }
     }
 
@@ -151,6 +159,7 @@ public class DAOSettings {
                         try {
                             stringList = convertFromJSONtoStrings(obj);
                             addSettingsToDB(stringList);
+                           LoginActivity.loadingSettingsDone = true;
                         } catch (JSONException e) {
                             Log.e("DAOSettings", "Error in GetJSON", e);
                         }
@@ -340,6 +349,28 @@ public class DAOSettings {
         _db.delete(DAConstants.TABLE_TYPEOFTRANSPORT, null, null);
         _db.delete(DAConstants.TABLE_TYPEOFVISIT, null, null);
         _db.delete(DAConstants.TABLE_COUNTRY, null, null);
+    }
+
+    public ArrayList<BECountry> getCountryFromDevice() {
+        ArrayList<BECountry> list = new ArrayList<>();
+        Cursor cursor = _db.query(DAConstants.TABLE_COUNTRY,
+                new String[]{"Name", "Region", "CountryCode", "PhonePrefix"},
+                null, null, null, null,
+                null);
+        if (cursor.moveToFirst()) {
+            do {
+                String name = cursor.getString(0);
+                String region = cursor.getString(1);
+                String code = cursor.getString(2);
+                String phone = cursor.getString(3);
+                list.add(new BECountry(name, region, code, phone));
+            } while (cursor.moveToNext());
+        }
+        if (cursor != null && !cursor.isClosed()) {
+            cursor.close();
+        }
+        return list;
+
     }
 }
 

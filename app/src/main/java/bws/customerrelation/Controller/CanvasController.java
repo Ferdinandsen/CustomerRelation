@@ -84,7 +84,7 @@ public class CanvasController {
     }
 
     public long saveCanvas(BECanvas canvas) {
-        return _daoCanvas.insertUploadCanvasShort(canvas);
+        return _daoCanvas.insertUploadCanvas(canvas);
     }
 
     public void deleteAllCanvas() {

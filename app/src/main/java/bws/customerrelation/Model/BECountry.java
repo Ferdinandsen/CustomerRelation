@@ -49,4 +49,10 @@ public class BECountry {
     public void set_phonePrefix(String _phonePrefix) {
         this._phonePrefix = _phonePrefix;
     }
+
+
+    @Override
+    public String toString(){
+        return _name;
+    }
 }

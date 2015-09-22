@@ -22,6 +22,7 @@ import bws.customerrelation.Controller.CanvasController;
 import bws.customerrelation.Controller.CompanyController;
 import bws.customerrelation.DAL.Gateway.GetJSONFromAPI;
 import bws.customerrelation.DAL.Gateway.VolleySingleton;
+import bws.customerrelation.GUI.LoginActivity;
 import bws.customerrelation.Model.BECompany;
 
 /**
@@ -34,6 +35,7 @@ public class DAOCompany {
     SQLiteStatement _sql;
     JSONObject obj;
     ArrayList<BECompany> aList;
+
     String _INSERTCOMPANY = "INSERT INTO " + DAConstants.TABLE_COMPANY + "(CompanyId, CompanyName, Address, City, Zip, Country, Phone, Fax, Email, SeNo, " +
             "SalesArea, BusinessRelation, CompanyGroup, CompanyClosed, CompanyHomepage) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 
@@ -56,6 +58,7 @@ public class DAOCompany {
                         try {
                             aList = ConvertFromJsonToBE(obj);
                             CompanyController.setCachedList(aList);
+                            LoginActivity.loadingCompanies = true;
                         } catch (JSONException e) {
                             Log.e("DAOCanvas", "Error in GetJSON", e);
                         }
@@ -73,21 +76,21 @@ public class DAOCompany {
         VolleySingleton.getInstance(_activity).addToRequestQueue(jsObjRequest);
     }
 
-    public ArrayList<BECompany> getCompanyFromApi() {
-        ArrayList<BECompany> companyList = new ArrayList<>();
-        String URL = "http://skynet.bws.dk/Applications/smsAndroid.nsf/LookupCompanyNameAndUNID?readviewentries&outputformat=json&start=1&count=100&restrict=2C7EFD49ADD61732C1256C2C002FEF71#";
-        JSONObject obj;
-        GetJSONFromAPI api = new GetJSONFromAPI(_activity);
-        api.execute(URL);
-
-        try {
-            obj = api.get();
-            companyList = ConvertFromJsonToBE(obj);
-        } catch (Exception e) {
-            Log.e("Api get", "Error when trying to connect to api", e);
-        }
-        return companyList;
-    }
+//    public ArrayList<BECompany> getCompanyFromApi() {
+//        ArrayList<BECompany> companyList = new ArrayList<>();
+//        String URL = "http://skynet.bws.dk/Applications/smsAndroid.nsf/LookupCompanyNameAndUNID?readviewentries&outputformat=json&start=1&count=100&restrict=2C7EFD49ADD61732C1256C2C002FEF71#";
+//        JSONObject obj;
+//        GetJSONFromAPI api = new GetJSONFromAPI(_activity);
+//        api.execute(URL);
+//
+//        try {
+//            obj = api.get();
+//            companyList = ConvertFromJsonToBE(obj);
+//        } catch (Exception e) {
+//            Log.e("Api get", "Error when trying to connect to api", e);
+//        }
+//        return companyList;
+//    }
 
     /**
      * KONVERTER JSON OG ADD TIL ARRAYLIST
