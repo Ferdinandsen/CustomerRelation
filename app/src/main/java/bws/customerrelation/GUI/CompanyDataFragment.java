@@ -1,14 +1,17 @@
 package bws.customerrelation.GUI;
 
+
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-
+import android.support.v4.app.Fragment;
+import android.support.v7.app.AppCompatActivity;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -23,7 +26,13 @@ import bws.customerrelation.Model.BECanvas;
 import bws.customerrelation.Model.BECompany;
 import bws.customerrelation.R;
 
-public class CompanyDataActivity extends AppCompatActivity {
+/**
+ * A placeholder fragment containing a simple view.
+ */
+public class CompanyDataFragment extends Fragment {
+
+
+
 
     TextView companyName;
     TextView address;
@@ -41,32 +50,26 @@ public class CompanyDataActivity extends AppCompatActivity {
     ArrayList<BECanvas> companyCanvaslist;
     BECompany _selectedCompany;
     private static String TAG = "CompanyDataActivity";
-
+    View rootView;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        rootView = inflater.inflate(R.layout.fragment_company_main, container, false);
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_company_data);
-        _canvasController = CanvasController.getInstance(this);
-        _companyController = CompanyController.getInstance(this);
+        _canvasController = CanvasController.getInstance(getActivity());
+        _companyController = CompanyController.getInstance(getActivity());
         _selectedCompany = CompanyActivity.SELECTEDCOMPANY != null ? CompanyActivity.SELECTEDCOMPANY : MainActivity.SELECTEDCOMPANIES.get(0);
         findViews();
         populateData();
         setListeners();
         inflateViews();
         SELECTEDCANVAS = _adapter.getSelectedCanvas() != null ? _adapter.getSelectedCanvas() : null;
-    }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-        companyCanvaslist = _canvasController.getAllCanvasByClientId(_selectedCompany);
-        _LinearLayout.removeAllViews();
-        inflateViews();
+        return rootView;
     }
 
     private void inflateViews() {
-        _adapter = new InflateCompanyCanvasData(this, companyCanvaslist, _LinearLayout);
+        _adapter = new InflateCompanyCanvasData(getActivity(), companyCanvaslist, _LinearLayout);
         _adapter.inflateView();
     }
 
@@ -81,14 +84,14 @@ public class CompanyDataActivity extends AppCompatActivity {
     }
 
     private void findViews() {
-        companyName = (TextView) findViewById(R.id.companyName);
-        address = (TextView) findViewById(R.id.address);
-        telephone = (TextView) findViewById(R.id.telephone);
-        businessRelation = (TextView) findViewById(R.id.businessRelation);
-        zipcode_city = (TextView) findViewById(R.id.zipcode_city);
-        btnCreateCanvas = (Button) findViewById(R.id.btnCreateCanvas);
-        _LinearLayout = (LinearLayout) findViewById(R.id.linear_listview);
-        btnShowCanvas = (Button) findViewById(R.id.btnShowCanvas);
+        companyName = (TextView) rootView.findViewById(R.id.companyName);
+        address = (TextView) rootView.findViewById(R.id.address);
+        telephone = (TextView) rootView.findViewById(R.id.telephone);
+        businessRelation = (TextView) rootView.findViewById(R.id.businessRelation);
+        zipcode_city = (TextView) rootView.findViewById(R.id.zipcode_city);
+        btnCreateCanvas = (Button) rootView.findViewById(R.id.btnCreateCanvas);
+        _LinearLayout = (LinearLayout) rootView.findViewById(R.id.linear_listview);
+        btnShowCanvas = (Button) rootView.findViewById(R.id.btnShowCanvas);
     }
 
     private void setListeners() {
@@ -108,25 +111,19 @@ public class CompanyDataActivity extends AppCompatActivity {
 
     private void openCanvas() {
         if (SELECTEDCANVAS == null) {
-            Toast.makeText(this, "Du har ikke valgt et canvas", Toast.LENGTH_LONG).show();
+            Toast.makeText(getActivity(), "Du har ikke valgt et canvas", Toast.LENGTH_LONG).show();
         } else {
             Intent showCanvasIntent = new Intent();
-            showCanvasIntent.setClass(this, ShowCanvasActivity.class);
+            showCanvasIntent.setClass(getActivity(), ShowCanvasActivity.class);
             startActivity(showCanvasIntent);
         }
     }
 
     private void onclickBtnCreateCanvas() {
         Intent canvasIntent = new Intent();
-        canvasIntent.setClass(this, CreateCanvasActivity.class);
+        canvasIntent.setClass(getActivity(), CreateCanvasActivity.class);
         canvasIntent.putExtra(SharedConstants.CLIENT, _selectedCompany);//TODO remove?
         startActivity(canvasIntent);
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_client_data, menu);
-        return true;
     }
 
 
@@ -136,14 +133,15 @@ public class CompanyDataActivity extends AppCompatActivity {
 
 
         if (id == R.id.menu_delete_by_id) {
-            new AlertDialog.Builder(this)
+            new AlertDialog.Builder(getActivity())
                     .setTitle("Really delete " + "..." + "?")
                     .setMessage("Are you sure you want to delete this company?")
                     .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int which) {
                             final String cId = _selectedCompany.getM_companyId();
                             _companyController.deleteCompanyById(cId);
-                            finish();
+                        //TODO lukke den her og åbne noget andet !??!?!?!?!?!??!?!?!?!??
+                        // TODO !=!==!=!=!=!?!?!"=
                         }
                     })
                     .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
@@ -157,3 +155,4 @@ public class CompanyDataActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 }
+

@@ -66,4 +66,9 @@
 
     <!--ShowCanvas-->
     <string name="title_activity_show_canvas">Canvas</string>
+
+    <string name="info">info</string>
+    <string name="more">more</string>
+    <string name="title_activity_company_main">CompanyMainActivity</string>
+
 </resources>

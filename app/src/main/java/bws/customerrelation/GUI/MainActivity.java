@@ -1,5 +1,6 @@
 package bws.customerrelation.GUI;
 
+import android.app.ActionBar;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
@@ -59,6 +60,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        android.support.v7.app.ActionBar ab = getSupportActionBar();
         setContentView(R.layout.activity_main);
         Bundle b = getIntent().getExtras(); //Todo remove?
         _user = (BEUser) b.getSerializable(SharedConstants.USER);//TODO remove?
@@ -119,7 +121,7 @@ public class MainActivity extends AppCompatActivity {
                         // Here you should write your time consuming task...
                         if (SELECTEDCOMPANIES.size() == 1) {
                             Intent showCompanyIntent = new Intent();
-                            showCompanyIntent.setClass(MainActivity.this, CompanyDataActivity.class);
+                            showCompanyIntent.setClass(MainActivity.this, CompanyMainActivity.class);
                             _companyController.createCompanyList(SELECTEDCOMPANIES);
                             _canvasController.createCanvasList();
                             startActivity(showCompanyIntent);

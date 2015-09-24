@@ -119,15 +119,10 @@ public class LoginActivity extends AppCompatActivity {
 
                     }
                 }
-
                 _dialog.dismiss();
             }
         }
-
-        ).
-
-                start();
-
+        ).start();
     }
 
     private boolean userLogin(String email, String password) {
