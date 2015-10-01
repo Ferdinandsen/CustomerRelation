@@ -9,8 +9,9 @@
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
-        android:theme="@style/Theme.AppCompat.Light.DarkActionBar">
-    <!--android:theme="@style/AppTheme" -->
+        android:theme="@style/AppTheme" >
+
+        <!-- android:theme="@style/AppTheme" -->
 
 
         <!-- android:label="@string/app_name" -->
@@ -30,22 +31,26 @@
             android:name=".GUI.MainActivity"
             android:label="@string/title_activity_main" />
         <activity
-            android:name=".GUI.CompanyActivity"
+            android:name=".GUI.Company.CompanyActivity"
             android:label="@string/title_activity_client" />
         <activity
-            android:name=".GUI.CompanyDataActivity"
+            android:name=".GUI.Company.CompanyDataActivity"
             android:label="@string/title_activity_client_data" >
         </activity>
         <activity
-            android:name=".GUI.CreateCanvasActivity"
+            android:name=".GUI.Canvas.CreateCanvasActivity"
             android:label="@string/title_activity_canvas" />
         <activity
-            android:name=".GUI.ShowCanvasActivity"
+            android:name=".GUI.Canvas.ShowCanvasActivity"
             android:label="@string/title_activity_show_canvas" >
         </activity>
         <activity
-            android:name=".GUI.CompanyMainActivity"
+            android:name=".GUI.Company.CompanyMainActivity"
             android:label="@string/title_activity_company_main" >
+        </activity>
+        <activity
+            android:name=".GUI.Canvas.CanvasMainActivity"
+            android:label="@string/title_fragment_canvas" >
         </activity>
     </application>
 

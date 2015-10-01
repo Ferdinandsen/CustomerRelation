@@ -1,6 +1,5 @@
 package bws.customerrelation.GUI;
 
-import android.app.ActionBar;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
@@ -31,6 +30,9 @@ import bws.customerrelation.Controller.CanvasController;
 import bws.customerrelation.Controller.CompanyController;
 import bws.customerrelation.Controller.SettingsController;
 import bws.customerrelation.Controller.SharedConstants;
+import bws.customerrelation.GUI.Company.CompanyActivity;
+import bws.customerrelation.GUI.Company.CompanyMainActivity;
+import bws.customerrelation.GUI.InflateLists.InflateCompanies;
 import bws.customerrelation.Model.BECompany;
 import bws.customerrelation.Model.BEUser;
 import bws.customerrelation.R;
@@ -50,7 +52,8 @@ public class MainActivity extends AppCompatActivity {
     ProgressDialog _dialog;
     ArrayList<BECompany> _allCompanies;
     ArrayList<BECompany> _searchList;
-    static ArrayList<BECompany> SELECTEDCOMPANIES = new ArrayList<BECompany>();
+    public static ArrayList<BECompany> SELECTEDCOMPANIES = new ArrayList<BECompany>();
+    static int counter = 0;
 
 
     private static String TAG = "MainActivity";
@@ -110,6 +113,7 @@ public class MainActivity extends AppCompatActivity {
 
     //DOWNLOAD THE SELECTED ITEMS TO DB + start appropriate activity
     private void onClickDownloadList() {
+        counter += SELECTEDCOMPANIES.size();
         if (SELECTEDCOMPANIES.isEmpty()) {
             Toast.makeText(this, "Du har ikke valgt kunder", Toast.LENGTH_SHORT).show();
         } else {
@@ -134,7 +138,7 @@ public class MainActivity extends AppCompatActivity {
                             startActivity(companyIntent);
                             _dialog.dismiss();
                         }
-                        // Let the progress ring for 10 seconds...
+                        // Let the progress ring for 5 seconds...
                         Thread.sleep(5000);
                     } catch (Exception e) {
                         Log.e("Login", e.toString());
@@ -197,8 +201,8 @@ public class MainActivity extends AppCompatActivity {
 
     private void deleteAllCompaniesMenu() {
         new AlertDialog.Builder(this)
-                .setTitle("Delete all entries from device")
-                .setMessage("Are you sure you want to delete all entries?")
+                .setTitle("remove all entries from device")
+                .setMessage("Are you sure you want to remove all entries from this device?")
                 .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
                         _companyController.deleteAllCompanies();
@@ -229,14 +233,12 @@ public class MainActivity extends AppCompatActivity {
                 .show();
     }
 
-
     private void searchMethod(final Activity activity) {
         _imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, InputMethodManager.HIDE_IMPLICIT_ONLY);
         _searchView.setText("");
         _searchView.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
             }
 
             @Override

@@ -76,21 +76,6 @@ public class DAOCompany {
         VolleySingleton.getInstance(_activity).addToRequestQueue(jsObjRequest);
     }
 
-//    public ArrayList<BECompany> getCompanyFromApi() {
-//        ArrayList<BECompany> companyList = new ArrayList<>();
-//        String URL = "http://skynet.bws.dk/Applications/smsAndroid.nsf/LookupCompanyNameAndUNID?readviewentries&outputformat=json&start=1&count=100&restrict=2C7EFD49ADD61732C1256C2C002FEF71#";
-//        JSONObject obj;
-//        GetJSONFromAPI api = new GetJSONFromAPI(_activity);
-//        api.execute(URL);
-//
-//        try {
-//            obj = api.get();
-//            companyList = ConvertFromJsonToBE(obj);
-//        } catch (Exception e) {
-//            Log.e("Api get", "Error when trying to connect to api", e);
-//        }
-//        return companyList;
-//    }
 
     /**
      * KONVERTER JSON OG ADD TIL ARRAYLIST

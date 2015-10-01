@@ -70,5 +70,20 @@
     <string name="info">info</string>
     <string name="more">more</string>
     <string name="title_activity_company_main">CompanyMainActivity</string>
+    <string name="title_fragment_canvas">Canvas</string>
 
+
+    <!-- Contacts tab -->
+    <string name="contactEmailLbl"> Contact E-Mail: </string>
+    <string name="contactPhoneLbl"> Phone: </string>
+    <string name="contactNameLbl"> Contact: </string>
+    <string name="contactAddressLbl"> Address: </string>
+    <string name="contactZipcodeLbl"> Zipcode and City: </string>
+    <string name="contactCountryLbl"> Country: </string>
+    <string name="contactMobilephoneLbl"> Mobile phone: </string>
+    <string name="contactFaxLbl"> Contact fax: </string>
+    <string name="additionalContacts"> Additional Contacts </string>
+    <string name="addContactsName"> Name </string>
+    <string name="addContactsPhone"> Phone </string>
+    <string name="addContactsmobile"> Mobil </string>
 </resources>

@@ -22,6 +22,7 @@ import java.util.HashMap;
 
 import bws.customerrelation.Controller.SettingsController;
 import bws.customerrelation.Controller.SharedConstants;
+import bws.customerrelation.DAL.Gateway.GetJSONListHelper;
 import bws.customerrelation.DAL.Gateway.VolleySingleton;
 import bws.customerrelation.GUI.LoginActivity;
 import bws.customerrelation.Model.BECompany;
@@ -39,6 +40,7 @@ public class DAOSettings {
     HashMap<String, ArrayList<String>> stringList;
     ArrayList<String> list;
     ArrayList<BECountry> countryList;
+    GetJSONListHelper helper;
 
 
     String _INSERTCOUNTRY = "INSERT INTO " + DAConstants.TABLE_COUNTRY + "(Name, Region, CountryCode, PhonePrefix) VALUES (?,?,?,?)";
@@ -70,7 +72,7 @@ public class DAOSettings {
                         try {
                             countryList = ConvertFromJsonToBE(obj);
                             addCountryToDB(countryList);
-                          LoginActivity.loadingCountriesDone = true;
+                            LoginActivity.loadingCountriesDone = true;
                         } catch (JSONException e) {
                             Log.e("DAOSettings", "Error in GetJSON", e);
                         }
@@ -159,7 +161,7 @@ public class DAOSettings {
                         try {
                             stringList = convertFromJSONtoStrings(obj);
                             addSettingsToDB(stringList);
-                           LoginActivity.loadingSettingsDone = true;
+                            LoginActivity.loadingSettingsDone = true;
                         } catch (JSONException e) {
                             Log.e("DAOSettings", "Error in GetJSON", e);
                         }

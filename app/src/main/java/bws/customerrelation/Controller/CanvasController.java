@@ -1,8 +1,6 @@
 package bws.customerrelation.Controller;
 
 import android.app.Activity;
-import android.util.Log;
-import android.widget.ArrayAdapter;
 
 import java.util.ArrayList;
 
@@ -76,7 +74,7 @@ public class CanvasController {
     }
 
     private void getAllCanvasFromAPI() {
-        _daoCanvas.getJSON();
+        _daoCanvas.getJSONCanvas();
     }
 
     public ArrayList<BECanvas> getAllCanvasByClientId(BECompany company) {

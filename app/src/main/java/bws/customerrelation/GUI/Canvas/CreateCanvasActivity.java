@@ -1,4 +1,4 @@
-package bws.customerrelation.GUI;
+package bws.customerrelation.GUI.Canvas;
 
 import android.app.DatePickerDialog;
 import android.app.Dialog;
@@ -24,6 +24,7 @@ import java.util.Random;
 import bws.customerrelation.Controller.CanvasController;
 import bws.customerrelation.Controller.SettingsController;
 import bws.customerrelation.Controller.SharedConstants;
+import bws.customerrelation.GUI.LoginActivity;
 import bws.customerrelation.Model.BECanvas;
 import bws.customerrelation.Model.BECompany;
 import bws.customerrelation.Model.BECountry;
@@ -43,6 +44,7 @@ public class CreateCanvasActivity extends AppCompatActivity {
     Spinner spinBusinessArea;
     Spinner spinCountry;
     Button spinFollowUpDate;
+    Spinner spinOffice;
     SettingsController _settingController;
     private int year, month, day;
     private Calendar calendar;
@@ -70,7 +72,7 @@ public class CreateCanvasActivity extends AppCompatActivity {
         spinToTRP.setAdapter(createAdapter(SharedConstants.TRANSPORTTYPE));
         spinToVisit.setAdapter(createAdapter(SharedConstants.VISITTYPE));
         spinBusinessArea.setAdapter(createAdapter(SharedConstants.BUSINESSAREA));
-
+        spinOffice.setAdapter(createAdapter(SharedConstants.OFFICE));
     }
 
     private void populateData(Bundle b) {
@@ -137,7 +139,7 @@ public class CreateCanvasActivity extends AppCompatActivity {
     }
 
     private void onClickBtnSave(BECompany comp) {
-        String followUpDate, subject, activityType, visitType, transportType, businessArea, country, region, text, user;
+        String followUpDate, subject, activityType, visitType, transportType, businessArea, country, region, text, user, office;
         BECountry beCountry;
         String canvasId = "" + (Math.random() * 1000 + Math.random() * 1000);
 
@@ -152,9 +154,9 @@ public class CreateCanvasActivity extends AppCompatActivity {
         visitType = spinToVisit.getSelectedItem().toString();
         transportType = spinToTRP.getSelectedItem().toString();
         businessArea = spinBusinessArea.getSelectedItem().toString();
+        office = spinOffice.getSelectedItem().toString();
         text = txtCanvas.getText().toString();
         user = _selectedUser.getFirstname() + " " + _selectedUser.getLastname();
-
         beCountry = (BECountry) spinCountry.getSelectedItem();
         country = beCountry.get_name();
         region = beCountry.get_region();
@@ -163,8 +165,8 @@ public class CreateCanvasActivity extends AppCompatActivity {
         SimpleDateFormat sdfout = new SimpleDateFormat("dd-MM-yyyy");
         String today = sdfout.format(res);
         BECanvas canvas = new BECanvas(canvasId, comp.getM_companyId(), subject, user, visitType,
-                today, "null", followUpDate, "null", "null", region, country,
-                transportType, activityType, businessArea, "null", text);
+                today,followUpDate,"null", "null", "null", region, country,
+                transportType, activityType, businessArea, office, text);
         if (_canvasController.saveCanvas(canvas) != -1) {
             finish();
         }
@@ -180,7 +182,7 @@ public class CreateCanvasActivity extends AppCompatActivity {
         spinToActivity = (Spinner) findViewById(R.id.activitySpinner);
         spinFollowUpDate = (Button) findViewById(R.id.followUpSpinner);
         spinToVisit = (Spinner) findViewById(R.id.TypeOfVisitSpinner);
+        spinOffice = (Spinner) findViewById(R.id.officeSpinner);
     }
-
 
 }

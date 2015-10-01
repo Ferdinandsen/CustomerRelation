@@ -1,4 +1,4 @@
-package bws.customerrelation.GUI;
+package bws.customerrelation.GUI.Canvas;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -6,7 +6,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
 
-import bws.customerrelation.Controller.SharedConstants;
+import bws.customerrelation.GUI.Company.CompanyDataActivity;
 import bws.customerrelation.Model.BECanvas;
 import bws.customerrelation.R;
 

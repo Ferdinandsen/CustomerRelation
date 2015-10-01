@@ -1,35 +1,33 @@
-package bws.customerrelation.GUI;
+package bws.customerrelation.GUI.Canvas;
 
-
-import android.app.FragmentTransaction;
-
-
-import android.support.v4.app.FragmentActivity;
-import android.support.v4.view.ViewPager;
 import android.os.Bundle;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 
 import bws.customerrelation.R;
 
-public class CompanyMainActivity extends ActionBarActivity {
+/**
+ * Created by jaje on 01-Oct-15.
+ */
+public class CanvasMainActivity extends ActionBarActivity {
+
     private ViewPager viewPager;
-    private FragmentPagerAdapter mAdapter;
+    private FragmentCanvasPagerAdapter mAdapter;
     private android.support.v7.app.ActionBar actionBar;
     // Tab titles
-    private String[] tabs = {"Top Rated", "Games", "Movies"};
+    private String[] tabs = {"Canvas", "Contacs"};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_company_main);
+        setContentView(R.layout.actionbar_tabs);
 
         // Initilization
         viewPager = (ViewPager) findViewById(R.id.pager);
 
-
         actionBar = getSupportActionBar();
-        mAdapter = new FragmentPagerAdapter(getSupportFragmentManager());
+        mAdapter = new FragmentCanvasPagerAdapter(getSupportFragmentManager());
 
         viewPager.setAdapter(mAdapter);
 
@@ -65,12 +63,10 @@ public class CompanyMainActivity extends ActionBarActivity {
 
         @Override
         public void onTabUnselected(ActionBar.Tab tab, android.support.v4.app.FragmentTransaction ft) {
-
         }
 
         @Override
         public void onTabReselected(ActionBar.Tab tab, android.support.v4.app.FragmentTransaction ft) {
-
         }
     }
 }

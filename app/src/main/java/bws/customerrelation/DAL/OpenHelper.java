@@ -22,12 +22,14 @@ public class OpenHelper extends SQLiteOpenHelper {
         db.execSQL("CREATE TABLE " + DAConstants.TABLE_CANVAS + "(CompanyId TEXT, CanvasId TEXT PRIMARY KEY, Subject TEXT, " +
                 "VisitBy TEXT, TypeOfVisit TEXT, Date TEXT, FollowUpDate TEXT, FollowUpSalesman TEXT, Sender TEXT, " +
                 "ToInternal TEXT, Region TEXT, Country TEXT, TypeOfTransport TEXT, ActivityType TEXT, " +
-                "BusinessArea TEXT, Office TEXT, Text TEXT)");
+                "BusinessArea TEXT, Office TEXT, Text TEXT, Con1 TEXT, Con1P TEXT, Con1M TEXT, Con1F TEXT, Con1E TEXT, Con1D TEXT, Con2 TEXT," +
+                "Con2P TEXT, Con2M TEXT, Con3 TEXT,Con3P TEXT, Con3M TEXT, Con4 TEXT, Con4P TEXT, Con4M TEXT)");
 
         db.execSQL("CREATE TABLE " + DAConstants.TABLE_UPLOAD + "(CompanyId TEXT, CanvasId TEXT PRIMARY KEY, Subject TEXT, " +
                 "VisitBy TEXT, TypeOfVisit TEXT, Date TEXT, FollowUpDate TEXT, FollowUpSalesman TEXT, Sender TEXT, " +
                 "ToInternal TEXT, Region TEXT, Country TEXT, TypeOfTransport TEXT, ActivityType TEXT, " +
-                "BusinessArea TEXT, Office TEXT, Text TEXT)");
+                "BusinessArea TEXT, Office TEXT, Text TEXT, Con1 TEXT, Con1P TEXT, Con1M TEXT, Con1F TEXT, Con1E TEXT, Con1D TEXT, Con2 TEXT," +
+                "Con2P TEXT, Con2M TEXT, Con3 TEXT,Con3P TEXT, Con3M TEXT, Con4 TEXT, Con4P TEXT, Con4M TEXT)");
 
         db.execSQL("CREATE TABLE " + DAConstants.TABLE_COUNTRY + "(Name TEXT PRIMARY KEY, Region TEXT, CountryCode TEXT, PhonePrefix TEXT)");
         db.execSQL("CREATE TABLE " + DAConstants.TABLE_ACTIVE + "(Name TEXT PRIMARY KEY)");
@@ -37,6 +39,7 @@ public class OpenHelper extends SQLiteOpenHelper {
         db.execSQL("CREATE TABLE " + DAConstants.TABLE_OFFICE + "(Name TEXT PRIMARY KEY)");
         db.execSQL("CREATE TABLE " + DAConstants.TABLE_TYPEOFTRANSPORT + "(Name TEXT PRIMARY KEY)");
         db.execSQL("CREATE TABLE " + DAConstants.TABLE_TYPEOFVISIT + "(Name TEXT PRIMARY KEY)");
+        db.execSQL("CREATE TABLE " + DAConstants.TABLE_CONTACTS + "(Name TEXT PRIMARY KEY)");
     }
 
     @Override
@@ -54,6 +57,7 @@ public class OpenHelper extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE IF EXISTS " + DAConstants.TABLE_OFFICE);
         db.execSQL("DROP TABLE IF EXISTS " + DAConstants.TABLE_TYPEOFTRANSPORT);
         db.execSQL("DROP TABLE IF EXISTS " + DAConstants.TABLE_TYPEOFVISIT);
+        db.execSQL("DROP TABLE IF EXISTS " + DAConstants.TABLE_CONTACTS);
 
         onCreate(db);
     }

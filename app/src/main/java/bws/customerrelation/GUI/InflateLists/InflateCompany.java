@@ -1,4 +1,4 @@
-package bws.customerrelation.GUI;
+package bws.customerrelation.GUI.InflateLists;
 
 import android.content.Context;
 import android.graphics.Color;
@@ -10,62 +10,52 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
-import bws.customerrelation.Model.BECanvas;
+import bws.customerrelation.GUI.Company.CompanyActivity;
+import bws.customerrelation.Model.BECompany;
 import bws.customerrelation.R;
 
 /**
  * Created by Jaje on 20-Aug-15.
  */
-public class InflateCompanyCanvasData {
-
-    /**
-     * Created by Jaje on 20-Aug-15.
-     */
+public class InflateCompany {
     LinearLayout mLinearListLayout;
-    ArrayList<BECanvas> _allCanvas;
-    static BECanvas _SELECTEDCANVAS;
+    ArrayList<BECompany> _allClients;
+    static BECompany _SELECTEDCOMPANY;
     Context _context;
     View oldView;
-    private static String TAG = "InflateCompanyCanvasData";
+    private static String TAG = "InflateCompany";
 
-    public InflateCompanyCanvasData(Context context, ArrayList<BECanvas> list, LinearLayout layout) {
-        _allCanvas = list;
+    public InflateCompany(Context context, ArrayList<BECompany> list, LinearLayout layout) {
+        _allClients = list;
         _context = context;
         mLinearListLayout = layout;
     }
 
     public void inflateView() {
         int pos = 0;
-        for (final BECanvas c : _allCanvas) {
+        for (final BECompany c : _allClients) {
             /**
              * inflate items/ add items in linear layout instead of listview
              */
             LayoutInflater inflater = null;
             inflater = (LayoutInflater) _context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            final View mLinearView = inflater.inflate(R.layout.cell_canvas_data, null);
+            final View mLinearView = inflater.inflate(R.layout.cell_inflate_company, null);
             mLinearView.setTag(pos);
             /**
              * getting id of row.xml
              */
 
-            TextView desc = (TextView) mLinearView
+            TextView mFirstName = (TextView) mLinearView
                     .findViewById(R.id.companyName);
-            TextView date = (TextView) mLinearView.findViewById(R.id.date);
             final CheckBox mCheckBox = (CheckBox) mLinearView
                     .findViewById(R.id.checkbox);
             mCheckBox.setVisibility(View.INVISIBLE);
             /**
              * set item into row
              */
-            final String showDate = c.getM_date();
-            final String typeVisit = c.getM_TypeOfVisit();
-            final String subject = c.getM_Subject();
-            if (subject == null || subject.equals("")) {
-                desc.setText(typeVisit);
-            } else {
-                desc.setText(subject);
-            }
-            date.setText(showDate);
+
+            final String fName = c.getM_companyName();
+            mFirstName.setText(fName);
 
             /**
              * changes background to white
@@ -83,8 +73,8 @@ public class InflateCompanyCanvasData {
              * IF the client is in_selectedClients, highlight it again
              */
 
-            if (_SELECTEDCANVAS != null) {
-                if (_SELECTEDCANVAS.getM_canvasId().equals(c.getM_canvasId())) {
+            if (_SELECTEDCOMPANY != null) {
+                if (_SELECTEDCOMPANY.getM_companyId().equals(c.getM_companyId())) {
                     mLinearView.setBackgroundColor(Color.parseColor("#00B2EE")); //blåååååå
                     oldView = mLinearView;
                     mCheckBox.setChecked(true);
@@ -102,24 +92,23 @@ public class InflateCompanyCanvasData {
 
                     mCheckBox.setChecked(!isChecked);
 
-                    if (_SELECTEDCANVAS != null && isChecked && _SELECTEDCANVAS.getM_canvasId().equals(c.getM_canvasId())) {
+                    if (_SELECTEDCOMPANY != null && isChecked && _SELECTEDCOMPANY.getM_companyId().equals(c.getM_companyId())) {
                         setColorOnView(v);
-                        _SELECTEDCANVAS = null;
+                        _SELECTEDCOMPANY = null;
                         oldView = null;
                     } else {
                         if (oldView != null) {
                             v.setBackgroundColor(Color.parseColor("#00B2EE")); // blååååå
-                            ((CheckBox) oldView.findViewById(R.id.checkbox)).setChecked(false);
-                            _SELECTEDCANVAS = c;
+                            _SELECTEDCOMPANY = c;
                             setColorOnView(oldView);
                             oldView = v;
                         } else {
                             v.setBackgroundColor(Color.parseColor("#00B2EE")); // blååååå
                             oldView = v;
-                            _SELECTEDCANVAS = c;
+                            _SELECTEDCOMPANY = c;
                         }
                     }
-                    CompanyDataActivity.SELECTEDCANVAS = _SELECTEDCANVAS;
+                    CompanyActivity.SELECTEDCOMPANY = _SELECTEDCOMPANY;
                 }
             });
             pos++;
@@ -135,8 +124,7 @@ public class InflateCompanyCanvasData {
         }
     }
 
-    public BECanvas getSelectedCanvas() {
-        return _SELECTEDCANVAS;
+    public BECompany getSelectedClient() {
+        return _SELECTEDCOMPANY;
     }
 }
-

@@ -26,12 +26,9 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.Set;
 import java.util.concurrent.ExecutionException;
 
 import bws.customerrelation.Controller.CanvasController;
-import bws.customerrelation.Controller.SettingsController;
-import bws.customerrelation.DAL.Gateway.GetJSONFromAPI;
 import bws.customerrelation.DAL.Gateway.GetRTFFromHTML;
 import bws.customerrelation.DAL.Gateway.VolleySingleton;
 import bws.customerrelation.Model.BECanvas;
@@ -49,16 +46,18 @@ public class DAOCanvas {
     JSONObject obj;
     Gson gson;
 
-    //DL
+    //DL TODO - add contact info!
     String _INSERTCANVAS = "INSERT INTO " + DAConstants.TABLE_CANVAS + "(CanvasId, CompanyId, Subject, VisitBy, " +
             "TypeOfVisit, Date, FollowUpDate, FollowUpSalesman, " +
             "Sender, ToInternal, Region, Country, TypeOfTransport, " +
-            "ActivityType, BusinessArea, Office, Text) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+            "ActivityType, BusinessArea, Office, Text, Con1, Con1P, Con1M, Con1F, Con1E, Con1D, Con2," +
+            "Con2P, Con2M, Con3, Con3P, Con3M, Con4, Con4P, Con4M) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 
     String _INSERTUPLOAD = "INSERT INTO " + DAConstants.TABLE_UPLOAD + "(CanvasId, CompanyId, Subject, VisitBy, " +
             "TypeOfVisit, Date, FollowUpDate, FollowUpSalesman, " +
             "Sender, ToInternal, Region, Country, TypeOfTransport, " +
-            "ActivityType, BusinessArea, Office, Text) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+            "ActivityType, BusinessArea, Office, Text, Con1, Con1P, Con1M, Con1F, Con1E, Con1D, Con2," +
+            "Con2P, Con2M, Con3, Con3P, Con3M, Con4, Con4P, Con4M) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 
     public DAOCanvas(Activity activity) {
         _activity = activity;
@@ -70,7 +69,7 @@ public class DAOCanvas {
     /**
      * KONVERTER JSON OG ADD TIL ARRAYLIST
      */
-    public void getJSON() {
+    public void getJSONCanvas() {
         String url = "http://skynet.bws.dk/Applications/smsAndroid.nsf/(CanvasByCompany)?readviewentries&outputformat=json&start=1&count=1000&restrict=2C7EFD49ADD61732C1256C2C002FEF71#";
         obj = new JSONObject();
         aList = new ArrayList<>();
@@ -100,15 +99,7 @@ public class DAOCanvas {
         VolleySingleton.getInstance(_activity).addToRequestQueue(jsObjRequest);
     }
 
-
-    /**
-     * Konverterer JSON til BE og adder til ArrayList<BECanvas>
-     *
-     * @param object Det objekt vi modtager fra getAllCanvasFromAPI
-     * @return ArrayList<BECanvas> en komplet liste af BECanvas
-     * @throws JSONException
-     */
-//TODO extract to class
+    //  TODO extract to class
     private ArrayList<BECanvas> convertFromJsonToBE(JSONObject object) throws JSONException {
         JSONObject obj;
         JSONArray obj1;
@@ -127,7 +118,8 @@ public class DAOCanvas {
         String canvasId, companyId, TypeOfVisit, VisitBy,
                 Subject, Date, FollowUpBy, FollowUpDate,
                 Sender, ToInternal, Region, Country,
-                TypeOfTransport, Activity, BusinessArea, Office, Text;
+                TypeOfTransport, Activity, BusinessArea, Office, Text, con1, con1P, con1M, con1F, con1E, con1D, con2,
+                con2P, con2M, con3, con3P, con3M, con4, con4P, con4M;
 
         ArrayList<String> array1 = new ArrayList<>();
         java.util.Date nyDate;
@@ -189,9 +181,26 @@ public class DAOCanvas {
         Office = array1.get(15);
         Text = "pre entry";
 
+        con1 = array1.get(16);
+        con1P = array1.get(17);
+        con1M = array1.get(18);
+        con1F = array1.get(19);
+        con1D = array1.get(20);
+        con1E = array1.get(21);
+        con2 = array1.get(22);
+        con2P = array1.get(23);
+        con2M = array1.get(24);
+        con3 = array1.get(25);
+        con3P = array1.get(26);
+        con3M = array1.get(27);
+        con4 = array1.get(28);
+        con4P = array1.get(29);
+        con4M = array1.get(30);
+
         BECanvas canvas = new BECanvas(canvasId, companyId, Subject, VisitBy, TypeOfVisit, Date, FollowUpDate, FollowUpBy,
                 Sender, ToInternal, Region, Country,
-                TypeOfTransport, Activity, BusinessArea, Office, Text);
+                TypeOfTransport, Activity, BusinessArea, Office, Text, con1, con1P, con1M, con1F, con1E, con1D, con2,
+                con2P, con2M, con3, con3P, con3M, con4, con4P, con4M);
         return canvas;
     }
 
@@ -253,6 +262,21 @@ public class DAOCanvas {
         _sql.bindString(15, canvas.getM_BusinessArea());
         _sql.bindString(16, canvas.getM_Office());
         _sql.bindString(17, canvas.getM_text());
+//        _sql.bindString(18, canvas.getM_mainContact());
+//        _sql.bindString(19, canvas.getM_mainContactPhone());
+//        _sql.bindString(20, canvas.getM_mainContactMobile());
+//        _sql.bindString(21, canvas.getM_mainContactFax());
+//        _sql.bindString(22, canvas.getM_mainContactEmail());
+//        _sql.bindString(23, canvas.getM_mainContactDivision());
+//        _sql.bindString(24, canvas.getM_secondContact());
+//        _sql.bindString(25, canvas.getM_secondContactPhone());
+//        _sql.bindString(26, canvas.getM_secondContactMobile());
+//        _sql.bindString(27, canvas.getM_thirdContact());
+//        _sql.bindString(28, canvas.getM_thirdContactPhone());
+//        _sql.bindString(29, canvas.getM_thirdContactMobile());
+//        _sql.bindString(30, canvas.getM_fourthContact());
+//        _sql.bindString(31, canvas.getM_fourthContactPhone());
+//        _sql.bindString(32, canvas.getM_fourthContactMobile());
 
         return _sql.executeInsert();
     }
@@ -262,14 +286,18 @@ public class DAOCanvas {
         Cursor cursor = _db.query(DAConstants.TABLE_CANVAS,
                 new String[]{"CanvasId", "CompanyId", "Subject", "VisitBy", "TypeOfVisit",
                         "Date", "FollowUpDate", "FollowUpSalesman", "Sender", "ToInternal", "Region", "Country",
-                        "TypeOfTransport", "ActivityType", "BusinessArea", "Office", "Text"},
+                        "TypeOfTransport", "ActivityType", "BusinessArea", "Office", "Text", "Con1", "Con1P", "Con1M", "Con1F", "Con1E", "Con1D", "Con2",
+                        "Con2P", "Con2M", "Con3", "Con3P", "Con3M", "Con4", "Con4P", "Con4M"},
                 "CompanyId=?", new String[]{"" + company.getM_companyId()}, null, null,
                 null);
         if (cursor.moveToFirst()) {
             do {
                 canvasList.add(new BECanvas(cursor.getString(0), cursor.getString(1), cursor.getString(2), cursor.getString(3), cursor.getString(4),
                         cursor.getString(5), cursor.getString(6), cursor.getString(7), cursor.getString(8), cursor.getString(9), cursor.getString(10),
-                        cursor.getString(11), cursor.getString(12), cursor.getString(13), cursor.getString(14), cursor.getString(15), cursor.getString(16)));
+                        cursor.getString(11), cursor.getString(12), cursor.getString(13), cursor.getString(14), cursor.getString(15), cursor.getString(16),
+                        cursor.getString(17), cursor.getString(18), cursor.getString(19), cursor.getString(20), cursor.getString(21), cursor.getString(22),
+                        cursor.getString(23), cursor.getString(24), cursor.getString(25), cursor.getString(26), cursor.getString(27), cursor.getString(28),
+                        cursor.getString(29), cursor.getString(30), cursor.getString(31)));
             } while (cursor.moveToNext());
         }
         if (cursor != null && !cursor.isClosed()) {
@@ -284,14 +312,18 @@ public class DAOCanvas {
         Cursor cursor = _db.query(DAConstants.TABLE_UPLOAD,
                 new String[]{"CanvasId", "CompanyId", "Subject", "VisitBy", "TypeOfVisit",
                         "Date", "FollowUpDate", "FollowUpSalesman", "Sender", "ToInternal", "Region", "Country",
-                        "TypeOfTransport", "ActivityType", "BusinessArea", "Office", "Text"},
+                        "TypeOfTransport", "ActivityType", "BusinessArea", "Office", "Text", "Con1", "Con1P", "Con1M", "Con1F", "Con1E", "Con1D", "Con2",
+                        "Con2P", "Con2M", "Con3", "Con3P", "Con3M", "Con4", "Con4P", "Con4M"},
                 "CompanyId=?", new String[]{"" + company.getM_companyId()}, null, null,
                 null);
         if (cursor.moveToFirst()) {
             do {
                 local.add(new BECanvas(cursor.getString(0), cursor.getString(1), cursor.getString(2), cursor.getString(3), cursor.getString(4),
                         cursor.getString(5), cursor.getString(6), cursor.getString(7), cursor.getString(8), cursor.getString(9), cursor.getString(10),
-                        cursor.getString(11), cursor.getString(12), cursor.getString(13), cursor.getString(14), cursor.getString(15), cursor.getString(16)));
+                        cursor.getString(11), cursor.getString(12), cursor.getString(13), cursor.getString(14), cursor.getString(15), cursor.getString(16),
+                        cursor.getString(17), cursor.getString(18), cursor.getString(19), cursor.getString(20), cursor.getString(21), cursor.getString(22),
+                        cursor.getString(23), cursor.getString(24), cursor.getString(25), cursor.getString(26), cursor.getString(27), cursor.getString(28),
+                        cursor.getString(29), cursor.getString(30), cursor.getString(31)));
             } while (cursor.moveToNext());
         }
         if (cursor != null && !cursor.isClosed()) {
@@ -305,13 +337,17 @@ public class DAOCanvas {
         Cursor cursor = _db.query(DAConstants.TABLE_UPLOAD,
                 new String[]{"CanvasId", "CompanyId", "Subject", "VisitBy", "TypeOfVisit",
                         "Date", "FollowUpDate", "FollowUpSalesman", "Sender", "ToInternal", "Region", "Country",
-                        "TypeOfTransport", "ActivityType", "BusinessArea", "Office", "Text"},
+                        "TypeOfTransport", "ActivityType", "BusinessArea", "Office", "Text", "Con1", "Con1P", "Con1M", "Con1F", "Con1E", "Con1D", "Con2",
+                        "Con2P", "Con2M", "Con3", "Con3P", "Con3M", "Con4", "Con4P", "Con4M"},
                 null, null, null, null, null);
         if (cursor.moveToFirst()) {
             do {
                 local.add(new BECanvas(cursor.getString(0), cursor.getString(1), cursor.getString(2), cursor.getString(3), cursor.getString(4),
                         cursor.getString(5), cursor.getString(6), cursor.getString(7), cursor.getString(8), cursor.getString(9), cursor.getString(10),
-                        cursor.getString(11), cursor.getString(12), cursor.getString(13), cursor.getString(14), cursor.getString(15), cursor.getString(16)));
+                        cursor.getString(11), cursor.getString(12), cursor.getString(13), cursor.getString(14), cursor.getString(15), cursor.getString(16),
+                        cursor.getString(17), cursor.getString(18), cursor.getString(19), cursor.getString(20), cursor.getString(21), cursor.getString(22),
+                        cursor.getString(23), cursor.getString(24), cursor.getString(25), cursor.getString(26), cursor.getString(27), cursor.getString(28),
+                        cursor.getString(29), cursor.getString(30), cursor.getString(31)));
             } while (cursor.moveToNext());
         }
         if (cursor != null && !cursor.isClosed()) {
@@ -325,12 +361,16 @@ public class DAOCanvas {
         Cursor cursor = _db.query(DAConstants.TABLE_CANVAS,
                 new String[]{"CanvasId", "CompanyId", "Subject", "VisitBy", "TypeOfVisit",
                         "Date", "FollowUpDate", "FollowUpSalesman", "Sender", "ToInternal", "Region", "Country",
-                        "TypeOfTransport", "ActivityType", "BusinessArea", "Office", "Text"}, null, null, null, null, null);
+                        "TypeOfTransport", "ActivityType", "BusinessArea", "Office", "Text", "Con1", "Con1P", "Con1M", "Con1F", "Con1E", "Con1D", "Con2",
+                        "Con2P", "Con2M", "Con3", "Con3P", "Con3M", "Con4", "Con4P", "Con4M"}, null, null, null, null, null);
         if (cursor.moveToFirst()) {
             do {
                 canvasList.add(new BECanvas(cursor.getString(0), cursor.getString(1), cursor.getString(2), cursor.getString(3), cursor.getString(4),
                         cursor.getString(5), cursor.getString(6), cursor.getString(7), cursor.getString(8), cursor.getString(9), cursor.getString(10),
-                        cursor.getString(11), cursor.getString(12), cursor.getString(13), cursor.getString(14), cursor.getString(15), cursor.getString(16)));
+                        cursor.getString(11), cursor.getString(12), cursor.getString(13), cursor.getString(14), cursor.getString(15), cursor.getString(16),
+                        cursor.getString(17), cursor.getString(18), cursor.getString(19), cursor.getString(20), cursor.getString(21), cursor.getString(22),
+                        cursor.getString(23), cursor.getString(24), cursor.getString(25), cursor.getString(26), cursor.getString(27), cursor.getString(28),
+                        cursor.getString(29), cursor.getString(30), cursor.getString(31)));
             } while (cursor.moveToNext());
         }
         if (cursor != null && !cursor.isClosed()) {

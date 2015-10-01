@@ -1,18 +1,16 @@
-package bws.customerrelation.GUI;
+package bws.customerrelation.GUI.InflateLists;
 
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.Color;
-import android.support.v4.view.MenuItemCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.CheckBox;
-import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-
 import java.util.ArrayList;
 
+import bws.customerrelation.GUI.MainActivity;
 import bws.customerrelation.Model.BECompany;
 import bws.customerrelation.R;
 
@@ -105,7 +103,6 @@ public class InflateCompanies {
                     if (isChecked) {
                         setColorOnView(v);
                         _INFLATECLIENTS.remove(c);
-
                     } else {
                         v.setBackgroundColor(Color.parseColor("#00B2EE"));
                         _INFLATECLIENTS.add(c);

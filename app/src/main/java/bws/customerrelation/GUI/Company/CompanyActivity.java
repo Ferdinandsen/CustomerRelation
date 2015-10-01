@@ -1,5 +1,5 @@
 
-package bws.customerrelation.GUI;
+package bws.customerrelation.GUI.Company;
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
@@ -12,6 +12,7 @@ import android.widget.Toast;
 import java.util.ArrayList;
 
 import bws.customerrelation.Controller.CompanyController;
+import bws.customerrelation.GUI.InflateLists.InflateCompany;
 import bws.customerrelation.Model.BECompany;
 import bws.customerrelation.R;
 
@@ -19,7 +20,7 @@ public class CompanyActivity extends AppCompatActivity {
     LinearLayout _linearLayout;
     Button btnShowClient;
     ArrayList<BECompany> _selectedClients;
-    static BECompany SELECTEDCOMPANY;
+    public static BECompany SELECTEDCOMPANY;
     CompanyController _companyController;
     InflateCompany _adapter;
     private static String TAG = "CompanyActivity";
@@ -62,7 +63,7 @@ public class CompanyActivity extends AppCompatActivity {
 
     private void onClickBtnShowClient() {
         Intent clientDataIntent = new Intent();
-        clientDataIntent.setClass(this, CompanyDataActivity.class);
+        clientDataIntent.setClass(this, CompanyMainActivity.class);
         if (SELECTEDCOMPANY != null) {
             startActivity(clientDataIntent);
         } else {

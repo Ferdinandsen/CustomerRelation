@@ -15,8 +15,6 @@ import bws.customerrelation.Controller.CompanyController;
 import bws.customerrelation.Controller.SettingsController;
 import bws.customerrelation.Controller.SharedConstants;
 import bws.customerrelation.Controller.UserController;
-import bws.customerrelation.DAL.DAOCompany;
-import bws.customerrelation.DAL.DAOSettings;
 import bws.customerrelation.Model.BEUser;
 import bws.customerrelation.R;
 
@@ -25,7 +23,7 @@ public class LoginActivity extends AppCompatActivity {
     EditText txtUsername;
     EditText txtPassword;
     Button btnLogin;
-    static BEUser USER;
+    public static BEUser USER;
     private static String TAG = "LoginActivity";
     CompanyController _companyController;
     CanvasController _canvasController;
