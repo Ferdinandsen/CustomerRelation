@@ -41,7 +41,6 @@ public class ShowCanvasFragmentContacts extends Fragment {
         BECanvas canvas = CompanyDataActivity.SELECTEDCANVAS;
         findviews();
         setCanvasData(canvas);
-
         return rootView;
     }
 
@@ -51,7 +50,7 @@ public class ShowCanvasFragmentContacts extends Fragment {
         mainContactMobile.setText(c.getM_mainContactMobile());
         mainContactFax.setText(c.getM_mainContactFax());
         mainContactEmail.setText(c.getM_mainContactEmail());
-        mainContactDivision.setText(c.getM_mainContactDivision());
+//        mainContactDivision.setText(c.getM_mainContactDivision() );
 //        mainContactAddress.setText()
         secondContact.setText(c.getM_secondContact());
         secondContactPhone.setText(c.getM_secondContactPhone());

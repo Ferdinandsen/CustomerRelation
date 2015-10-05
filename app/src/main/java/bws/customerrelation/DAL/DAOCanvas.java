@@ -262,21 +262,21 @@ public class DAOCanvas {
         _sql.bindString(15, canvas.getM_BusinessArea());
         _sql.bindString(16, canvas.getM_Office());
         _sql.bindString(17, canvas.getM_text());
-//        _sql.bindString(18, canvas.getM_mainContact());
-//        _sql.bindString(19, canvas.getM_mainContactPhone());
-//        _sql.bindString(20, canvas.getM_mainContactMobile());
-//        _sql.bindString(21, canvas.getM_mainContactFax());
-//        _sql.bindString(22, canvas.getM_mainContactEmail());
-//        _sql.bindString(23, canvas.getM_mainContactDivision());
-//        _sql.bindString(24, canvas.getM_secondContact());
-//        _sql.bindString(25, canvas.getM_secondContactPhone());
-//        _sql.bindString(26, canvas.getM_secondContactMobile());
-//        _sql.bindString(27, canvas.getM_thirdContact());
-//        _sql.bindString(28, canvas.getM_thirdContactPhone());
-//        _sql.bindString(29, canvas.getM_thirdContactMobile());
-//        _sql.bindString(30, canvas.getM_fourthContact());
-//        _sql.bindString(31, canvas.getM_fourthContactPhone());
-//        _sql.bindString(32, canvas.getM_fourthContactMobile());
+        _sql.bindString(18, canvas.getM_mainContact());
+        _sql.bindString(19, canvas.getM_mainContactPhone());
+        _sql.bindString(20, canvas.getM_mainContactMobile());
+        _sql.bindString(21, canvas.getM_mainContactFax());
+        _sql.bindString(22, canvas.getM_mainContactEmail());
+        _sql.bindString(23, canvas.getM_mainContactDivision());
+        _sql.bindString(24, canvas.getM_secondContact());
+        _sql.bindString(25, canvas.getM_secondContactPhone());
+        _sql.bindString(26, canvas.getM_secondContactMobile());
+        _sql.bindString(27, canvas.getM_thirdContact());
+        _sql.bindString(28, canvas.getM_thirdContactPhone());
+        _sql.bindString(29, canvas.getM_thirdContactMobile());
+        _sql.bindString(30, canvas.getM_fourthContact());
+        _sql.bindString(31, canvas.getM_fourthContactPhone());
+        _sql.bindString(32, canvas.getM_fourthContactMobile());
 
         return _sql.executeInsert();
     }
@@ -419,7 +419,6 @@ public class DAOCanvas {
     }
 
     public void deleteAllCanvas() {
-//        _db.execSQL("DELETE FROM " + DAConstants.TABLE_CANVAS + " WHERE Id != " + 105600);
         _db.delete(DAConstants.TABLE_CANVAS, null, null);
     }
 

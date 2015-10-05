@@ -20,6 +20,7 @@ import bws.customerrelation.Controller.CanvasController;
 import bws.customerrelation.Controller.CompanyController;
 import bws.customerrelation.Controller.SharedConstants;
 import bws.customerrelation.GUI.Canvas.CreateCanvasActivity;
+import bws.customerrelation.GUI.Canvas.FragmentCanvasPagerAdapter;
 import bws.customerrelation.GUI.Canvas.ShowCanvasActivity;
 import bws.customerrelation.GUI.InflateLists.InflateCompanyCanvasData;
 import bws.customerrelation.GUI.MainActivity;
@@ -115,7 +116,7 @@ public class CompanyDataActivity extends AppCompatActivity {
             Toast.makeText(this, "Du har ikke valgt et canvas", Toast.LENGTH_LONG).show();
         } else {
             Intent showCanvasIntent = new Intent();
-            showCanvasIntent.setClass(this, ShowCanvasActivity.class);
+            showCanvasIntent.setClass(this, FragmentCanvasPagerAdapter.class);
             startActivity(showCanvasIntent);
         }
     }

@@ -25,9 +25,9 @@ public class FragmentCanvasPagerAdapter extends android.support.v4.app.FragmentP
                 return new ShowCanvasFragmentMain();
             case 1:
                 // Games fragment activity
-                return new ActivitiesFragment();
+                return new ShowCanvasFragmentContacts();
             default:
-                return new CompanyDataFragment();
+                return new ShowCanvasFragmentMain();
         }
     }
 

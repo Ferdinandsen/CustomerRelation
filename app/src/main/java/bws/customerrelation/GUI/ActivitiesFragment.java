@@ -17,6 +17,7 @@ import bws.customerrelation.R;
 
 public class ActivitiesFragment extends Fragment {
     View rootView;
+    TextView contactNameLbL;
     TextView contactName;
     TextView contactPhone;
     TextView contactEmail;
@@ -43,25 +44,27 @@ public class ActivitiesFragment extends Fragment {
     }
 
     private void populateData() {
-        contactName.setText("test");
-        contactPhone.setText("test1");
-        contactEmail.setText("test2");
-        contactFax.setText("test3");
-        contactAddress.setText("test4");
-        contactZipcode.setText("test5");
-        contactCountry.setText("test6");
-        contactMobile.setText("test7");
+        contactNameLbL.setText("");
+        contactName.setText("Under Construction");
+//        contactPhone.setText("test1");
+//        contactEmail.setText("test2");
+//        contactFax.setText("test3");
+//        contactAddress.setText("test4");
+//        contactZipcode.setText("test5");
+//        contactCountry.setText("test6");
+//        contactMobile.setText("test7");
     }
 
     private void findViews() {
+        contactNameLbL = (TextView) rootView.findViewById(R.id.contactNameLbL);
         contactName = (TextView) rootView.findViewById(R.id.contactName);
-        contactPhone = (TextView) rootView.findViewById(R.id.contactPhone);
-        contactEmail = (TextView) rootView.findViewById(R.id.contactEmail);
-        contactFax = (TextView) rootView.findViewById(R.id.contactfax);
-        contactAddress = (TextView) rootView.findViewById(R.id.contactAddress);
-        contactZipcode = (TextView) rootView.findViewById(R.id.contactZipcode);
-        contactCountry = (TextView) rootView.findViewById(R.id.contactCountry);
-        contactMobile = (TextView) rootView.findViewById(R.id.contactMobilePhone);
+//        contactPhone = (TextView) rootView.findViewById(R.id.contactPhone);
+//        contactEmail = (TextView) rootView.findViewById(R.id.contactEmail);
+//        contactFax = (TextView) rootView.findViewById(R.id.contactfax);
+//        contactAddress = (TextView) rootView.findViewById(R.id.contactAddress);
+//        contactZipcode = (TextView) rootView.findViewById(R.id.contactZipcode);
+//        contactCountry = (TextView) rootView.findViewById(R.id.contactCountry);
+//        contactMobile = (TextView) rootView.findViewById(R.id.contactMobilePhone);
 
     }
 
