@@ -20,7 +20,6 @@ public class DAOUser {
 
     String _INSERT = "INSERT INTO " + DAConstants.TABLE_USER + "(Firstname, Lastname, Email, Password, PhoneNumber) VALUES (?, ?, ?, ?, ?)";
 
-
     public DAOUser(Context context) {
         _context = context;
         OpenHelper openHelper = new OpenHelper(_context);

@@ -24,7 +24,6 @@ public class GetJSONFromAPI extends AsyncTask<String, Void, JSONObject> {
     JSONObject jsnobject;
     String result;
     Activity _activity;
-    private ProgressDialog _dialog;
 
     public GetJSONFromAPI(Activity activity) {
         _activity = activity;
@@ -75,6 +74,6 @@ public class GetJSONFromAPI extends AsyncTask<String, Void, JSONObject> {
         } catch (JSONException e) {
             Log.e("Get JSON From API JSON", "Error creating JSON", e);
         }
-        return jsnobject; //Rammer 4 gange ?
+        return jsnobject;
     }
 }

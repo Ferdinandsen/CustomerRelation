@@ -15,17 +15,12 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import java.util.ArrayList;
-
 import java.util.HashMap;
-
-import bws.customerrelation.Controller.SettingsController;
 import bws.customerrelation.Controller.SharedConstants;
-import bws.customerrelation.DAL.Gateway.GetJSONListHelper;
 import bws.customerrelation.DAL.Gateway.VolleySingleton;
 import bws.customerrelation.GUI.LoginActivity;
-import bws.customerrelation.Model.BECompany;
+
 import bws.customerrelation.Model.BECountry;
 
 /**
@@ -40,7 +35,6 @@ public class DAOSettings {
     HashMap<String, ArrayList<String>> stringList;
     ArrayList<String> list;
     ArrayList<BECountry> countryList;
-    GetJSONListHelper helper;
 
 
     String _INSERTCOUNTRY = "INSERT INTO " + DAConstants.TABLE_COUNTRY + "(Name, Region, CountryCode, PhonePrefix) VALUES (?,?,?,?)";

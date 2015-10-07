@@ -99,7 +99,6 @@ public class DAOCanvas {
         VolleySingleton.getInstance(_activity).addToRequestQueue(jsObjRequest);
     }
 
-    //  TODO extract to class
     private ArrayList<BECanvas> convertFromJsonToBE(JSONObject object) throws JSONException {
         JSONObject obj;
         JSONArray obj1;
