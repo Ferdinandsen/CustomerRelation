@@ -7,7 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import bws.customerrelation.GUI.Company.CompanyDataActivity;
+import bws.customerrelation.GUI.Company.CompanyDataFragment;
 import bws.customerrelation.Model.BECanvas;
 import bws.customerrelation.R;
 
@@ -38,7 +38,7 @@ public class ShowCanvasFragmentMain extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         rootView = inflater.inflate(R.layout.fragment_show_canvas_main, container, false);
         super.onCreate(savedInstanceState);
-        BECanvas canvas = CompanyDataActivity.SELECTEDCANVAS;
+        BECanvas canvas = CompanyDataFragment.SELECTEDCANVAS;
         findviews();
         setCanvasData(canvas);
 

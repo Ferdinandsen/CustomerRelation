@@ -33,10 +33,10 @@
         <activity
             android:name=".GUI.Company.CompanyActivity"
             android:label="@string/title_activity_client" />
-        <activity
-            android:name=".GUI.Company.CompanyDataActivity"
-            android:label="@string/title_activity_client_data" >
-        </activity>
+        <!--<activity-->
+            <!--android:name=".GUI.Company.CompanyDataActivity"-->
+            <!--android:label="@string/title_activity_client_data" >-->
+        <!--</activity>-->
         <activity
             android:name=".GUI.Canvas.CreateCanvasActivity"
             android:label="@string/title_activity_canvas" />

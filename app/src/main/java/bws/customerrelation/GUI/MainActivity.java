@@ -47,14 +47,13 @@ public class MainActivity extends AppCompatActivity {
     Button _btnDownloadList;
     LinearLayout _linearlayoutListView;
     EditText _searchView;
-    BEUser _user; //Todo make static from login?
 
     ProgressDialog _dialog;
     ArrayList<BECompany> _allCompanies;
     ArrayList<BECompany> _searchList;
     public static ArrayList<BECompany> SELECTEDCOMPANIES = new ArrayList<BECompany>();
     static int counter = 0;
-
+    BEUser _user;
 
     private static String TAG = "MainActivity";
     InflateCompanies _adapter;
@@ -65,12 +64,11 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         android.support.v7.app.ActionBar ab = getSupportActionBar();
         setContentView(R.layout.activity_main);
-        Bundle b = getIntent().getExtras(); //Todo remove?
-        _user = (BEUser) b.getSerializable(SharedConstants.USER);//TODO remove?
         _companyController = CompanyController.getInstance(this);
         _canvasController = CanvasController.getInstance(this);
         _settingsController = SettingsController.getInstance(this);
         _imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+        _user = LoginActivity.USER;
         findViews();
         setListeners();
         setUserData();
@@ -206,6 +204,7 @@ public class MainActivity extends AppCompatActivity {
                 .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
                         _companyController.deleteAllCompanies();
+                        CompanyActivity.SELECTEDCOMPANY = null;
                     }
                 })
                 .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {

@@ -42,7 +42,7 @@ public class CompanyDataFragment extends Fragment {
     TextView telephone;
 
     LinearLayout _LinearLayout;
-    static BECanvas SELECTEDCANVAS;
+  public static BECanvas SELECTEDCANVAS;
     Button btnCreateCanvas;
     Button btnShowCanvas;
     InflateCompanyCanvasData _adapter;
@@ -147,8 +147,7 @@ public class CompanyDataFragment extends Fragment {
                         public void onClick(DialogInterface dialog, int which) {
                             final String cId = _selectedCompany.getM_companyId();
                             _companyController.deleteCompanyById(cId);
-                            //TODO lukke den her og åbne noget andet !??!?!?!?!?!??!?!?!?!??
-                            // TODO !=!==!=!=!=!?!?!"=
+                            getActivity().finish();
                         }
                     })
                     .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {

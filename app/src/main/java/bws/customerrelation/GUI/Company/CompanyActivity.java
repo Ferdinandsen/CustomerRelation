@@ -13,6 +13,8 @@ import java.util.ArrayList;
 
 import bws.customerrelation.Controller.CompanyController;
 import bws.customerrelation.GUI.InflateLists.InflateCompany;
+import bws.customerrelation.GUI.LoginActivity;
+import bws.customerrelation.GUI.MainActivity;
 import bws.customerrelation.Model.BECompany;
 import bws.customerrelation.R;
 
@@ -42,9 +44,14 @@ public class CompanyActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
+        if (_companyController.getAllCompaniesFromDevice().isEmpty()) {
+            SELECTEDCOMPANY = null;
+            finish();
+        }
         _selectedClients = _companyController.getAllCompaniesFromDevice();
         _linearLayout.removeAllViews();
         inflateViews();
+
     }
 
     private void inflateViews() {

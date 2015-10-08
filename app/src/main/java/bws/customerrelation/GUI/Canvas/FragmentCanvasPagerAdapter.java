@@ -3,6 +3,8 @@ package bws.customerrelation.GUI.Canvas;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.util.Log;
+import android.widget.Toast;
 
 import bws.customerrelation.GUI.ActivitiesFragment;
 import bws.customerrelation.GUI.Canvas.ShowCanvasFragmentMain;
@@ -14,6 +16,7 @@ import bws.customerrelation.GUI.Company.CompanyDataFragment;
 public class FragmentCanvasPagerAdapter extends android.support.v4.app.FragmentPagerAdapter {
     public FragmentCanvasPagerAdapter(FragmentManager fm) {
         super(fm);
+       Log.v("pager", "lavet");
     }
 
     @Override

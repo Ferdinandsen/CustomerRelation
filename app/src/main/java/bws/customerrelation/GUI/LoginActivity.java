@@ -86,7 +86,6 @@ public class LoginActivity extends AppCompatActivity {
             clearDBClientList(); //TODO KUN TIL TEST!
             Intent mainActivity = new Intent();
             mainActivity.setClass(this, MainActivity.class);
-            mainActivity.putExtra(SharedConstants.USER, USER); //Todo remove?
             startActivity(mainActivity);
         }
     }

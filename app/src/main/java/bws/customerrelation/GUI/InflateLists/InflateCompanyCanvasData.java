@@ -7,10 +7,11 @@ import android.view.View;
 import android.widget.CheckBox;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
-import bws.customerrelation.GUI.Company.CompanyDataActivity;
+import bws.customerrelation.GUI.Company.CompanyDataFragment;
 import bws.customerrelation.Model.BECanvas;
 import bws.customerrelation.R;
 
@@ -38,6 +39,7 @@ public class InflateCompanyCanvasData {
     public void inflateView() {
         int pos = 0;
         for (final BECanvas c : _allCanvas) {
+
             /**
              * inflate items/ add items in linear layout instead of listview
              */
@@ -120,7 +122,9 @@ public class InflateCompanyCanvasData {
                             _SELECTEDCANVAS = c;
                         }
                     }
-                    CompanyDataActivity.SELECTEDCANVAS = _SELECTEDCANVAS;
+                    CompanyDataFragment.SELECTEDCANVAS = _SELECTEDCANVAS;
+
+
                 }
             });
             pos++;

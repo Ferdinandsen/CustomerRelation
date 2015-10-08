@@ -6,7 +6,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
 
-import bws.customerrelation.GUI.Company.CompanyDataActivity;
+import bws.customerrelation.GUI.Company.CompanyDataFragment;
 import bws.customerrelation.Model.BECanvas;
 import bws.customerrelation.R;
 
@@ -32,7 +32,7 @@ public class ShowCanvasActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_show_canvas);
-        BECanvas canvas = CompanyDataActivity.SELECTEDCANVAS;
+        BECanvas canvas = CompanyDataFragment.SELECTEDCANVAS;
         findviews();
         setCanvasData(canvas);
     }

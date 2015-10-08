@@ -3,6 +3,7 @@ package bws.customerrelation.GUI;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.util.Log;
 
 import bws.customerrelation.GUI.Company.CompanyDataFragment;
 
@@ -12,6 +13,7 @@ import bws.customerrelation.GUI.Company.CompanyDataFragment;
 public class FragmentPagerAdapter extends android.support.v4.app.FragmentPagerAdapter {
     public FragmentPagerAdapter(FragmentManager fm) {
         super(fm);
+        Log.v("pager", "lavet");
     }
 
     @Override
